@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'pembeli' => [
+            'driver' => 'session',
+            'provider' => 'pembelis',
+        ],
+
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -51,6 +56,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'pembelis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pembeli::class,
         ],
 
         'admins' => [

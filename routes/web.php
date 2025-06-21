@@ -18,8 +18,29 @@ use App\Http\Controllers\Admin\ManajemenAdminController;
 |
 */
 
+// Route utama untuk halaman depan
 Route::get('/', function () {
-    return view('pembeli.index');
+    return view('index');
+})->name('index');
+
+// Routes untuk pembeli
+Route::prefix('pembeli')->name('pembeli.')->group(function () {
+    // Auth routes
+    Route::get('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'login']);
+    Route::get('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'register']);
+    Route::post('/logout', [\App\Http\Controllers\Pembeli\AuthController::class, 'logout'])->name('logout');
+    
+    // Protected routes
+    Route::middleware('auth:pembeli')->group(function () {
+        Route::get('/', function () {
+            return view('index');
+        })->name('index');
+        
+        Route::get('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'index'])->name('keranjang.index');
+        Route::get('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('pesanan.index');
+    });
 });
 
 // Admin Authentication Routes

@@ -135,6 +135,66 @@
             display: none;
         }
 
+        /* Enhanced Dropdown Styles */
+        .dropdown-menu {
+            min-width: 220px;
+            padding: 0;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            transform-origin: top right;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(139, 69, 19, 0.05);
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1.75rem;
+        }
+
+        .dropdown-item:active {
+            background-color: rgba(139, 69, 19, 0.1);
+        }
+
+        .dropdown-divider {
+            margin: 0.25rem 0;
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animation for dropdown */
+        .dropdown-menu.show {
+            animation: fadeInDropdown 0.3s ease forwards;
+        }
+
+        @keyframes fadeInDropdown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* User profile in dropdown */
+        .dropdown-toggle::after {
+            vertical-align: 0.2em;
+            margin-left: 0.5em;
+        }
+
+        /* Badge styling */
+        .badge {
+            margin-left: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
         .hero-section {
             position: relative;
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.malkelapagading.com/tenant/Batik-Kerisfoto1.jpg');
@@ -413,6 +473,8 @@
         }
 
         .about-img {
+            height: 400px;
+            width: auto;
             border-radius: 15px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
             transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -831,9 +893,55 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#kontak">Kontak</a>
                     </li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="#produk" class="nav-link nav-cta">Beli Sekarang</a>
-                    </li>
+                    @auth('pembeli')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-cta" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        {{ Auth::guard('pembeli')->user()->nama }}
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="navbarDropdown"
+                                style="border: none; border-radius: 10px; overflow: hidden;">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-3"
+                                        href="{{ route('pembeli.keranjang.index') }}">
+                                        <i class="fas fa-shopping-cart me-2 text-primary"></i>
+                                        <span>Keranjang Saya</span>
+                                        <span class="badge bg-primary rounded-pill ms-2">0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-3"
+                                        href="{{ route('pembeli.pesanan.index') }}">
+                                        <i class="fas fa-clipboard-list me-2 text-primary"></i>
+                                        <span>Pesanan Saya</span>
+                                        <span class="badge bg-primary rounded-pill ms-auto ml-2">0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider my-1">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-3" href="#" id="logout-btn">
+                                        <i class="fas fa-sign-out-alt me-2 text-danger"></i>
+                                        <span class="text-danger">Logout</span>
+                                    </a>
+                                    <form id="logout-form" method="POST" action="{{ route('pembeli.logout') }}">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item ms-lg-3">
+                            <a href="{{ route('pembeli.login') }}" class="nav-link nav-cta">
+                                <i class="fas fa-sign-in-alt me-1"></i> Login
+                            </a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -1017,7 +1125,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
-                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    <img src="https://lh3.googleusercontent.com/p/AF1QipOaV7CC5GtpuEI3KzYsY8-QF34BL_ekegH8j2iu=s1360-w1360-h1020-rw"
                         alt="Proses Pembuatan Batik" class="img-fluid about-img">
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
@@ -1061,7 +1169,6 @@
                     </div>
 
                     <div class="mt-4" data-aos="fade-up" data-aos-delay="300">
-                        <a href="#" class="btn btn-primary me-3">Baca Selengkapnya</a>
                         <a href="#kontak" class="btn btn-primary">Hubungi Kami</a>
                     </div>
                 </div>
@@ -1183,7 +1290,7 @@
                         <h3 class="mb-4 position-relative" style="font-weight: 700; color: var(--light-color)">
                             Informasi Kontak</h3>
 
-                        <div class="contact-info-item d-flex mb-4">
+                        <div class="contact-info-item d-flex justify-content-center align-items-center mb-4">
                             <div class="contact-icon me-4"
                                 style="
                             width: 50px;
@@ -1200,7 +1307,8 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Lokasi Kami</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">Jl. Kalimantan No. 123, Jember, Jawa Timur
+                                <p style="opacity: 0.9; margin-bottom: 0;">Jl. Argopuro, Tegalsari, Kec. Ambulu,
+                                    Kabupaten Jember, Jawa Timur 68172
                                 </p>
                             </div>
                         </div>
@@ -1264,7 +1372,7 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Jam Operasional</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">Senin - Sabtu: 08.00 - 17.00 WIB</p>
+                                <p style="opacity: 0.9; margin-bottom: 0;">Senin - Sabtu: 08.00–21.00 WIB</p>
                             </div>
                         </div>
 
@@ -1424,12 +1532,9 @@
                     border-radius: 20px;
                     overflow: hidden;
                     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                    height: 400px;
-                    background: #eee;
-                    position: relative;
-                ">
+                    height: 400px; background: #eee; position: relative;">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.382655208117!2d113.71731431478467!3d-8.166450284399435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6954f4134804d%3A0x3a6e5a651b1a9c6a!2sJember%2C%20Jember%20Regency%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1621234567890!5m2!1sen!2sid"
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m11!1m3!1d202.17772725127884!2d113.60020468833449!3d-8.346939136221485!2m2!1f32.78965092069119!2f45!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x2dd69b668bbd6aef%3A0x38c76624b86f8b92!2sRezti&#39;s%20Batik%20(Rumah%20Produksi%20Batik%20Jember)!5e1!3m2!1sid!2sid!4v1750522161328!5m2!1sid!2sid"
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                         </iframe>
                         <div
@@ -1442,8 +1547,8 @@
                         border-radius: 10px;
                         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
                     ">
-                            <a href="https://maps.google.com/?q=Jl.+Kalimantan+No.+123,+Jember,+Jawa+Timur"
-                                target="_blank" class="text-decoration-none">
+                            <a href="https://maps.app.goo.gl/AJro4qsPbmBnoTwb6" target="_blank"
+                                class="text-decoration-none">
                                 <i class="fas fa-directions me-2 text-primary"></i> Dapatkan Petunjuk
                             </a>
                         </div>
@@ -1528,8 +1633,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <!-- AOS Animation JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // SweetAlert for logout confirmation
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Konfirmasi Logout',
+                        text: 'Apakah Anda yakin ingin keluar?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#8B4513',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Logout',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true,
+                        customClass: {
+                            popup: 'animated fadeIn'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('logout-form').submit();
+                        }
+                    });
+                });
+            }
+        });
+
         // Initialize AOS animation
         AOS.init({
             duration: 800,
