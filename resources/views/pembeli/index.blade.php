@@ -883,11 +883,14 @@
                             <div class="product-actions">
                                 <div>
                                     <span class="product-price">Rp 250.000</span>
-                                    <span class="product-old-price">Rp 300.000</span>
                                 </div>
                                 <button class="product-btn">
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
+                            </div>
+                            <div class="product-stock">
+                                <span class="stock-label">Stok Tersedia:</span>
+                                <span class="stock-quantity">15</span>
                             </div>
                             <div class="product-rating">
                                 <i class="fas fa-star"></i>
@@ -919,6 +922,10 @@
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
                             </div>
+                            <div class="product-stock">
+                                <span class="stock-label">Stok Tersedia:</span>
+                                <span class="stock-quantity">8</span>
+                            </div>
                             <div class="product-rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -944,11 +951,14 @@
                             <div class="product-actions">
                                 <div>
                                     <span class="product-price">Rp 280.000</span>
-                                    <span class="product-old-price">Rp 330.000</span>
                                 </div>
                                 <button class="product-btn">
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
+                            </div>
+                            <div class="product-stock">
+                                <span class="stock-label">Stok Tersedia:</span>
+                                <span class="stock-quantity">20</span>
                             </div>
                             <div class="product-rating">
                                 <i class="fas fa-star"></i>
@@ -978,6 +988,10 @@
                                 <button class="product-btn">
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
+                            </div>
+                            <div class="product-stock">
+                                <span class="stock-label">Stok Tersedia:</span>
+                                <span class="stock-quantity">5</span>
                             </div>
                             <div class="product-rating">
                                 <i class="fas fa-star"></i>
@@ -1166,7 +1180,8 @@
                             </div>
                         </div>
 
-                        <h3 class="mb-4 position-relative" style="font-weight: 700; color: var(--light-color)">Informasi Kontak</h3>
+                        <h3 class="mb-4 position-relative" style="font-weight: 700; color: var(--light-color)">
+                            Informasi Kontak</h3>
 
                         <div class="contact-info-item d-flex mb-4">
                             <div class="contact-icon me-4"

@@ -34,6 +34,14 @@
                     <span>Pelanggan</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('admin.manajemen-admin.index') }}"
+                    class="nav-link @if (Request::is('admin/manajemen-admin*')) active @endif">
+                    <i class="fas fa-user-cog me-2"></i>
+                    <span>Manajemen Admin</span>
+                </a>
+            </li>
         </ul>
     </div>
 
