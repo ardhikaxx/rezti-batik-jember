@@ -603,6 +603,7 @@
         }
 
         .testimonial-name {
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
             margin-bottom: 5px;
         }
@@ -910,7 +911,7 @@
                                         href="{{ route('pembeli.keranjang.index') }}">
                                         <i class="fas fa-shopping-cart me-2 text-primary"></i>
                                         <span>Keranjang Saya</span>
-                                        <span class="badge bg-primary rounded-pill ms-2">0</span>
+                                        <span class="badge rounded-pill ms-2" style="background-color: var(--primary-color);">0</span>
                                     </a>
                                 </li>
                                 <li>
@@ -918,7 +919,7 @@
                                         href="{{ route('pembeli.pesanan.index') }}">
                                         <i class="fas fa-clipboard-list me-2 text-primary"></i>
                                         <span>Pesanan Saya</span>
-                                        <span class="badge bg-primary rounded-pill ms-auto ml-2">0</span>
+                                        <span class="badge rounded-pill ms-2" style="background-color: var(--primary-color);">0</span>
                                     </a>
                                 </li>
                                 <li>
@@ -1193,7 +1194,7 @@
                                 "Kualitas batiknya sangat bagus, motifnya unik dan tidak mudah luntur. Pengiriman juga
                                 cepat. Sangat recommended!"
                             </div>
-                            <h5 class="testimonial-name">Sarah Wijaya</h5>
+                            <h4 class="testimonial-name">Sarah Wijaya</h4>
                             <p class="testimonial-role">Pembeli</p>
                             <div class="text-warning">
                                 <i class="fas fa-star"></i>
@@ -1215,7 +1216,7 @@
                                 "Saya sering membeli batik dari Reztis untuk hadiah bisnis. Klien sangat menyukainya
                                 karena kualitas dan kemasannya yang premium."
                             </div>
-                            <h5 class="testimonial-name">Budi Santoso</h5>
+                            <h4 class="testimonial-name">Budi Santoso</h4>
                             <p class="testimonial-role">Pengusaha</p>
                             <div class="text-warning">
                                 <i class="fas fa-star"></i>
@@ -1237,7 +1238,7 @@
                                 "Motif-motif dari Reztis Batik sangat inspiratif dan unik. Saya sering menggunakannya
                                 sebagai bahan untuk koleksi fashion saya."
                             </div>
-                            <h5 class="testimonial-name">Dewi Kartika</h5>
+                            <h4 class="testimonial-name">Dewi Kartika</h4>
                             <p class="testimonial-role">Desainer</p>
                             <div class="text-warning">
                                 <i class="fas fa-star"></i>

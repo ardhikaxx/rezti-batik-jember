@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if (Auth::guard('pembeli')->attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('pembeli.index'));
+            return redirect()->intended(route('index'));
         }
 
         return back()->withErrors([
