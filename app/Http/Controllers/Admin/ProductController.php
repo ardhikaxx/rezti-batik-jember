@@ -108,6 +108,6 @@ class ProductController extends Controller
             ]
         ];
 
-        return view('admin.data-barang.index', ['products' => $products]);
+        return view('admin.manajemen-produk.index', ['products' => $products]);
     }
 }

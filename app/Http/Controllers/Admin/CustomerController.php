@@ -92,7 +92,7 @@ class CustomerController extends Controller
             ]
         ];
 
-        return view('admin.data-pembeli.index', ['customers' => $customers]);
+        return view('admin.manajemen-pembeli.index', ['customers' => $customers]);
     }
 
     public function show($id)
@@ -167,6 +167,6 @@ class CustomerController extends Controller
             abort(404);
         }
 
-        return view('admin.data-pembeli.show', ['customer' => $customer]);
+        return view('admin.manajemen-pembeli.show', ['customer' => $customer]);
     }
 }

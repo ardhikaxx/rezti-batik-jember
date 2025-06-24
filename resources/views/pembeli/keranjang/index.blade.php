@@ -419,7 +419,7 @@
                         </div>
 
                         <button class="btn btn-primary w-100 btn-checkout py-3 fw-bold">
-                            <i class="fas fa-credit-card me-2"></i> Lanjut ke Pembayaran
+                            <i class="fas fa-credit-card me-2"></i> Checkout
                         </button>
                     </div>
                 </div>

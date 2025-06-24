@@ -136,11 +136,9 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow">
                 <li><a class="dropdown-item active" href="#">Semua Pesanan</a></li>
-                <li><a class="dropdown-item" href="#">Belum Dibayar</a></li>
                 <li><a class="dropdown-item" href="#">Diproses</a></li>
                 <li><a class="dropdown-item" href="#">Dikirim</a></li>
                 <li><a class="dropdown-item" href="#">Selesai</a></li>
-                <li><a class="dropdown-item" href="#">Dibatalkan</a></li>
             </ul>
         </div>
     </div>
@@ -150,11 +148,6 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button">
                 Semua <span class="badge bg-primary ms-2">3</span>
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="unpaid-tab" data-bs-toggle="tab" data-bs-target="#unpaid" type="button">
-                Belum Dibayar <span class="badge bg-warning ms-2">1</span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -328,22 +321,17 @@
             </div>
         </div>
 
-        <!-- Unpaid Orders Tab -->
-        <div class="tab-pane fade" id="unpaid" role="tabpanel">
-            <!-- Unpaid orders will be shown here -->
+        <!-- Processing Orders Tab -->
+        <div class="tab-pane fade" id="processing" role="tabpanel">
+            <!-- Processing orders will be shown here -->
             <div class="text-center py-5">
                 <img src="{{ asset('admin/img/empty-order.svg') }}" alt="No orders" class="img-fluid mb-4" style="max-width: 300px;">
-                <h5 class="fw-bold mb-2">Tidak ada pesanan yang belum dibayar</h5>
+                <h5 class="fw-bold mb-2">Tidak ada pesanan yang di proses</h5>
                 <p class="text-muted">Anda belum memiliki pesanan yang belum dibayar</p>
                 <a href="{{ route('index') }}" class="btn btn-primary mt-3">
                     <i class="fas fa-shopping-bag me-2"></i> Belanja Sekarang
                 </a>
             </div>
-        </div>
-
-        <!-- Processing Orders Tab -->
-        <div class="tab-pane fade" id="processing" role="tabpanel">
-            <!-- Processing orders will be shown here -->
         </div>
 
         <!-- Shipped Orders Tab -->
