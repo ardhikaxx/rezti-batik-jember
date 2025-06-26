@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\EducationServiceController;
 use App\Http\Controllers\Admin\ManajemenAdminController;
 
 /*
@@ -19,9 +21,7 @@ use App\Http\Controllers\Admin\ManajemenAdminController;
 */
 
 // Route utama untuk halaman depan
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->name('index');
 
 // Routes untuk pembeli
 Route::prefix('pembeli')->name('pembeli.')->group(function () {
@@ -31,15 +31,36 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
     Route::get('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'register']);
     Route::post('/logout', [\App\Http\Controllers\Pembeli\AuthController::class, 'logout'])->name('logout');
-    
+
     // Protected routes
     Route::middleware('auth:pembeli')->group(function () {
-        Route::get('/', function () {
-            return view('index');
-        })->name('index');
-        
+        Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->name('index');
+
+        // Keranjang
         Route::get('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'index'])->name('keranjang.index');
+        Route::post('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'store'])->name('keranjang.store');
+        Route::put('/keranjang/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'update'])->name('keranjang.update');
+        Route::delete('/keranjang/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+        Route::get('/keranjang/count', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'count'])->name('keranjang.count');
+        Route::post('/keranjang/destroy-multiple', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroyMultiple'])->name('keranjang.destroy-multiple');
+
+        // Pesanan
         Route::get('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('pesanan.index');
+        Route::get('/pesanan/create', [\App\Http\Controllers\Pembeli\PesananController::class, 'create'])->name('pesanan.create');
+        Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
+        Route::get('/pesanan/{id}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
+        Route::post('/pesanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PesananController::class, 'cancel'])->name('pesanan.cancel');
+        Route::post('/pesanan/{id}/complete', [\App\Http\Controllers\Pembeli\PesananController::class, 'complete'])->name('pesanan.complete');
+
+        // Pelayanan Edukasi
+        Route::get('/pelayanan', [\App\Http\Controllers\Pembeli\PelayananController::class, 'index'])->name('pelayanan.index');
+        Route::get('/pelayanan/create', [\App\Http\Controllers\Pembeli\PelayananController::class, 'create'])->name('pelayanan.create');
+        Route::post('/pelayanan', [\App\Http\Controllers\Pembeli\PelayananController::class, 'store'])->name('pelayanan.store');
+        Route::get('/pelayanan/{id}', [\App\Http\Controllers\Pembeli\PelayananController::class, 'show'])->name('pelayanan.show');
+        Route::post('/pelayanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PelayananController::class, 'cancel'])->name('pelayanan.cancel');
+
+        // // Alamat Pengiriman
+        // Route::resource('alamat', \App\Http\Controllers\Pembeli\ShippingAddressController::class)->except(['show']);
     });
 });
 
@@ -69,6 +90,20 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::prefix('data-pembeli')->name('data-pembeli.')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('index');
         Route::get('/{id}', [CustomerController::class, 'show'])->name('show');
+    });
+
+    // Manajemen Pesanan
+    Route::prefix('manajemen-pesanan')->name('manajemen-pesanan.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+        Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
+    });
+
+    // Manajemen Pelayanan
+    Route::prefix('manajemen-pelayanan')->name('manajemen-pelayanan.')->group(function () {
+        Route::get('/', [EducationServiceController::class, 'index'])->name('index');
+        Route::get('/{id}', [EducationServiceController::class, 'show'])->name('show');
+        Route::post('/{id}/update-status', [EducationServiceController::class, 'updateStatus'])->name('update-status');
     });
 
     // Manajemen Admin

@@ -6,11 +6,11 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAuthenticated
+class RedirectIfNotAdmin
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $guard = 'admin')
     {
-        if (!Auth::guard('admin')->check()) {
+        if (!Auth::guard($guard)->check()) {
             return redirect()->route('admin.login');
         }
 

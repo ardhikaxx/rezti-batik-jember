@@ -191,239 +191,146 @@
             <h1 class="fw-bold mb-0 text-gradient-primary">
                 <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
             </h1>
-            <span class="badge rounded-pill ms-3 px-3 py-2 fs-6" style="background-color: var(--primary-color)">3 Item</span>
+            <span class="badge rounded-pill ms-3 px-3 py-2 fs-6"
+                style="background-color: var(--primary-color)">{{ $cartItems->sum('quantity') }} Item</span>
         </div>
 
         <!-- Main Cart Content -->
         <div class="row g-4">
             <!-- Cart Items Column -->
             <div class="col-lg-8">
-                <!-- Cart Actions -->
-                <div class="card shadow-sm mb-4 border-0">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectAll"
-                                    style="width: 1.25em; height: 1.25em;">
-                                <label class="form-check-label fw-semibold ms-2" for="selectAll">
-                                    Pilih Semua
-                                </label>
-                            </div>
-                            <button class="btn btn-outline-danger btn-sm px-3">
-                                <i class="fas fa-trash-alt me-1"></i> Hapus
-                            </button>
+                @if ($cartItems->isEmpty())
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-shopping-cart fa-4x mb-3" style="color: var(--primary-color);"></i>
+                            <h4>Keranjang Anda Kosong</h4>
+                            <p style="color: var(--primary-color)">Mulai belanja sekarang!</p>
+                            <a href="{{ route('index') }}" class="btn btn-primary mt-3">
+                                <i class="fas fa-store me-2"></i> Belanja Sekarang
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <!-- Cart Items List -->
-                <div class="card shadow-sm border-0">
-                    <div class="card-body p-0">
-                        <!-- Product 1 -->
-                        <div class="cart-item p-4 border-bottom">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="product1" checked
-                                            style="width: 1.25em; height: 1.25em;">
-                                    </div>
+                @else
+                    <!-- Cart Actions -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="selectAll"
+                                        style="width: 1.25em; height: 1.25em;">
+                                    <label class="form-check-label fw-semibold ms-2" for="selectAll">
+                                        Pilih Semua
+                                    </label>
                                 </div>
-                                <div class="col-auto">
-                                    <div class="product-img-container">
-                                        <img src="{{ asset('img/batik-1.jpg') }}"
-                                            class="product-img" alt="Batik Mega Mendung">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <h5 class="product-title mb-1">Batik Tulis Motif Dewa Ruci</h5>
-                                    <p class="product-code mb-2">Kode: BT001</p>
-                                    <div class="product-price d-lg-none mb-2">
-                                        <span class="current-price">Rp 250.000</span>
-                                    </div>
-                                    <div class="quantity-selector d-lg-none">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="2">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-price">
-                                        <span class="current-price">Rp 250.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="quantity-selector">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="2">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-total">
-                                        <span>Rp 500.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-action delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product 2 -->
-                        <div class="cart-item p-4 border-bottom">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="product2" checked
-                                            style="width: 1.25em; height: 1.25em;">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="product-img-container">
-                                        <img src="{{ asset('img/batik-2.jpg') }}" class="product-img" alt="Batik Parang">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <h5 class="product-title mb-1">Batik Tulis Motif Sekarjagat</h5>
-                                    <p class="product-code mb-2">Kode: BT002</p>
-                                    <div class="product-price d-lg-none mb-2">
-                                        <span class="current-price">Rp 320.000</span>
-                                    </div>
-                                    <div class="quantity-selector d-lg-none">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="1">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-price">
-                                        <span class="current-price">Rp 320.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="quantity-selector">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="1">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-total">
-                                        <span>Rp 320.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-action delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product 3 -->
-                        <div class="cart-item p-4">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="product3"
-                                            style="width: 1.25em; height: 1.25em;">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="product-img-container">
-                                        <img src="{{ asset('img/batik-3.jpg') }}" class="product-img" alt="Batik Kawung">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <h5 class="product-title mb-1">Batik Tulis Motif Wanito Kinasih</h5>
-                                    <p class="product-code mb-2">Kode: BT003</p>
-                                    <div class="product-price d-lg-none mb-2">
-                                        <span class="current-price">Rp 280.000</span>
-                                    </div>
-                                    <div class="quantity-selector d-lg-none">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="3">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-price">
-                                        <span class="current-price">Rp 280.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="quantity-selector">
-                                        <button class="btn btn-quantity minus">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control quantity-input" value="3">
-                                        <button class="btn btn-quantity plus">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 d-none d-lg-block">
-                                    <div class="product-total">
-                                        <span>Rp 840.000</span>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-action delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
+                                <button class="btn btn-outline-danger btn-sm px-3" id="delete-selected">
+                                    <i class="fas fa-trash-alt me-1"></i> Hapus
+                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Cart Items List -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-0">
+                            @foreach ($cartItems as $item)
+                                <div class="cart-item p-4 border-bottom" data-cart-id="{{ $item->id }}">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="form-check">
+                                                <input class="form-check-input item-checkbox" type="checkbox"
+                                                    id="product{{ $item->id }}" style="width: 1.25em; height: 1.25em;">
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="product-img-container">
+                                                <img src="{{ $item->product->image_url }}" class="product-img"
+                                                    alt="{{ $item->product->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="product-title mb-1">{{ $item->product->name }}</h5>
+                                            <p class="product-code mb-2">Stok: {{ $item->product->stock }}</p>
+                                            <div class="product-price d-lg-none mb-2">
+                                                <span class="current-price">Rp
+                                                    {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                            </div>
+                                            <div class="quantity-selector d-lg-none">
+                                                <button class="btn btn-quantity minus">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="text" class="form-control quantity-input"
+                                                    value="{{ $item->quantity }}" data-cart-id="{{ $item->id }}"
+                                                    data-max="{{ $item->product->stock }}">
+                                                <button class="btn btn-quantity plus">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 d-none d-lg-block">
+                                            <div class="product-price">
+                                                <span class="current-price">Rp
+                                                    {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 d-none d-lg-block">
+                                            <div class="quantity-selector">
+                                                <button class="btn btn-quantity minus">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="text" class="form-control quantity-input"
+                                                    value="{{ $item->quantity }}" data-cart-id="{{ $item->id }}"
+                                                    data-max="{{ $item->product->stock }}">
+                                                <button class="btn btn-quantity plus">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 d-none d-lg-block">
+                                            <div class="product-total">
+                                                <span>Rp
+                                                    {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-action delete" data-cart-id="{{ $item->id }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Order Summary Column -->
-            <div class="col-lg-4">
-                <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold mb-4">Ringkasan Belanja</h5>
+            @if (!$cartItems->isEmpty())
+                <div class="col-lg-4">
+                    <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-4">Ringkasan Belanja</h5>
 
-                        <div class="summary-item d-flex justify-content-between mb-2">
-                            <span class="text-muted">Subtotal (3 Produk)</span>
-                            <span class="fw-semibold">Rp 1,660,000</span>
+                            <div class="summary-item d-flex justify-content-between mb-2">
+                                <span class="text-muted">Subtotal ({{ $cartItems->sum('quantity') }} Produk)</span>
+                                <span class="fw-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="mb-0 fw-bold">Total Pembayaran</h5>
+                                <h4 class="mb-0 text-gradient-primary">Rp {{ number_format($total, 0, ',', '.') }}</h4>
+                            </div>
+
+                            <a href="{{ route('pembeli.pesanan.create') }}"
+                                class="btn btn-primary w-100 btn-checkout py-3 fw-bold">
+                                <i class="fas fa-credit-card me-2"></i> Checkout
+                            </a>
                         </div>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="mb-0 fw-bold">Total Pembayaran</h5>
-                            <h4 class="mb-0 text-gradient-primary">Rp 1,635,000</h4>
-                        </div>
-
-                        <button class="btn btn-primary w-100 btn-checkout py-3 fw-bold">
-                            <i class="fas fa-credit-card me-2"></i> Checkout
-                        </button>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 
@@ -431,13 +338,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Select all functionality
             const selectAll = document.getElementById('selectAll');
-            const checkboxes = document.querySelectorAll('.cart-item .form-check-input');
+            const checkboxes = document.querySelectorAll('.item-checkbox');
 
-            selectAll.addEventListener('change', function() {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAll.checked;
+            if (selectAll) {
+                selectAll.addEventListener('change', function() {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAll.checked;
+                    });
                 });
-            });
+            }
 
             // Quantity controls
             document.querySelectorAll('.btn-quantity').forEach(button => {
@@ -445,33 +354,179 @@
                     const input = this.closest('.quantity-selector').querySelector(
                         '.quantity-input');
                     let value = parseInt(input.value);
+                    const max = parseInt(input.getAttribute('data-max'));
+                    const cartId = input.getAttribute('data-cart-id');
 
                     if (this.classList.contains('minus')) {
                         if (value > 1) {
                             input.value = value - 1;
+                            updateCartItem(cartId, input.value);
                         }
                     } else {
-                        input.value = value + 1;
+                        if (value < max) {
+                            input.value = value + 1;
+                            updateCartItem(cartId, input.value);
+                        } else {
+                            Swal.fire({
+                                title: 'Stok Tidak Cukup',
+                                text: 'Jumlah melebihi stok yang tersedia',
+                                icon: 'warning',
+                                confirmButtonColor: '#8B4513'
+                            });
+                        }
                     }
-
-                    // Here you would update the total price
-                    console.log('Quantity updated:', input.value);
                 });
             });
+
+            // Input change event
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const max = parseInt(this.getAttribute('data-max'));
+                    const cartId = this.getAttribute('data-cart-id');
+
+                    if (this.value < 1) {
+                        this.value = 1;
+                    }
+
+                    if (this.value > max) {
+                        Swal.fire({
+                            title: 'Stok Tidak Cukup',
+                            text: 'Jumlah melebihi stok yang tersedia',
+                            icon: 'warning',
+                            confirmButtonColor: '#8B4513'
+                        });
+                        this.value = max;
+                    }
+
+                    updateCartItem(cartId, this.value);
+                });
+            });
+
+            // Function to update cart item quantity
+            function updateCartItem(cartId, quantity) {
+                fetch("{{ route('pembeli.keranjang.update', '') }}/" + cartId, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            quantity: quantity
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload page to update totals
+                            window.location.reload();
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message || 'Gagal memperbarui jumlah',
+                                icon: 'error',
+                                confirmButtonColor: '#8B4513'
+                            });
+                            window.location.reload();
+                        }
+                    });
+            }
 
             // Delete button functionality
             document.querySelectorAll('.btn-action.delete').forEach(button => {
                 button.addEventListener('click', function() {
-                    const cartItem = this.closest('.cart-item');
-                    cartItem.classList.add('animate__animated', 'animate__fadeOut');
+                    const cartId = this.getAttribute('data-cart-id');
 
-                    setTimeout(() => {
-                        cartItem.remove();
-                        console.log('Item removed from cart');
-                        // Here you would update the cart summary
-                    }, 300);
+                    Swal.fire({
+                        title: 'Hapus Item?',
+                        text: 'Anda yakin ingin menghapus item ini dari keranjang?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#8B4513',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ route('pembeli.keranjang.destroy', '') }}/" +
+                                cartId, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        // Remove item from DOM
+                                        const cartItem = document.querySelector(
+                                            `.cart-item[data-cart-id="${cartId}"]`);
+                                        if (cartItem) {
+                                            cartItem.classList.add('animate__animated',
+                                                'animate__fadeOut');
+                                            setTimeout(() => {
+                                                cartItem.remove();
+                                                window.location.reload();
+                                            }, 300);
+                                        }
+                                    }
+                                });
+                        }
+                    });
                 });
             });
+
+            // Delete selected items
+            const deleteSelectedBtn = document.getElementById('delete-selected');
+            if (deleteSelectedBtn) {
+                deleteSelectedBtn.addEventListener('click', function() {
+                    const selectedItems = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+                        .map(checkbox => {
+                            return checkbox.closest('.cart-item').getAttribute('data-cart-id');
+                        });
+
+                    if (selectedItems.length === 0) {
+                        Swal.fire({
+                            title: 'Tidak Ada Item Dipilih',
+                            text: 'Silakan pilih item yang ingin dihapus',
+                            icon: 'warning',
+                            confirmButtonColor: '#8B4513'
+                        });
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: 'Hapus Item Terpilih?',
+                        text: `Anda yakin ingin menghapus ${selectedItems.length} item dari keranjang?`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#8B4513',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ route('pembeli.keranjang.destroy-multiple') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({
+                                        cart_ids: selectedItems
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        // Reload page
+                                        window.location.reload();
+                                    }
+                                });
+                        }
+                    });
+                });
+            }
         });
     </script>
 @endsection

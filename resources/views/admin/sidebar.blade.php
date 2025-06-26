@@ -36,6 +36,22 @@
             </li>
             
             <li class="nav-item">
+                <a href="{{ route('admin.manajemen-pesanan.index') }}"
+                    class="nav-link @if (Request::is('admin/manajemen-pesanan*')) active @endif">
+                    <i class="fas fa-shopping-bag me-2"></i>
+                    <span>Manajemen Pesanan</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('admin.manajemen-pelayanan.index') }}"
+                    class="nav-link @if (Request::is('admin/manajemen-pelayanan*')) active @endif">
+                    <i class="fas fa-calendar-check me-2"></i>
+                    <span>Manajemen Pelayanan</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
                 <a href="{{ route('admin.manajemen-admin.index') }}"
                     class="nav-link @if (Request::is('admin/manajemen-admin*')) active @endif">
                     <i class="fas fa-user-cog me-2"></i>

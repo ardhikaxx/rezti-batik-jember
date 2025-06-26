@@ -46,7 +46,7 @@
         h3,
         h4,
         h6 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Poppins', sans-serif;
             color: var(--dark-color);
             font-weight: 600;
         }
@@ -105,7 +105,8 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            border-radius: 50px;
+            height: 3px;
             background: var(--primary-color);
             bottom: -2px;
             left: 0;
@@ -197,7 +198,7 @@
 
         .hero-section {
             position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.malkelapagading.com/tenant/Batik-Kerisfoto1.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ asset('img/background.jpg') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -464,6 +465,41 @@
         .product-btn:hover {
             transform: scale(1.1) rotate(10deg);
             box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+        }
+
+        .education-section {
+            position: relative;
+        }
+
+        .highlight-box {
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item {
+            transition: all 0.3s ease;
+            height: 170px;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            object-fit: fill
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
         }
 
         .about-section {
@@ -886,6 +922,9 @@
                         <a class="nav-link" href="#produk">Produk</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#edukasi">Layanan Edukasi</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#tentang">Tentang</a>
                     </li>
                     <li class="nav-item">
@@ -911,7 +950,8 @@
                                         href="{{ route('pembeli.keranjang.index') }}">
                                         <i class="fas fa-shopping-cart me-2 text-primary"></i>
                                         <span>Keranjang Saya</span>
-                                        <span class="badge rounded-pill ms-2" style="background-color: var(--primary-color);">0</span>
+                                        <span class="badge rounded-pill ms-2 cart-badge"
+                                            style="background-color: var(--primary-color);">0</span>
                                     </a>
                                 </li>
                                 <li>
@@ -919,7 +959,8 @@
                                         href="{{ route('pembeli.pesanan.index') }}">
                                         <i class="fas fa-clipboard-list me-2 text-primary"></i>
                                         <span>Pesanan Saya</span>
-                                        <span class="badge rounded-pill ms-2" style="background-color: var(--primary-color);">0</span>
+                                        <span class="badge rounded-pill ms-2"
+                                            style="background-color: var(--primary-color);">0</span>
                                     </a>
                                 </li>
                                 <li>
@@ -978,145 +1019,121 @@
                 <h2>Koleksi Eksklusif</h2>
                 <p class="subtitle">Temukan batik berkualitas tinggi dengan motif tradisional dan modern</p>
             </div>
-            <div class="row">
-                <!-- Produk 1 -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="product-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="product-img-container">
-                            <img src="{{ asset('img/batik-1.jpg') }}" class="product-img" alt="Batik Mega Mendung">
-                            <div class="product-badge">Terlaris</div>
-                        </div>
-                        <div class="product-content">
-                            <h5 class="product-title">Batik Tulis Motif Dewa Ruci</h5>
-                            <p class="product-description">Motif awan dengan gradasi warna yang indah</p>
-                            <div class="product-actions">
-                                <div>
-                                    <span class="product-price">Rp 250.000</span>
+
+            @if ($products->isEmpty())
+                <div class="text-center py-5" data-aos="fade-up">
+                    <i class="fas fa-box-open fa-4x mb-3" style="color: var(--primary-color);"></i>
+                    <h4>Belum ada produk tersedia</h4>
+                    <p style="color: var(--primary-color)">Produk akan segera hadir. Silakan cek kembali nanti.</p>
+                </div>
+            @else
+                <div class="row">
+                    @foreach ($products as $product)
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="product-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                                <div class="product-img-container">
+                                    <img src="{{ $product->image_url }}" class="product-img"
+                                        alt="{{ $product->name }}">
                                 </div>
-                                <button class="product-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                            <div class="product-stock">
-                                <span class="stock-label">Stok Tersedia:</span>
-                                <span class="stock-quantity">15</span>
-                            </div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="ms-1">(28)</span>
+                                <div class="product-content">
+                                    <h5 class="product-title">{{ $product->name }}</h5>
+                                    <p class="product-description">{{ Str::limit($product->description, 100) }}</p>
+                                    <div class="product-actions">
+                                        <div>
+                                            <span class="product-price">Rp
+                                                {{ number_format($product->price, 0, ',', '.') }}</span>
+                                        </div>
+                                        <button class="product-btn add-to-cart"
+                                            data-product-id="{{ $product->id }}">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="product-stock">
+                                        <span class="stock-label">Stok Tersedia:</span>
+                                        <span class="stock-quantity">{{ $product->stock }}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
 
-                <!-- Produk 2 -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="product-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="product-img-container">
-                            <img src="{{ asset('img/batik-2.jpg') }}" class="product-img" alt="Batik Parang">
-                            <div class="product-badge">Baru</div>
-                        </div>
-                        <div class="product-content">
-                            <h5 class="product-title">Batik Tulis Motif Sekarjagat Pasadeng</h5>
-                            <p class="product-description">Motif tradisional dengan sentuhan modern</p>
-                            <div class="product-actions">
-                                <div>
-                                    <span class="product-price">Rp 320.000</span>
-                                </div>
-                                <button class="product-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                            <div class="product-stock">
-                                <span class="stock-label">Stok Tersedia:</span>
-                                <span class="stock-quantity">8</span>
-                            </div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span class="ms-1">(15)</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-center mt-2" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#" class="btn btn-primary px-5">Lihat Semua Produk</a>
                 </div>
+            @endif
+        </div>
+    </section>
 
-                <!-- Produk 3 -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="product-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="product-img-container">
-                            <img src="{{ asset('img/batik-3.jpg') }}" class="product-img" alt="Batik Kawung">
-                            <div class="product-badge">Diskon 15%</div>
-                        </div>
-                        <div class="product-content">
-                            <h5 class="product-title">Batik Tulis Motif Wanito Kinasih</h5>
-                            <p class="product-description">Motif geometris klasik dengan makna filosofis</p>
-                            <div class="product-actions">
-                                <div>
-                                    <span class="product-price">Rp 280.000</span>
-                                </div>
-                                <button class="product-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                            <div class="product-stock">
-                                <span class="stock-label">Stok Tersedia:</span>
-                                <span class="stock-quantity">20</span>
-                            </div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="ms-1">(42)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Produk 4 -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="product-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="product-img-container">
-                            <img src="{{ asset('img/batik-4.jpg') }}" class="product-img" alt="Batik Sogan">
-                        </div>
-                        <div class="product-content">
-                            <h5 class="product-title">Batik Tulis Motif Teobroma Cacao</h5>
-                            <p class="product-description">Warna cokelat alami dengan motif tradisional</p>
-                            <div class="product-actions">
-                                <div>
-                                    <span class="product-price">Rp 200.000</span>
-                                </div>
-                                <button class="product-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                            <div class="product-stock">
-                                <span class="stock-label">Stok Tersedia:</span>
-                                <span class="stock-quantity">5</span>
-                            </div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="ms-1">(36)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Layanan Edukasi Batik -->
+    <section id="edukasi" class="section education-section py-5">
+        <div class="container">
+            <div class="section-title text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Layanan Edukasi Membatik</h2>
+                <p class="subtitle text-muted">Pelajari seni membatik langsung dari ahlinya</p>
+                <div class="title-divider"></div>
             </div>
 
-            <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
-                <a href="#" class="btn btn-primary px-5">Lihat Semua Produk</a>
+            <div class="row align-items-center">
+                <!-- Deskripsi Layanan -->
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h3 class="card-title text-primary fw-bold mb-3">Pengalaman Membatik yang Menyenangkan</h3>
+                            <p class="card-text mb-4">
+                                Nikmati pengalaman belajar membatik dengan metode yang mudah dipahami untuk pemula.
+                                Anda akan dibimbing langkah demi langkah oleh pembatik profesional kami.
+                            </p>
+
+                            <div class="highlight-box text-white p-3 rounded mb-4">
+                                <h4 class="fw-bold mb-2 text-white">Hanya Rp 25.000,- /peserta</h4>
+                                <p class="mb-0">Anda mendapatkan:</p>
+                                <ul class="mb-0">
+                                    <li>Pelajaran membatik dasar selama 1-2 jam</li>
+                                    <li>Kain batik ukuran 30cm x 30cm yang bisa dibawa pulang</li>
+                                    <li>Peralatan membatik lengkap</li>
+                                    <li>Bimbingan dari pembatik profesional</li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-primary btn-lg px-4 py-2 fw-bold">Booking Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Galeri Kegiatan -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="gallery-item rounded overflow-hidden shadow-sm">
+                                <img src="/img/edukasi1.jpeg" alt="Kegiatan Edukasi Batik 1"
+                                    class="img-fluid w-100 h-auto">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item rounded overflow-hidden shadow-sm">
+                                <img src="/img/edukasi2.jpeg" alt="Kegiatan Edukasi Batik 2"
+                                    class="img-fluid w-100 h-auto">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item rounded overflow-hidden shadow-sm">
+                                <img src="/img/edukasi3.jpeg" alt="Kegiatan Edukasi Batik 3"
+                                    class="img-fluid w-100 h-auto">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item rounded overflow-hidden shadow-sm">
+                                <img src="/img/edukasi4.jpeg" alt="Kegiatan Edukasi Batik 4"
+                                    class="img-fluid w-100 h-auto">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-muted">Beberapa momen peserta yang sedang belajar membatik</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1635,6 +1652,97 @@
     <!-- AOS Animation JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add to cart functionality
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+
+                    @auth('pembeli')
+                        addToCart(productId);
+                    @else
+                        Swal.fire({
+                            title: 'Login Required',
+                            text: 'Anda perlu login untuk menambahkan produk ke keranjang',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#8B4513',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Login Sekarang',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "{{ route('pembeli.login') }}";
+                            }
+                        });
+                    @endauth
+                });
+            });
+
+            // Function to add item to cart
+            function addToCart(productId) {
+                fetch("{{ route('pembeli.keranjang.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            quantity: 1
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateCartCount(data.cart_count);
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonColor: '#8B4513'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonColor: '#8B4513'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan',
+                            icon: 'error',
+                            confirmButtonColor: '#8B4513'
+                        });
+                    });
+            }
+
+            // Function to update cart count in navbar
+            function updateCartCount(count) {
+                const cartBadges = document.querySelectorAll('.cart-badge');
+                cartBadges.forEach(badge => {
+                    badge.textContent = count;
+                });
+            }
+
+            // Initialize cart count on page load
+            @auth('pembeli')
+                fetch("{{ route('pembeli.keranjang.count') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateCartCount(data.count);
+                        }
+                    });
+            @endauth
+        });
+    </script>
     <script>
         // SweetAlert for logout confirmation
         document.addEventListener('DOMContentLoaded', function() {

@@ -41,14 +41,20 @@ return [
             'provider' => 'users',
         ],
 
-        'pembeli' => [
-            'driver' => 'session',
-            'provider' => 'pembelis',
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
         ],
 
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+
+        'pembeli' => [
+            'driver' => 'session',
+            'provider' => 'pembelis',
         ],
     ],
 
@@ -58,14 +64,14 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'pembelis' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Pembeli::class,
-        ],
-
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+
+        'pembelis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pembeli::class,
         ],
     ],
 
