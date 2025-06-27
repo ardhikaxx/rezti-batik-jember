@@ -1,7 +1,7 @@
 <aside class="sidebar px-0">
     <div class="sidebar-header d-flex align-items-center justify-content-between p-4">
         <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center text-decoration-none">
-            <img src="{{ asset('admin/img/logo.png') }}" alt="Logo" height="30" class="me-2">
+            {{-- <img src="{{ asset('admin/img/logo.png') }}" alt="Logo" height="30" class="me-2"> --}}
             <span class="fs-5 fw-bold">Reztis Batik</span>
         </a>
         <button class="sidebar-toggle d-lg-none">

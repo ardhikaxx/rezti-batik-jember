@@ -23,7 +23,10 @@ class PesananController extends Controller
 
     public function create()
     {
-        return view('pembeli.pesanan.create');
+        $shippingAddresses = ShippingAddress::where('pembeli_id', auth('pembeli')->id())
+            ->orderBy('is_default', 'desc')
+            ->get();
+        return view('pembeli.pesanan.create', compact( 'shippingAddresses'));
     }
 
     // public function create()
