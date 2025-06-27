@@ -268,10 +268,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-map-marker-alt me-2"></i>Alamat Pengiriman</span>
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                        data-bs-target="#addressModal">
-                        Ubah Alamat Pengiriman
-                    </button>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -303,16 +300,7 @@
                                         </p>
                                     </div>
                                     <div class="mt-3">
-                                        <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal"
-                                            data-bs-target="#addressModal">Ubah</button>
-                                        <form
-                                            action="{{ route('pembeli.shipping-address.destroy', $shippingAddresses->where('is_default', true)->first()->id) }}"
-                                            method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus alamat ini?')">Hapus</button>
-                                        </form>
+                                        <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
                                     </div>
                                 @else
                                     <div class="alert alert-warning mb-0">
@@ -358,28 +346,18 @@
                                                     {{ $address->postal_code }}</p>
                                             </div>
                                             <div class="mt-3 d-flex justify-content-between">
-                                                <form
-                                                    action="{{ route('pembeli.shipping-address.set-default', $address->id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="btn btn-sm {{ $address->is_default ? 'btn-primary' : 'btn-outline-primary' }}">
-                                                        {{ $address->is_default ? 'Default' : 'Jadikan Utama' }}
-                                                    </button>
-                                                </form>
-                                                <div>
-                                                    <button class="btn btn-sm btn-outline-secondary me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editAddressModal{{ $address->id }}">Ubah</button>
+                                                @if (!$address->is_default)
                                                     <form
-                                                        action="{{ route('pembeli.shipping-address.destroy', $address->id) }}"
-                                                        method="PUT" class="d-inline">
+                                                        action="{{ route('pembeli.shipping-address.set-default', $address->id) }}"
+                                                        method="POST">
                                                         @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus alamat ini?')">Hapus</button>
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-sm w-100 rounded-3"
+                                                            style="background-color: var(--secondary-color); color: var(--dark-color);">
+                                                            <i class="fas fa-check-circle me-1"></i> Jadikan Alamat Pengiriman
+                                                        </button>
                                                     </form>
-                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -394,164 +372,10 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addAddressModal">
-                                <i class="fas fa-plus me-1"></i> Tambah Alamat Baru
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Add Address Modal -->
-            <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addAddressModalLabel">Tambah Alamat Baru</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('pembeli.shipping-address.store') }}" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="recipient_name" class="form-label">Nama Penerima</label>
-                                    <input type="text" class="form-control" id="recipient_name"
-                                        name="recipient_name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone_number" class="form-label">Nomor Telepon</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="address" class="form-label">Alamat Lengkap</label>
-                                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="province" class="form-label">Provinsi</label>
-                                        <input type="text" class="form-control" id="province" name="province">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="city" class="form-label">Kota/Kabupaten</label>
-                                        <input type="text" class="form-control" id="city" name="city">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="district" class="form-label">Kecamatan</label>
-                                        <input type="text" class="form-control" id="district" name="district">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="postal_code" class="form-label">Kode Pos</label>
-                                        <input type="text" class="form-control" id="postal_code"
-                                            name="postal_code">
-                                    </div>
-                                </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="is_default"
-                                        name="is_default">
-                                    <label class="form-check-label" for="is_default">Jadikan alamat utama</label>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Simpan Alamat</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            @foreach ($shippingAddresses as $address)
-                <!-- Edit Address Modal -->
-                <div class="modal fade" id="editAddressModal{{ $address->id }}" tabindex="-1"
-                    aria-labelledby="editAddressModalLabel{{ $address->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editAddressModalLabel{{ $address->id }}">Edit Alamat
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="{{ route('pembeli.shipping-address.update', $address->id) }}"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="recipient_name{{ $address->id }}" class="form-label">Nama
-                                            Penerima</label>
-                                        <input type="text" class="form-control"
-                                            id="recipient_name{{ $address->id }}" name="recipient_name"
-                                            value="{{ $address->recipient_name }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="phone_number{{ $address->id }}" class="form-label">Nomor
-                                            Telepon</label>
-                                        <input type="text" class="form-control"
-                                            id="phone_number{{ $address->id }}" name="phone_number"
-                                            value="{{ $address->phone_number }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="address{{ $address->id }}" class="form-label">Alamat
-                                            Lengkap</label>
-                                        <textarea class="form-control" id="address{{ $address->id }}" name="address" rows="3" required>{{ $address->address }}</textarea>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="province{{ $address->id }}"
-                                                class="form-label">Provinsi</label>
-                                            <input type="text" class="form-control"
-                                                id="province{{ $address->id }}" name="province"
-                                                value="{{ $address->province }}">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="city{{ $address->id }}"
-                                                class="form-label">Kota/Kabupaten</label>
-                                            <input type="text" class="form-control" id="city{{ $address->id }}"
-                                                name="city" value="{{ $address->city }}">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="district{{ $address->id }}"
-                                                class="form-label">Kecamatan</label>
-                                            <input type="text" class="form-control"
-                                                id="district{{ $address->id }}" name="district"
-                                                value="{{ $address->district }}">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="postal_code{{ $address->id }}" class="form-label">Kode
-                                                Pos</label>
-                                            <input type="text" class="form-control"
-                                                id="postal_code{{ $address->id }}" name="postal_code"
-                                                value="{{ $address->postal_code }}">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input"
-                                            id="is_default{{ $address->id }}" name="is_default"
-                                            {{ $address->is_default ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_default{{ $address->id }}">Jadikan
-                                            alamat utama</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
 
             <!-- Produk Dipesan -->
             <div class="card mb-4">
