@@ -14,10 +14,10 @@ return new class extends Migration
             $table->string('recipient_name');
             $table->string('phone_number');
             $table->text('address');
-            $table->string('province');
-            $table->string('city');
-            $table->string('district');
-            $table->string('postal_code');
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
+            $table->string('district')->nullable();
+            $table->string('postal_code')->nullable();
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });

@@ -36,6 +36,14 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
     Route::middleware('auth:pembeli')->group(function () {
         Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->name('index');
 
+        // Profile Routes
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pembeli\ProfileController::class, 'index'])->name('profile.index');
+            Route::get('/edit', [\App\Http\Controllers\Pembeli\ProfileController::class, 'edit'])->name('profile.edit');
+            Route::put('/', [\App\Http\Controllers\Pembeli\ProfileController::class, 'update'])->name('profile.update');
+            Route::put('/password', [\App\Http\Controllers\Pembeli\ProfileController::class, 'updatePassword'])->name('profile.update-password');
+        });
+
         // Keranjang
         Route::get('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'index'])->name('keranjang.index');
         Route::post('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'store'])->name('keranjang.store');
@@ -59,8 +67,16 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         Route::get('/pelayanan/{id}', [\App\Http\Controllers\Pembeli\PelayananController::class, 'show'])->name('pelayanan.show');
         Route::post('/pelayanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PelayananController::class, 'cancel'])->name('pelayanan.cancel');
 
-        // // Alamat Pengiriman
-        // Route::resource('alamat', \App\Http\Controllers\Pembeli\ShippingAddressController::class)->except(['show']);
+        // Alamat Pengiriman
+        Route::prefix('shipping-address')->name('shipping-address.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'store'])->name('store');
+            Route::get('/{shippingAddress}/edit', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'edit'])->name('edit');
+            Route::put('/{shippingAddress}', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'update'])->name('update');
+            Route::delete('/{shippingAddress}', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'destroy'])->name('destroy');
+            Route::put('/{shippingAddress}/set-default', [\App\Http\Controllers\Pembeli\ShippingAddressController::class, 'setDefault'])->name('set-default');
+        });
     });
 });
 

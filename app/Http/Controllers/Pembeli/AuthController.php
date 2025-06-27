@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pembeli;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pembeli;
+use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,13 +44,25 @@ class AuthController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:pembelis',
+            'no_hp' => 'required|string|max:20',
+            'alamat' => 'required|string',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $pembeli = Pembeli::create([
             'nama' => $request->nama,
             'email' => $request->email,
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
             'password' => Hash::make($request->password),
+        ]);
+
+        ShippingAddress::create([
+            'pembeli_id' => $pembeli->id,
+            'recipient_name' => $request->nama,
+            'phone_number' => $request->no_hp,
+            'address' => $request->alamat,
+            'is_default' => true
         ]);
 
         Auth::guard('pembeli')->login($pembeli);

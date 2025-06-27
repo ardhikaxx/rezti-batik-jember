@@ -175,50 +175,6 @@
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="badge bg-warning me-2">Belum Dibayar</span>
-                        <span class="text-muted">#INV-20230615-001</span>
-                    </div>
-                    <small class="text-muted">15 Juni 2023</small>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="d-flex mb-3">
-                                <div class="flex-shrink-0">
-                                    <img src="https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
-                                         class="rounded-3" width="80" height="80" alt="Batik Mega Mendung">
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-1">Batik Tulis Motif Dewa Ruci</h6>
-                                    <p class="text-muted mb-1">Kode: BT001</p>
-                                    <p class="mb-0">2 Item × Rp 250.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="d-flex flex-column h-100">
-                                <div class="mb-2">
-                                    <span class="text-muted">Total Pesanan:</span>
-                                    <h5 class="mb-0 fw-bold">Rp 500.000</h5>
-                                </div>
-                                <div class="mt-auto d-flex gap-2">
-                                    <button class="btn btn-outline-danger btn-sm flex-grow-1">
-                                        Batalkan Pesanan
-                                    </button>
-                                    <button class="btn btn-primary btn-sm flex-grow-1">
-                                        Bayar Sekarang
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order Card 2 -->
-            <div class="card shadow-sm border-0 mb-4">
-                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <div>
                         <span class="badge bg-info me-2">Diproses</span>
                         <span class="text-muted">#INV-20230610-001</span>
                     </div>
@@ -256,7 +212,7 @@
                 </div>
             </div>
 
-            <!-- Order Card 3 -->
+            <!-- Order Card 2 -->
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <div>

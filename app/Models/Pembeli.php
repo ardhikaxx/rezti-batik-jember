@@ -29,4 +29,15 @@ class Pembeli extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Tambahkan relasi shippingAddresses
+    public function shippingAddresses()
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    public function defaultAddress()
+    {
+        return $this->hasOne(ShippingAddress::class)->where('is_default', true);
+    }
 }

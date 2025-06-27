@@ -488,8 +488,7 @@
         }
 
         .gallery-item img {
-            object-fit: fill
-            height: 100%;
+            object-fit: fill height: 100%;
             transition: transform 0.5s ease;
         }
 
@@ -961,6 +960,13 @@
                                         <span>Pesanan Saya</span>
                                         <span class="badge rounded-pill ms-2"
                                             style="background-color: var(--primary-color);">0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-3"
+                                        href="{{ route('pembeli.profile.index') }}">
+                                        <i class="fas fa-user me-2 text-primary"></i>
+                                        <span>Profile Saya</span>
                                     </a>
                                 </li>
                                 <li>
