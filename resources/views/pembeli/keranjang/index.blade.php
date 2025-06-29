@@ -338,10 +338,9 @@
                                     </h4>
                                 </div>
 
-                                <a href="{{ route('pembeli.pesanan.create') }}"
-                                    class="btn btn-primary w-100 btn-checkout py-3 fw-bold">
-                                    <i class="fas fa-credit-card me-2"></i> Checkout
-                                </a>
+                              <a href="{{ route('pembeli.pesanan.create') }}" class="btn btn-primary w-100 btn-checkout py-3 fw-bold" id="checkout-button">
+    <i class="fas fa-credit-card me-2"></i> Checkout
+</a>
                             </div>
                         </div>
                     </div>
@@ -350,6 +349,31 @@
         </div>
 
         <script>
+             document.getElementById('checkout-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        // Mengambil semua checkbox yang tercentang
+        const selectedItems = Array.from(document.querySelectorAll('.item-checkbox:checked')).map(checkbox => {
+            return checkbox.closest('.cart-item').getAttribute('data-cart-id');
+        });
+
+        // Mengecek apakah ada produk yang dipilih
+        if (selectedItems.length === 0) {
+            Swal.fire({
+                title: 'Tidak Ada Item Dipilih',
+                text: 'Silakan pilih item yang ingin dibeli.',
+                icon: 'warning',
+                confirmButtonColor: '#8B4513'
+            });
+            return;
+        }
+
+        // Menambahkan parameter ID produk yang tercentang ke URL
+        const url = '{{ route('pembeli.pesanan.create') }}' + '?selectedItems=' + JSON.stringify(selectedItems);
+        
+        // Redirect ke halaman checkout dengan membawa ID produk yang tercentang
+        window.location.href = url;
+    });
             document.addEventListener('DOMContentLoaded', function() {
                 // Select all functionality
                 const selectAll = document.getElementById('selectAll');

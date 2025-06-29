@@ -268,7 +268,8 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-map-marker-alt me-2"></i>Alamat Pengiriman</span>
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -290,17 +291,20 @@
                                             ({{ $shippingAddresses->where('is_default', true)->first()->phone_number }})
                                         </p>
                                         <p class="mb-1 text-muted small">
-                                            {{ $shippingAddresses->where('is_default', true)->first()->address }}</p>
+                                            {{ $shippingAddresses->where('is_default', true)->first()->address }}
+                                        </p>
                                         <p class="mb-1 text-muted small">
                                             {{ $shippingAddresses->where('is_default', true)->first()->district }},
-                                            {{ $shippingAddresses->where('is_default', true)->first()->city }}</p>
+                                            {{ $shippingAddresses->where('is_default', true)->first()->city }}
+                                        </p>
                                         <p class="mb-0 text-muted small">
                                             {{ $shippingAddresses->where('is_default', true)->first()->province }},
                                             {{ $shippingAddresses->where('is_default', true)->first()->postal_code }}
                                         </p>
                                     </div>
                                     <div class="mt-3">
-                                        <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
+                                        <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal"
+                                            data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
                                     </div>
                                 @else
                                     <div class="alert alert-warning mb-0">
@@ -320,15 +324,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addressModalLabel">Pilih Alamat Pengiriman</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 @foreach ($shippingAddresses as $address)
                                     <div class="col-md-6 mb-3">
-                                        <div
-                                            class="card address-card {{ $address->is_default ? 'active' : '' }} p-3 h-100">
+                                        <div class="card address-card {{ $address->is_default ? 'active' : '' }} p-3 h-100">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                 <h5 class="mb-0 fw-bold">{{ $address->recipient_name }}</h5>
                                                 @if ($address->is_default)
@@ -341,9 +343,11 @@
                                                 </p>
                                                 <p class="mb-1 text-muted small">{{ $address->address }}</p>
                                                 <p class="mb-1 text-muted small">{{ $address->district }},
-                                                    {{ $address->city }}</p>
+                                                    {{ $address->city }}
+                                                </p>
                                                 <p class="mb-0 text-muted small">{{ $address->province }},
-                                                    {{ $address->postal_code }}</p>
+                                                    {{ $address->postal_code }}
+                                                </p>
                                             </div>
                                             <div class="mt-3 d-flex justify-content-between">
                                                 @if (!$address->is_default)
@@ -377,66 +381,44 @@
                 </div>
             </div>
 
-            <!-- Produk Dipesan -->
+            <!-- Produk yang Dipesan -->
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-box-open me-2"></i>Produk Dipesan
                 </div>
                 <div class="card-body p-0">
-                    <div class="cart-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-2 col-4">
-                                <div class="product-img-container">
-                                    <img src="https://img.lazcdn.com/g/p/fc6e8d27bdeebcc1a9b1b79c1e8c9ca0.jpg_720x720q80.jpg"
-                                        class="product-img" alt="Baju Batik">
+                    @foreach ($cartItems as $item)
+                        <div class="cart-item">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 col-4">
+                                    <div class="product-img-container">
+                                        <img src="{{ $item->product->image_url }}" class="product-img"
+                                            alt="{{ $item->product->name }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-8">
-                                <h5 class="product-title mb-1">Baju Batik Tulis Modern</h5>
-                                <p class="product-code mb-2">Kode: BTK-001</p>
-                                <div class="d-md-none">
-                                    <span class="current-price">Rp 250.000</span>
-                                    <span class="text-muted ms-2">x 1</span>
+                                <div class="col-md-4 col-8">
+                                    <h5 class="product-title mb-1">{{ $item->product->name }}</h5>
+                                    <p class="product-code mb-2">Kode: {{ $item->product->code }}</p>
+                                    <div class="d-md-none">
+                                        <span class="current-price">Rp
+                                            {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                        <span class="text-muted ms-2">x {{ $item->quantity }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span class="current-price">Rp 250.000</span>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span>1</span>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span class="current-price">Rp 250.000</span>
+                                <div class="col-md-2 d-none d-md-block text-center">
+                                    <span class="current-price">Rp
+                                        {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="col-md-2 d-none d-md-block text-center">
+                                    <span>{{ $item->quantity }}</span>
+                                </div>
+                                <div class="col-md-2 d-none d-md-block text-center">
+                                    <span class="current-price">Rp
+                                        {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="cart-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-2 col-4">
-                                <div class="product-img-container">
-                                    <img src="https://img.lazcdn.com/g/p/22a9a15e8ab55c56561629228f7f04c0.jpg_720x720q80.jpg"
-                                        class="product-img" alt="Kain Batik">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-8">
-                                <h5 class="product-title mb-1">Kain Batik Cap Premium</h5>
-                                <p class="product-code mb-2">Kode: BTK-002</p>
-                                <div class="d-md-none">
-                                    <span class="current-price">Rp 180.000</span>
-                                    <span class="text-muted ms-2">x 2</span>
-                                </div>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span class="current-price">Rp 180.000</span>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span>2</span>
-                            </div>
-                            <div class="col-md-2 d-none d-md-block text-center">
-                                <span class="current-price">Rp 360.000</span>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -490,15 +472,18 @@
                             <hr class="my-4">
 
                             <h5 class="mb-3">Upload Bukti Pembayaran</h5>
-                            <div class="upload-area">
+                            <div class="upload-area" id="uploadArea">
+                                <input type="file" name="payment_proof" id="payment_proof" accept="image/*" hidden
+                                    required>
                                 <div class="upload-icon">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </div>
-                                <h5>Seret dan lepas file disini</h5>
+                                <h5 id="uploadText">Seret dan lepas file disini</h5>
                                 <p class="text-muted mb-3">atau</p>
-                                <button class="btn btn-primary">Pilih File</button>
+                                <button type="button" class="btn btn-primary" id="triggerUpload">Pilih File</button>
                                 <p class="small text-muted mt-2">Format: JPG, PNG (Maks. 5MB)</p>
                             </div>
+
                             <div class="alert alert-info mt-3">
                                 <i class="fas fa-info-circle me-2"></i> Setelah mengupload bukti pembayaran, pesanan
                                 Anda akan diverifikasi dalam 1x24 jam.
@@ -508,30 +493,44 @@
                 </div>
 
                 <div class="col-lg-4">
+                    {{-- Ringkasan Pesanan --}}
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-receipt me-2"></i>Ringkasan Pesanan
                         </div>
-                        <div class="card-body">
-                            <div class="summary-item">
-                                <span>Subtotal Produk</span>
-                                <span>Rp 610.000</span>
-                            </div>
-                            <div class="summary-item summary-total">
-                                <span>Total Pembayaran</span>
-                                <span>Rp 610.000</span>
-                            </div>
+                        <form action="{{ route('pembeli.pesanan.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
-                            <button class="btn btn-checkout mt-4">
-                                <i class="fas fa-paper-plane me-2"></i>Buat Pesanan
-                            </button>
+                            <input type="hidden" name="shipping_address_id"
+                                value="{{ $shippingAddresses->where('is_default', true)->first()->id ?? '' }}">
+                            <input type="hidden" name="payment_method" id="payment_method" value="">
 
-                            <div class="alert alert-warning mt-3 small">
-                                <i class="fas fa-exclamation-triangle me-2"></i> Pastikan data pesanan sudah benar
-                                sebelum melakukan pembayaran.
+                            @foreach ($cartItems as $ci)
+                                <input type="hidden" name="cart_ids[]" value="{{ $ci->id }}">
+                            @endforeach
+
+                            <div class="card-body">
+                                <div class="summary-item">
+                                    <span>Subtotal Produk</span>
+                                    <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="summary-item summary-total">
+                                    <span>Total Pembayaran</span>
+                                    <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+                                </div>
+
+                                <button type="submit" class="btn btn-checkout mt-4">
+                                    <i class="fas fa-paper-plane me-2"></i>Buat Pesanan
+                                </button>
+
+                                <div class="alert alert-warning mt-3 small">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    Pastikan data pesanan sudah benar sebelum melakukan pembayaran.
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -558,7 +557,7 @@
     <script>
         // Payment method selection
         document.querySelectorAll('.payment-method').forEach(method => {
-            method.addEventListener('click', function() {
+            method.addEventListener('click', function () {
                 document.querySelectorAll('.payment-method').forEach(m => {
                     m.classList.remove('active');
                     m.querySelector('.fa-check-circle')?.remove();
@@ -569,23 +568,29 @@
                 const checkIcon = document.createElement('i');
                 checkIcon.className = 'fas fa-check-circle text-success ms-2';
                 this.appendChild(checkIcon);
+
+                // Ambil teks dari elemen <h6> di dalam payment-method
+                const selectedMethod = this.querySelector('h6')?.innerText || '';
+                document.getElementById('payment_method').value = selectedMethod;
             });
         });
 
+
+
         // Upload area interaction
         const uploadArea = document.querySelector('.upload-area');
-        uploadArea.addEventListener('click', function() {
+        uploadArea.addEventListener('click', function () {
             // Trigger file input click
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'image/*';
             fileInput.click();
 
-            fileInput.addEventListener('change', function() {
+            fileInput.addEventListener('change', function () {
                 if (this.files && this.files[0]) {
                     const reader = new FileReader();
 
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         uploadArea.innerHTML = `
                             <img src="${e.target.result}" class="img-fluid mb-2" style="max-height: 150px;">
                             <p class="mb-1">${fileInput.files[0].name}</p>
