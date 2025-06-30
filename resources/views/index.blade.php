@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -897,6 +898,175 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Modern Bento Grid Styles */
+        .modern-bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 240px;
+            gap: 1.5rem;
+        }
+
+        .bento-card {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .content-card {
+            grid-column: span 5;
+            grid-row: span 2;
+            background: white;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        .image-card {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .image-card:nth-child(3) {
+            grid-column: span 4;
+        }
+
+        .image-card:nth-child(5) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .stats-card {
+            grid-column: span 2;
+            grid-row: span 1;
+            box-shadow: 0 8px 24px rgba(78, 84, 200, 0.15);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .image-card:hover .image-caption {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Custom Styles */
+        .bg-soft-gradient {
+            background: linear-gradient(to bottom, #f9f9ff 0%, #ffffff 100%);
+        }
+
+        .bg-primary {
+            background: var(--primary-color) !important;
+        }
+
+        .bg-primary-soft {
+            background: rgba(78, 84, 200, 0.1) !important;
+        }
+
+        .bg-primary-light {
+            background: rgba(78, 84, 200, 0.08);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .feature-icon-edukasi {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .price-tag {
+            border-left: 3px solid var(--dark-color);
+        }
+
+        @media (max-width: 1200px) {
+            .modern-bento-grid {
+                grid-auto-rows: 200px;
+            }
+
+            .content-card {
+                grid-column: span 6;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .modern-bento-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .content-card {
+                grid-column: span 6;
+                grid-row: span 1;
+                min-height: 400px;
+            }
+
+            .image-card {
+                grid-column: span 3;
+            }
+
+            .image-card:nth-child(3) {
+                grid-column: span 3;
+            }
+
+            .image-card:nth-child(5) {
+                grid-column: span 2;
+            }
+
+            .stats-card {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modern-bento-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+
+            .bento-card {
+                grid-column: span 1 !important;
+                min-height: 300px;
+            }
+
+            .content-card {
+                min-height: auto;
+            }
+        }
     </style>
 </head>
 
@@ -1037,7 +1207,7 @@
                         <div class="col-lg-3 col-md-6 mb-4">
                             <div class="product-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                                 <div class="product-img-container">
-                                    <img src="{{ $product->image_url }}" class="product-img"
+                                    <img src="{{ asset($product->image) }}" class="product-img"
                                         alt="{{ $product->name }}">
                                 </div>
                                 <div class="product-content">
@@ -1070,73 +1240,96 @@
         </div>
     </section>
 
-    <!-- Layanan Edukasi Batik -->
-    <section id="edukasi" class="section education-section py-5">
+    <!-- Modern Bento Grid for Batik Education -->
+    <section id="edukasi" class="section py-6 bg-soft-gradient">
         <div class="container">
-            <div class="section-title text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">Layanan Edukasi Membatik</h2>
-                <p class="subtitle text-muted">Pelajari seni membatik langsung dari ahlinya</p>
-                <div class="title-divider"></div>
+            <div class="text-center mb-6" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">Edukasi Membatik</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 600px;">Pelajari seni warisan budaya dengan
+                    metode modern dari pembatik profesional</p>
             </div>
 
-            <div class="row align-items-center">
-                <!-- Deskripsi Layanan -->
-                <div class="col-lg-6 mb-4" data-aos="fade-right">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title text-primary fw-bold mb-3">Pengalaman Membatik yang Menyenangkan</h3>
-                            <p class="card-text mb-4">
-                                Nikmati pengalaman belajar membatik dengan metode yang mudah dipahami untuk pemula.
-                                Anda akan dibimbing langkah demi langkah oleh pembatik profesional kami.
-                            </p>
+            <div class="modern-bento-grid">
+                <!-- Main Content Card -->
+                <div class="bento-card content-card rounded-4 p-5">
+                    <div class="d-flex flex-column h-100">
+                        <div class="mb-4">
+                            <h3 class="fw-bold mb-3">Pengalaman Membatik Autentik</h3>
+                            <p class="text-muted mb-4">Bimbingan langsung dari maestro batik dengan pendekatan
+                                pembelajaran yang menyenangkan dan interaktif untuk semua usia.</p>
 
-                            <div class="highlight-box text-white p-3 rounded mb-4">
-                                <h4 class="fw-bold mb-2 text-white">Hanya Rp 25.000,- /peserta</h4>
-                                <p class="mb-0">Anda mendapatkan:</p>
-                                <ul class="mb-0">
-                                    <li>Pelajaran membatik dasar selama 1-2 jam</li>
-                                    <li>Kain batik ukuran 30cm x 30cm yang bisa dibawa pulang</li>
-                                    <li>Peralatan membatik lengkap</li>
-                                    <li>Bimbingan dari pembatik profesional</li>
-                                </ul>
+                            <div class="feature-list mb-4">
+                                <div class="feature-item">
+                                    <div class="feature-icon-edukasi">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <span>1-2 jam sesi intensif</span>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon-edukasi">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <span>Semua peralatan disediakan</span>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon-edukasi">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span>Instruktur bersertifikat</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <a href="#" class="btn btn-primary btn-lg px-4 py-2 fw-bold">Booking Sekarang</a>
+                        <div class="mt-auto">
+                            <div class="price-tag bg-white rounded-3 p-3 mb-4 shadow-sm">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="text-muted small">Mulai dari</span>
+                                        <h4 class="fw-bold mb-0">Rp 25.000</h4>
+                                    </div>
+                                    <a href="#" class="btn btn-primary px-4">
+                                        Daftar Sekarang <i class="fas fa-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Galeri Kegiatan -->
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="gallery-item rounded overflow-hidden shadow-sm">
-                                <img src="/img/edukasi1.jpeg" alt="Kegiatan Edukasi Batik 1"
-                                    class="img-fluid w-100 h-auto">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="gallery-item rounded overflow-hidden shadow-sm">
-                                <img src="/img/edukasi2.jpeg" alt="Kegiatan Edukasi Batik 2"
-                                    class="img-fluid w-100 h-auto">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="gallery-item rounded overflow-hidden shadow-sm">
-                                <img src="/img/edukasi3.jpeg" alt="Kegiatan Edukasi Batik 3"
-                                    class="img-fluid w-100 h-auto">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="gallery-item rounded overflow-hidden shadow-sm">
-                                <img src="/img/edukasi4.jpeg" alt="Kegiatan Edukasi Batik 4"
-                                    class="img-fluid w-100 h-auto">
-                            </div>
-                        </div>
+                <!-- Image Cards -->
+                <div class="bento-card image-card rounded-4 overflow-hidden">
+                    <img src="{{ asset('img/edukasi1.jpeg') }}" alt="Workshop membatik" class="img-fluid">
+                    <div class="image-caption">
+                        <p>Sesi praktik menggunakan canting</p>
                     </div>
+                </div>
 
-                    <div class="text-center mt-3">
-                        <p class="text-muted">Beberapa momen peserta yang sedang belajar membatik</p>
+                <div class="bento-card image-card rounded-4 overflow-hidden">
+                    <img src="{{ asset('img/edukasi2.jpeg') }}" alt="Hasil karya" class="img-fluid">
+                    <div class="image-caption">
+                        <p>Karya pertama peserta</p>
+                    </div>
+                </div>
+
+                <div class="bento-card image-card rounded-4 overflow-hidden">
+                    <img src="{{ asset('img/edukasi3.jpeg') }}" alt="Sesi kelompok" class="img-fluid">
+                    <div class="image-caption">
+                        <p>Belajar bersama teman</p>
+                    </div>
+                </div>
+
+                <div class="bento-card image-card rounded-4 overflow-hidden">
+                    <img src="{{ asset('img/edukasi4.jpeg') }}" alt="Proses pewarnaan" class="img-fluid">
+                    <div class="image-caption">
+                        <p>Teknik pewarnaan tradisional</p>
+                    </div>
+                </div>
+
+                <div class="bento-card stats-card rounded-4 p-4 bg-primary text-white">
+                    <div class="d-flex flex-column h-100 justify-content-center">
+                        <i class="bi bi-people fs-1 mb-3"></i>
+                        <h3 class="fw-bold mb-2 text-white">500+ Peserta</h3>
+                        <p class="small opacity-75 mb-0">Telah mengikuti workshop kami</p>
                     </div>
                 </div>
             </div>

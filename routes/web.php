@@ -55,9 +55,7 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         // Pesanan
         Route::get('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('pesanan.index');
         Route::get('/pesanan/create', [\App\Http\Controllers\Pembeli\PesananController::class, 'create'])->name('pesanan.create');
-
-        Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])
-      ->name('pembeli.pesanan.store');
+        Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
         Route::get('/pesanan/{id}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
         Route::post('/pesanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PesananController::class, 'cancel'])->name('pesanan.cancel');
         Route::post('/pesanan/{id}/complete', [\App\Http\Controllers\Pembeli\PesananController::class, 'complete'])->name('pesanan.complete');

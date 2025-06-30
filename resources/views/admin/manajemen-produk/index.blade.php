@@ -38,18 +38,18 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $product['image']) }}" alt="{{ $product['name'] }}"
-                                        width="50" class="rounded">
+                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                        width="65" height="65" class="rounded" style="object-fit: cover;">
                                 </td>
                                 <td>
-                                    <h6 class="mb-0">{{ $product['name'] }}</h6>
+                                    <h6 class="mb-0">{{ $product->name }}</h6>
                                 </td>
                                 <td>
-                                    <span class="fw-bold">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                                    <span class="fw-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                                 </td>
-                                <td>{{ $product['stock'] }}</td>
+                                <td>{{ $product->stock }}</td>
                                 <td>
-                                    @if ($product['status'] == 'active')
+                                    @if ($product->status == 'active')
                                         <span class="badge bg-success">Aktif</span>
                                     @else
                                         <span class="badge bg-secondary">Nonaktif</span>
@@ -91,7 +91,7 @@
 
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
-                        text: "Data admin akan dihapus secara permanen!",
+                        text: "Data produk akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',

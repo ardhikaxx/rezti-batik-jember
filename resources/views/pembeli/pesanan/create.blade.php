@@ -392,7 +392,7 @@
                             <div class="row align-items-center">
                                 <div class="col-md-2 col-4">
                                     <div class="product-img-container">
-                                        <img src="{{ $item->product->image_url }}" class="product-img"
+                                        <img src="{{ asset( $item->product->image) }}" class="product-img"
                                             alt="{{ $item->product->name }}">
                                     </div>
                                 </div>

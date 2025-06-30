@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -31,7 +31,17 @@ class ProductController extends Controller
             'status' => 'required|in:active,inactive'
         ]);
 
-        $imagePath = $request->file('image')->store('products', 'public');
+        // Buat direktori jika belum ada
+        $uploadPath = public_path('product');
+        if (!File::exists($uploadPath)) {
+            File::makeDirectory($uploadPath, 0777, true, true);
+        }
+
+        // Handle upload gambar
+        $image = $request->file('image');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $image->move($uploadPath, $imageName);
+        $imagePath = 'product/' . $imageName;
 
         Product::create([
             'name' => $request->name,
@@ -74,12 +84,18 @@ class ProductController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama
-            Storage::disk('public')->delete($product->image);
+            // Hapus gambar lama jika ada
+            $oldImagePath = public_path($product->image);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
             
             // Upload gambar baru
-            $imagePath = $request->file('image')->store('products', 'public');
-            $data['image'] = $imagePath;
+            $uploadPath = public_path('product');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move($uploadPath, $imageName);
+            $data['image'] = 'product/' . $imageName;
         }
 
         $product->update($data);
@@ -92,8 +108,11 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         
-        // Hapus gambar dari storage
-        Storage::disk('public')->delete($product->image);
+        // Hapus gambar dari folder public/product
+        $imagePath = public_path($product->image);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
         
         $product->delete();
 
