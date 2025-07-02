@@ -30,13 +30,11 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $request->validate([
-            'status' => 'required|in:pending,processing,shipped,completed,cancelled',
-            'tracking_number' => 'nullable|string|max:255'
+            'status' => 'required|in:pending,shipped,completed,cancelled',
         ]);
 
         $order->update([
             'status' => $request->status,
-            'tracking_number' => $request->tracking_number
         ]);
 
         return back()->with('success', 'Status pesanan berhasil diperbarui');

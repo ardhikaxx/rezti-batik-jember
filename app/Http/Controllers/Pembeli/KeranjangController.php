@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembeli;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
 
 class KeranjangController extends Controller
@@ -52,7 +53,7 @@ class KeranjangController extends Controller
                     'message' => 'Stok tidak mencukupi untuk jumlah yang diminta'
                 ]);
             }
-            
+
             $cartItem->update([
                 'quantity' => $newQuantity
             ]);
@@ -137,6 +138,84 @@ class KeranjangController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Item terpilih berhasil dihapus'
+        ]);
+    }
+
+    public function checkout(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            // Handle GET request - show the checkout form
+            $cartItems = Cart::with('product')
+                ->where('pembeli_id', auth('pembeli')->id())
+                ->get();
+
+            if ($cartItems->isEmpty()) {
+                return redirect()->route('pembeli.keranjang.index')
+                    ->with('error', 'Keranjang belanja Anda kosong');
+            }
+
+            // Check stock availability
+            foreach ($cartItems as $item) {
+                if ($item->product->stock < $item->quantity) {
+                    return redirect()->route('pembeli.keranjang.index')
+                        ->with('error', 'Stok produk ' . $item->product->name . ' tidak mencukupi');
+                }
+            }
+
+            $shippingAddresses = ShippingAddress::where('pembeli_id', auth('pembeli')->id())->get();
+
+            if ($shippingAddresses->isEmpty()) {
+                return redirect()->route('pembeli.shipping-address.create')
+                    ->with('warning', 'Silakan tambahkan alamat pengiriman terlebih dahulu');
+            }
+
+            $subtotal = $cartItems->sum(function ($item) {
+                return $item->product->price * $item->quantity;
+            });
+
+            $total = $subtotal;
+
+            return view('pembeli.pesanan.create', compact('cartItems', 'shippingAddresses', 'subtotal', 'total'));
+        }
+
+        // Handle POST request - process the checkout
+        $request->validate([
+            'cart_ids' => 'required|array',
+            'cart_ids.*' => 'exists:carts,id,pembeli_id,' . auth('pembeli')->id()
+        ]);
+
+        $cartItems = Cart::with('product')
+            ->whereIn('id', $request->cart_ids)
+            ->where('pembeli_id', auth('pembeli')->id())
+            ->get();
+
+        // Check stock availability
+        foreach ($cartItems as $item) {
+            if ($item->product->stock < $item->quantity) {
+                return redirect()->back()
+                    ->with('error', 'Stok produk ' . $item->product->name . ' tidak mencukupi');
+            }
+        }
+
+        $shippingAddresses = ShippingAddress::where('pembeli_id', auth('pembeli')->id())->get();
+
+        if ($shippingAddresses->isEmpty()) {
+            return redirect()->route('pembeli.shipping-address.create')
+                ->with('warning', 'Silakan tambahkan alamat pengiriman terlebih dahulu');
+        }
+
+        $subtotal = $cartItems->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        $total = $subtotal;
+
+        return view('pembeli.pesanan.create', [
+            'cartItems' => $cartItems,
+            'shippingAddresses' => $shippingAddresses,
+            'subtotal' => $subtotal,
+            'total' => $total,
+            'selectedCartIds' => $request->cart_ids
         ]);
     }
 }

@@ -51,14 +51,13 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         Route::delete('/keranjang/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroy'])->name('keranjang.destroy');
         Route::get('/keranjang/count', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'count'])->name('keranjang.count');
         Route::post('/keranjang/destroy-multiple', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroyMultiple'])->name('keranjang.destroy-multiple');
+        Route::match(['get', 'post'], '/keranjang/checkout', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'checkout'])->name('keranjang.checkout');
 
         // Pesanan
         Route::get('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('pesanan.index');
-        Route::get('/pesanan/create', [\App\Http\Controllers\Pembeli\PesananController::class, 'create'])->name('pesanan.create');
+        Route::get('/pesanan/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
+        Route::post('/pesanan/{id}/update-status', [OrderController::class, 'updateStatus'])->name('pesanan.update-status');
         Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
-        Route::get('/pesanan/{id}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
-        Route::post('/pesanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PesananController::class, 'cancel'])->name('pesanan.cancel');
-        Route::post('/pesanan/{id}/complete', [\App\Http\Controllers\Pembeli\PesananController::class, 'complete'])->name('pesanan.complete');
 
         // Pelayanan Edukasi
         Route::get('/pelayanan', [\App\Http\Controllers\Pembeli\PelayananController::class, 'index'])->name('pelayanan.index');

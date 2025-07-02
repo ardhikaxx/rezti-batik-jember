@@ -23,8 +23,11 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         .text-header {
@@ -264,6 +267,16 @@
                 </div>
             </div>
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <!-- Alamat Pengiriman -->
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -275,43 +288,31 @@
                     <div class="row">
                         <!-- Alamat Utama -->
                         <div class="col-md-12 mb-3">
-                            <div class="card address-card active p-3 h-100">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="mb-0 fw-bold">
-                                        {{ $shippingAddresses->where('is_default', true)->first()->recipient_name ?? 'Belum ada alamat' }}
-                                    </h5>
-                                    @if ($shippingAddresses->where('is_default', true)->first())
+                            @if ($defaultAddress = $shippingAddresses->where('is_default', true)->first())
+                                <div class="card address-card active p-3 h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 class="mb-0 fw-bold">{{ $defaultAddress->recipient_name }}</h5>
                                         <span class="badge bg-primary">Utama</span>
-                                    @endif
-                                </div>
-                                @if ($shippingAddresses->where('is_default', true)->first())
+                                    </div>
                                     <div class="address-details">
                                         <p class="mb-1">
-                                            <strong>{{ $shippingAddresses->where('is_default', true)->first()->recipient_name }}</strong>
-                                            ({{ $shippingAddresses->where('is_default', true)->first()->phone_number }})
+                                            <strong>{{ $defaultAddress->recipient_name }}</strong>
+                                            ({{ $defaultAddress->phone_number }})
                                         </p>
+                                        <p class="mb-1 text-muted small">{{ $defaultAddress->address }}</p>
                                         <p class="mb-1 text-muted small">
-                                            {{ $shippingAddresses->where('is_default', true)->first()->address }}
-                                        </p>
-                                        <p class="mb-1 text-muted small">
-                                            {{ $shippingAddresses->where('is_default', true)->first()->district }},
-                                            {{ $shippingAddresses->where('is_default', true)->first()->city }}
+                                            {{ $defaultAddress->district }}, {{ $defaultAddress->city }}
                                         </p>
                                         <p class="mb-0 text-muted small">
-                                            {{ $shippingAddresses->where('is_default', true)->first()->province }},
-                                            {{ $shippingAddresses->where('is_default', true)->first()->postal_code }}
+                                            {{ $defaultAddress->province }}, {{ $defaultAddress->postal_code }}
                                         </p>
                                     </div>
-                                    <div class="mt-3">
-                                        <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal"
-                                            data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
-                                    </div>
-                                @else
-                                    <div class="alert alert-warning mb-0">
-                                        Anda belum memiliki alamat pengiriman. Silakan tambahkan alamat terlebih dahulu.
-                                    </div>
-                                @endif
-                            </div>
+                                </div>
+                            @else
+                                <div class="alert alert-warning mb-0">
+                                    Anda belum memiliki alamat pengiriman. Silakan tambahkan alamat terlebih dahulu.
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -375,6 +376,8 @@
                             @endif
                         </div>
                         <div class="modal-footer">
+                            <a href="{{ route('pembeli.shipping-address.create') }}"
+                        class="btn btn-primary">Tambah Alamat</a>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
@@ -392,7 +395,7 @@
                             <div class="row align-items-center">
                                 <div class="col-md-2 col-4">
                                     <div class="product-img-container">
-                                        <img src="{{ asset( $item->product->image) }}" class="product-img"
+                                        <img src="{{ asset($item->product->image) }}" class="product-img"
                                             alt="{{ $item->product->name }}">
                                     </div>
                                 </div>
@@ -432,7 +435,7 @@
                         <div class="card-body">
                             <h5 class="mb-3">Pilih Metode Pembayaran</h5>
 
-                            <div class="payment-method active">
+                            <div class="payment-method active" data-method="Transfer Bank BRI">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/252px-BANK_BRI_logo.svg.png"
                                     class="payment-icon" alt="BRI">
                                 <div class="flex-grow-1">
@@ -442,7 +445,7 @@
                                 <i class="fas fa-check-circle text-success ms-2"></i>
                             </div>
 
-                            <div class="payment-method">
+                            <div class="payment-method" data-method="Transfer Bank BCA">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png"
                                     class="payment-icon" alt="BCA">
                                 <div class="flex-grow-1">
@@ -451,7 +454,7 @@
                                 </div>
                             </div>
 
-                            <div class="payment-method">
+                            <div class="payment-method" data-method="Transfer Bank Mandiri">
                                 <img src="https://upload.wikimedia.org/wikipedia/id/thumb/f/fa/Bank_Mandiri_logo.svg/2880px-Bank_Mandiri_logo.svg.png"
                                     class="payment-icon" alt="Mandiri">
                                 <div class="flex-grow-1">
@@ -460,7 +463,7 @@
                                 </div>
                             </div>
 
-                            <div class="payment-method">
+                            <div class="payment-method" data-method="DANA">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
                                     class="payment-icon" alt="DANA">
                                 <div class="flex-grow-1">
@@ -473,8 +476,8 @@
 
                             <h5 class="mb-3">Upload Bukti Pembayaran</h5>
                             <div class="upload-area" id="uploadArea">
-                                <input type="file" name="payment_proof" id="payment_proof" accept="image/*" hidden
-                                    required>
+                                <input type="file" name="payment_proof" id="payment_proof" accept="image/*"
+                                    hidden required>
                                 <div class="upload-icon">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </div>
@@ -493,21 +496,25 @@
                 </div>
 
                 <div class="col-lg-4">
-                    {{-- Ringkasan Pesanan --}}
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-receipt me-2"></i>Ringkasan Pesanan
                         </div>
-                        <form action="{{ route('pembeli.pesanan.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('pembeli.pesanan.store') }}" method="POST"
+                            enctype="multipart/form-data" id="orderForm">
                             @csrf
 
                             <input type="hidden" name="shipping_address_id"
-                                value="{{ $shippingAddresses->where('is_default', true)->first()->id ?? '' }}">
-                            <input type="hidden" name="payment_method" id="payment_method" value="">
+                                value="{{ $defaultAddress->id ?? '' }}">
+                            <input type="hidden" name="payment_method" id="payment_method"
+                                value="Transfer Bank BRI">
 
                             @foreach ($cartItems as $ci)
                                 <input type="hidden" name="cart_ids[]" value="{{ $ci->id }}">
                             @endforeach
+
+                            <input type="file" name="payment_proof" id="payment_proof_input" accept="image/*"
+                                hidden required>
 
                             <div class="card-body">
                                 <div class="summary-item">
@@ -530,7 +537,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -557,7 +563,7 @@
     <script>
         // Payment method selection
         document.querySelectorAll('.payment-method').forEach(method => {
-            method.addEventListener('click', function () {
+            method.addEventListener('click', function() {
                 document.querySelectorAll('.payment-method').forEach(m => {
                     m.classList.remove('active');
                     m.querySelector('.fa-check-circle')?.remove();
@@ -569,40 +575,136 @@
                 checkIcon.className = 'fas fa-check-circle text-success ms-2';
                 this.appendChild(checkIcon);
 
-                // Ambil teks dari elemen <h6> di dalam payment-method
-                const selectedMethod = this.querySelector('h6')?.innerText || '';
-                document.getElementById('payment_method').value = selectedMethod;
+                // Set payment method value
+                document.getElementById('payment_method').value = this.getAttribute('data-method');
             });
         });
-
-
 
         // Upload area interaction
-        const uploadArea = document.querySelector('.upload-area');
-        uploadArea.addEventListener('click', function () {
-            // Trigger file input click
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.click();
+        const uploadArea = document.getElementById('uploadArea');
+        const paymentProofInput = document.getElementById('payment_proof_input');
+        const uploadText = document.getElementById('uploadText');
+        const triggerUpload = document.getElementById('triggerUpload');
 
-            fileInput.addEventListener('change', function () {
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        uploadArea.innerHTML = `
-                            <img src="${e.target.result}" class="img-fluid mb-2" style="max-height: 150px;">
-                            <p class="mb-1">${fileInput.files[0].name}</p>
-                            <p class="small text-muted">${(fileInput.files[0].size / 1024 / 1024).toFixed(2)} MB</p>
-                            <button class="btn btn-sm btn-outline-danger mt-2">Unggah Ulang</button>
-                        `;
-                    }
-
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
+        triggerUpload.addEventListener('click', function(e) {
+            e.stopPropagation();
+            paymentProofInput.click();
         });
+
+        paymentProofInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                // Validasi ukuran file
+                if (this.files[0].size > 5 * 1024 * 1024) {
+                    Swal.fire({
+                        title: 'File terlalu besar',
+                        text: 'Ukuran file maksimal 5MB',
+                        icon: 'error',
+                        confirmButtonColor: '#8B4513'
+                    });
+                    return;
+                }
+
+                // Validasi tipe file
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!validTypes.includes(this.files[0].type)) {
+                    Swal.fire({
+                        title: 'Format tidak valid',
+                        text: 'Hanya menerima file JPG, JPEG, atau PNG',
+                        icon: 'error',
+                        confirmButtonColor: '#8B4513'
+                    });
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadArea.innerHTML = `
+                    <img src="${e.target.result}" class="img-fluid mb-2" style="max-height: 150px;">
+                    <p class="mb-1">${paymentProofInput.files[0].name}</p>
+                    <p class="small text-muted">${(paymentProofInput.files[0].size / 1024 / 1024).toFixed(2)} MB</p>
+                    <button type="button" class="btn btn-sm btn-outline-danger mt-2" id="reuploadBtn">Unggah Ulang</button>
+                `;
+
+                    // Handle reupload button
+                    document.getElementById('reuploadBtn').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        paymentProofInput.value = '';
+                        resetUploadArea();
+                    });
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#8B4513';
+            this.style.backgroundColor = 'rgba(210, 180, 140, 0.1)';
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+            this.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+            this.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+
+            if (e.dataTransfer.files.length) {
+                paymentProofInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                paymentProofInput.dispatchEvent(event);
+            }
+        });
+
+        // Form validation before submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            const shippingAddressId = document.querySelector('input[name="shipping_address_id"]').value;
+            const paymentProof = document.getElementById('payment_proof_input').files;
+
+            if (!shippingAddressId) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Alamat Pengiriman Diperlukan',
+                    text: 'Silakan pilih alamat pengiriman terlebih dahulu',
+                    icon: 'warning',
+                    confirmButtonColor: '#8B4513'
+                });
+                return;
+            }
+
+            if (!paymentProof || paymentProof.length === 0) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Bukti Pembayaran Diperlukan',
+                    text: 'Silakan upload bukti pembayaran terlebih dahulu',
+                    icon: 'warning',
+                    confirmButtonColor: '#8B4513'
+                });
+            }
+        });
+
+        function resetUploadArea() {
+            uploadArea.innerHTML = `
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h5 id="uploadText">Seret dan lepas file disini</h5>
+            <p class="text-muted mb-3">atau</p>
+            <button type="button" class="btn btn-primary" id="triggerUpload">Pilih File</button>
+            <p class="small text-muted mt-2">Format: JPG, PNG (Maks. 5MB)</p>
+        `;
+
+            // Re-attach event listeners
+            document.getElementById('triggerUpload').addEventListener('click', function(e) {
+                e.stopPropagation();
+                paymentProofInput.click();
+            });
+        }
     </script>
     @stack('scripts')
 </body>

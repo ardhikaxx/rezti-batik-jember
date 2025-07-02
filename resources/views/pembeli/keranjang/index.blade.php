@@ -23,7 +23,23 @@
             --dark-color: #3E2723;
         }
 
+        @font-face {
+            font-family: 'Sriwedari';
+            src: url('font/Sriwedari.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         .text-header {
+            font-family: 'Sriwedari', sans-serif;
             color: var(--primary-dark);
         }
 
@@ -211,10 +227,10 @@
                     @if ($cartItems->isEmpty())
                         <div class="card shadow-sm border-0">
                             <div class="card-body text-center py-5">
-                                <i class="fas fa-shopping-cart fa-4x mb-3" style="color: var(--primary-color);"></i>
-                                <h4>Keranjang Anda Kosong</h4>
-                                <p style="color: var(--primary-color)">Mulai belanja sekarang!</p>
-                                <a href="{{ route('index') }}" class="btn btn-primary mt-3">
+                                <i class="fas fa-shopping-cart fa-4x mb-3" style="color: var(--primary-dark);"></i>
+                                <h2 class="fw-bold" style="color: var(--primary-dark)">Keranjang Anda Kosong</h2>
+                                <p class="h4 fw-medium" style="color: var(--primary-color)">Mulai belanja sekarang!</p>
+                                <a href="{{ route('index') }}" class="btn mt-3" style="background-color: var(--primary-dark); color: var(--light-color);">
                                     <i class="fas fa-store me-2"></i> Belanja Sekarang
                                 </a>
                             </div>
@@ -338,10 +354,14 @@
                                     </h4>
                                 </div>
 
-                                <a href="{{ route('pembeli.pesanan.create') }}"
-                                    class="btn btn-primary w-100 btn-checkout py-3 fw-bold" id="checkout-button">
-                                    <i class="fas fa-credit-card me-2"></i> Checkout
-                                </a>
+                                <form action="{{ route('pembeli.keranjang.checkout') }}" method="POST"
+                                    id="checkout-form">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary w-100 btn-checkout py-3 fw-bold"
+                                        id="checkout-button">
+                                        <i class="fas fa-credit-card me-2"></i> Checkout
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -350,7 +370,7 @@
         </div>
 
         <script>
-            document.getElementById('checkout-button').addEventListener('click', function(event) {
+            document.getElementById('checkout-form').addEventListener('submit', function(event) {
                 event.preventDefault();
 
                 // Mengambil semua checkbox yang tercentang
@@ -369,13 +389,19 @@
                     return;
                 }
 
-                // Menambahkan parameter ID produk yang tercentang ke URL
-                const url = '{{ route('pembeli.pesanan.create') }}' + '?selectedItems=' + JSON.stringify(
-                selectedItems);
+                // Tambahkan input untuk cart_ids
+                selectedItems.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'cart_ids[]';
+                    input.value = id;
+                    this.appendChild(input);
+                });
 
-                // Redirect ke halaman checkout dengan membawa ID produk yang tercentang
-                window.location.href = url;
+                // Submit form
+                this.submit();
             });
+
             document.addEventListener('DOMContentLoaded', function() {
                 // Select all functionality
                 const selectAll = document.getElementById('selectAll');

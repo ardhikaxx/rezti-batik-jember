@@ -46,7 +46,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}" width="50" class="me-3">
+                                        <img src="{{ asset($item->product->image)  }}" alt="{{ $item->product->name }}" width="50" class="me-3">
                                         <div>
                                             <h6 class="mb-0">{{ $item->product->name }}</h6>
                                             <small class="text-muted">{{ $item->product->description }}</small>
@@ -128,15 +128,10 @@
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status">
                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Diproses</option>
                             <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Dikirim</option>
                             <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Selesai</option>
                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                         </select>
-                    </div>
-                    <div class="mb-3" id="trackingNumberField" style="{{ $order->status != 'shipped' ? 'display: none;' : '' }}">
-                        <label for="tracking_number" class="form-label">Nomor Resi</label>
-                        <input type="text" class="form-control" id="tracking_number" name="tracking_number" value="{{ $order->tracking_number }}">
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Update Status</button>
                 </form>

@@ -13,6 +13,14 @@
             --dark-color: #3E2723;
         }
 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         .address-detail {
             transition: all 0.3s ease;
             border-left: 3px solid var(--secondary-color);
@@ -36,7 +44,7 @@
     <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="card border-0 rounded-5 shadow-lg" style="border-color: var(--secondary-color) background-color: var(--light-color); !important;">
+                <div class="card border-0 rounded-3 shadow-sm" style="border-color: var(--secondary-color) background-color: var(--light-color); !important;">
                     <div class="card-header py-3"
                         style="background: linear-gradient(to right, var(--primary-color), var(--primary-light)); border-radius: 0.375rem 0.375rem 0 0 !important;">
                         <div class="d-flex justify-content-between align-items-center">

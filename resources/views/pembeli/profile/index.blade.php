@@ -14,8 +14,15 @@
             --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
         }
 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         .profile-container {
-            background-color: #f8f9fa;
             min-height: 100vh;
         }
 
@@ -109,7 +116,7 @@
 
         .member-badge {
             background-color: rgba(210, 180, 140, 0.3);
-            color: var(--primary-dark);
+            color: var(--light-color);
             padding: 0.25rem 0.75rem;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -129,8 +136,7 @@
                 <div class="col-lg-8">
                     <div class="profile-card mb-5">
                         <div class="profile-header text-center">
-                            <h2 class="fw-bold mb-3"><i class="fas fa-user-circle me-2"></i>Profil Saya</h2>
-                            <h3 class="fw-bold mb-1">{{ $pembeli->nama }}</h3>
+                            <h2 class="fw-bold mb-1">{{ $pembeli->nama }}</h2>
                             <span class="member-badge">
                                 <i class="fas fa-calendar-alt me-1"></i> 
                                 Member sejak {{ $pembeli->created_at->format('d M Y') }}

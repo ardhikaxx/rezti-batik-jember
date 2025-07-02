@@ -14,21 +14,14 @@ class Order extends Model
         'pembeli_id',
         'shipping_address_id',
         'subtotal',
-        'shipping_cost',
         'total',
         'status',
         'payment_method',
         'payment_proof',
-        'payment_status',
-        'shipping_courier',
-        'shipping_service',
-        'tracking_number',
-        'notes'
     ];
 
     protected $casts = [
         'subtotal' => 'decimal:2',
-        'shipping_cost' => 'decimal:2',
         'total' => 'decimal:2',
     ];
 
@@ -49,15 +42,14 @@ class Order extends Model
 
     public function getPaymentProofUrlAttribute()
     {
-        return $this->payment_proof ? asset('storage/'.$this->payment_proof) : null;
+        return $this->payment_proof ? asset($this->payment_proof) : null;
     }
 
     public function getStatusLabelAttribute()
     {
         $statuses = [
             'pending' => 'Menunggu Pembayaran',
-            'processing' => 'Diproses',
-            'shipped' => 'Dikirim',
+            'shipped' => 'Proses Dikirim',
             'completed' => 'Selesai',
             'cancelled' => 'Dibatalkan'
         ];
