@@ -73,7 +73,6 @@
                         <select class="form-select" id="status" name="status">
                             <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
                             <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Terkonfirmasi</option>
-                            <option value="completed" {{ $booking->status == 'completed' ? 'selected' : '' }}>Selesai</option>
                             <option value="cancelled" {{ $booking->status == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                         </select>
                     </div>

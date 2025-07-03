@@ -34,4 +34,9 @@ class OrderItem extends Model
     {
         return $this->price * $this->quantity;
     }
+
+    public function rating()
+    {
+        return $this->hasOne(Rating::class, 'order_item_id');
+    }
 }

@@ -39,8 +39,6 @@
                         <td>
                             @if($order->status == 'pending')
                                 <span class="badge bg-warning">Pending</span>
-                            @elseif($order->status == 'processing')
-                                <span class="badge bg-info">Diproses</span>
                             @elseif($order->status == 'shipped')
                                 <span class="badge bg-primary">Dikirim</span>
                             @elseif($order->status == 'completed')

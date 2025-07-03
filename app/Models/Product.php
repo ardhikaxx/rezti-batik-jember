@@ -35,11 +35,26 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        return asset('storage/'.$this->image);
+        return asset('storage/' . $this->image);
     }
 
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->ratings()->avg('rating') ?: 0;
+    }
+
+    public function getRatingCountAttribute()
+    {
+        return $this->ratings()->count();
     }
 }

@@ -560,54 +560,26 @@
             margin-bottom: 0;
         }
 
+        /* Testimoni Styles */
         .testimonial-section {
-            background-color: var(--light-color);
-            position: relative;
-        }
-
-        .testimonial-section:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M1200,0V120H0V0Z" fill="white"></path></svg>');
-            background-size: cover;
-            z-index: 1;
+            background-color: #f9f5f0;
+            padding: 80px 0;
         }
 
         .testimonial-card {
             background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin: 15px;
-            transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-            position: relative;
-            z-index: 2;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: transform 0.3s ease;
         }
 
         .testimonial-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .testimonial-card:before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 5rem;
-            font-family: 'Playfair Display', serif;
-            color: rgba(139, 69, 19, 0.1);
-            line-height: 1;
-            z-index: 0;
+            transform: translateY(-5px);
         }
 
         .testimonial-content {
-            position: relative;
-            z-index: 1;
+            padding: 30px;
         }
 
         .testimonial-img {
@@ -615,37 +587,46 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--secondary-color);
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid #8B4513;
+        }
+
+        .testimonial-product-img img {
+            border: 1px solid #e0e0e0;
+            padding: 5px;
         }
 
         .testimonial-text {
             font-style: italic;
-            color: var(--text-color);
+            color: #555;
             margin-bottom: 20px;
             position: relative;
         }
 
-        .testimonial-text:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--primary-color);
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            font-size: 24px;
+            color: #8B4513;
+            opacity: 0.3;
         }
 
         .testimonial-name {
-            font-family: 'Poppins', sans-serif;
+            color: #8B4513;
             font-weight: 600;
             margin-bottom: 5px;
         }
 
+        .testimonial-product {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
         .testimonial-role {
-            color: var(--text-light);
-            font-size: 0.9rem;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 10px;
         }
 
         .contact-section {
@@ -1331,8 +1312,10 @@
 
                 <div class="bento-card stats-card rounded-4 p-4 bg-primary text-white">
                     <div class="d-flex flex-column h-100 justify-content-center">
-                        <i class="bi bi-people fs-1 mb-3"></i>
-                        <h3 class="fw-bold mb-2 text-white">500+ Peserta</h3>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-user fs-1 me-2"></i>
+                            <h3 class="fw-bold mb-2 text-white">500+ Peserta</h3>
+                        </div>
                         <p class="small opacity-75 mb-0">Telah mengikuti workshop kami</p>
                     </div>
                 </div>
@@ -1401,74 +1384,45 @@
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Apa Kata Pelanggan</h2>
-                <p class="subtitle">Testimoni dari pelanggan yang sudah membeli produk kami</p>
+                <p class="subtitle">Testimoni asli dari pelanggan yang sudah membeli produk kami</p>
             </div>
             <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="testimonial-content text-center">
-                            <img src="https://randomuser.me/api/portraits/women/32.jpg" class="testimonial-img"
-                                alt="Testimoni 1">
-                            <div class="testimonial-text">
-                                "Kualitas batiknya sangat bagus, motifnya unik dan tidak mudah luntur. Pengiriman juga
-                                cepat. Sangat recommended!"
-                            </div>
-                            <h4 class="testimonial-name">Sarah Wijaya</h4>
-                            <p class="testimonial-role">Pembeli</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @forelse($ratings as $rating)
+                    <div class="col-lg-4 mb-4">
+                        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                            <div class="testimonial-content text-center">
+                                <div class="testimonial-product-img mb-3">
+                                    <img src="{{ asset($rating->product->image) }}" class="img-fluid rounded"
+                                        alt="{{ $rating->product->name }}" style="max-height: 120px;">
+                                </div>
+                                <div class="testimonial-text">
+                                    "{{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}"
+                                </div>
+                                <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
+                                <p class="testimonial-product">{{ $rating->product->name }}</p>
+                                <div class="mb-2">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $rating->rating)
+                                            <i class="fas fa-star text-warning"></i>
+                                        @else
+                                            <i class="fas fa-star text-secondary"></i>
+                                        @endif
+                                    @endfor
+                                </div>
 
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="testimonial-content text-center">
-                            <img src="https://randomuser.me/api/portraits/men/45.jpg" class="testimonial-img"
-                                alt="Testimoni 2">
-                            <div class="testimonial-text">
-                                "Saya sering membeli batik dari Reztis untuk hadiah bisnis. Klien sangat menyukainya
-                                karena kualitas dan kemasannya yang premium."
-                            </div>
-                            <h4 class="testimonial-name">Budi Santoso</h4>
-                            <p class="testimonial-role">Pengusaha</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                                <small class="text-muted">
+                                    {{ $rating->created_at->format('d M Y') }}
+                                </small>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4 mb-4">
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="testimonial-content text-center">
-                            <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-img"
-                                alt="Testimoni 3">
-                            <div class="testimonial-text">
-                                "Motif-motif dari Reztis Batik sangat inspiratif dan unik. Saya sering menggunakannya
-                                sebagai bahan untuk koleksi fashion saya."
-                            </div>
-                            <h4 class="testimonial-name">Dewi Kartika</h4>
-                            <p class="testimonial-role">Desainer</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
+                @empty
+                    <div class="col-12 text-center py-4">
+                        <div class="alert alert-info">
+                            Belum ada testimoni dari pelanggan
                         </div>
                     </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -1592,7 +1546,7 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Jam Operasional</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">Senin - Sabtu: 08.00–21.00 WIB</p>
+                                <p style="opacity: 0.9; margin-bottom: 0;">Senin - Sabtu: 08.00–15.00 WIB</p>
                             </div>
                         </div>
 
@@ -1878,7 +1832,7 @@
                 });
             @endauth
         });
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             // Add to cart functionality
             document.querySelectorAll('.add-to-cart').forEach(button => {

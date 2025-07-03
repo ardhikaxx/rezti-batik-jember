@@ -40,9 +40,9 @@
                             @if($booking->status == 'pending')
                                 <span class="badge bg-warning">Pending</span>
                             @elseif($booking->status == 'confirmed')
-                                <span class="badge bg-primary">Terkonfirmasi</span>
-                            @elseif($booking->status == 'completed')
-                                <span class="badge bg-success">Selesai</span>
+                                <span class="badge bg-success">Terkonfirmasi</span>
+                            @elseif($booking->status == 'cancelled')
+                                <span class="badge bg-danger">Batal</span>
                             @else
                                 <span class="badge bg-secondary">{{ $booking->status }}</span>
                             @endif

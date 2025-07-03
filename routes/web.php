@@ -58,6 +58,8 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         Route::get('/pesanan/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
         Route::post('/pesanan/{id}/update-status', [OrderController::class, 'updateStatus'])->name('pesanan.update-status');
         Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
+        Route::get('pesanan/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
+        Route::post('pesanan/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');
 
         // Pelayanan Edukasi
         Route::prefix('pelayanan-edukasi')->name('layanan-edukasi.')->group(function () {

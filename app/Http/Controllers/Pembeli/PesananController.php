@@ -15,7 +15,7 @@ class PesananController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['items.product', 'shippingAddress'])
+        $orders = Order::with(['items.rating','items.product', 'shippingAddress'])
             ->where('pembeli_id', auth('pembeli')->id())
             ->latest()
             ->get();

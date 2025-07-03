@@ -236,7 +236,8 @@
                                                             class="btn btn-outline-danger btn-sm w-100 confirm-button"
                                                             data-title="Batalkan Pesanan"
                                                             data-text="Apakah Anda yakin ingin membatalkan pesanan ini?"
-                                                            data-confirm-text="Ya, Batalkan Pesanan" data-cancel-text="Batal">
+                                                            data-confirm-text="Ya, Batalkan Pesanan"
+                                                            data-cancel-text="Batal">
                                                             <i class="fas fa-times-circle me-1"></i> Batalkan Pesanan
                                                         </button>
                                                     </form>
@@ -254,6 +255,17 @@
                                                             <i class="fas fa-check-circle me-1"></i> Terima Pesanan
                                                         </button>
                                                     </form>
+                                                @elseif($order->status == 'completed')
+                                                    @if ($order->items->every(fn($item) => $item->rating))
+                                                        <span class="btn btn-success btn-sm flex-grow-1">
+                                                            <i class="fas fa-check-circle me-1"></i> Rating Diberikan
+                                                        </span>
+                                                    @else
+                                                        <a href="{{ route('pembeli.rating.index', $order->id) }}"
+                                                            class="btn btn-warning btn-sm flex-grow-1 text-white">
+                                                            <i class="fas fa-star me-1"></i> Beri Nilai Pesanan
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -474,11 +486,23 @@
                                                 <h5 class="mb-0 fw-bold">Rp
                                                     {{ number_format($order->total, 0, ',', '.') }}</h5>
                                             </div>
-                                            <div class="mt-auto">
+                                            <div class="mt-auto d-flex gap-2">
                                                 <a href="{{ route('pembeli.pesanan.show', $order->id) }}"
-                                                    class="btn btn-outline-primary btn-sm w-100">
+                                                    class="btn btn-outline-primary btn-sm flex-grow-1">
                                                     <i class="fas fa-eye me-1"></i> Detail Pesanan
                                                 </a>
+                                                @if ($order->status == 'completed')
+                                                    @if ($order->items->every(fn($item) => $item->rating))
+                                                        <span class="btn btn-success btn-sm flex-grow-1">
+                                                            <i class="fas fa-check-circle me-1"></i> Rating Diberikan
+                                                        </span>
+                                                    @else
+                                                        <a href="{{ route('pembeli.rating.index', $order->id) }}"
+                                                            class="btn btn-warning btn-sm flex-grow-1 text-white">
+                                                            <i class="fas fa-star me-1"></i> Beri Nilai Pesanan
+                                                        </a>
+                                                    @endif
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
