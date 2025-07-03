@@ -19,7 +19,6 @@ class EducationService extends Model
         'payment_method',
         'payment_proof',
         'status',
-        'notes'
     ];
 
     protected $casts = [
@@ -35,7 +34,7 @@ class EducationService extends Model
 
     public function getPaymentProofUrlAttribute()
     {
-        return $this->payment_proof ? asset('storage/'.$this->payment_proof) : null;
+        return $this->payment_proof ? asset($this->payment_proof) : null;
     }
 
     public function getStatusLabelAttribute()
@@ -43,7 +42,6 @@ class EducationService extends Model
         $statuses = [
             'pending' => 'Menunggu Konfirmasi',
             'confirmed' => 'Terkonfirmasi',
-            'completed' => 'Selesai',
             'cancelled' => 'Dibatalkan'
         ];
 

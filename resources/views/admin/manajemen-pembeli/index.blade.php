@@ -20,10 +20,11 @@
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>Pelanggan</th>
+                        <th>Nama Pelanggan</th>
                         <th>Email</th>
                         <th>Telepon</th>
                         <th>Total Pesanan</th>
+                        <th>Total Belanja</th>
                         <th>Bergabung</th>
                         <th>Aksi</th>
                     </tr>
@@ -32,26 +33,14 @@
                     @foreach($customers as $customer)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $customer->nama }}</td>
+                        <td>{{ $customer->email }}</td>
+                        <td>{{ $customer->no_hp }}</td>
+                        <td>{{ $customer->orders_count }}</td>
+                        <td>Rp {{ number_format($customer->orders_sum_total ?? 0, 0, ',', '.') }}</td>
+                        <td>{{ $customer->created_at->format('d M Y') }}</td>
                         <td>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/'.$customer['avatar']) }}" alt="{{ $customer['name'] }}" width="40" height="40" class="rounded-circle">
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-0">{{ $customer['name'] }}</h6>
-                                    <small class="text-muted">ID: {{ $customer['id'] }}</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td>{{ $customer['email'] }}</td>
-                        <td>{{ $customer['phone'] ?? '-' }}</td>
-                        <td>
-                            <span class="fw-bold">{{ $customer['total_orders'] }}</span> pesanan<br>
-                            <small class="text-muted">Rp {{ number_format($customer['total_spent'], 0, ',', '.') }}</small>
-                        </td>
-                        <td>{{ $customer['joined_at'] }}</td>
-                        <td>
-                            <a href="{{ route('admin.data-pembeli.show', $customer['id']) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.data-pembeli.show', $customer->id) }}" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-eye me-1"></i> Detail
                             </a>
                         </td>
@@ -60,10 +49,14 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-3">
+            {{ $customers->links() }}
+        </div>
     </div>
 </div>
 
-@push('scripts')
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#customersTable').DataTable({
@@ -76,10 +69,10 @@
                     previous: "<i class='fas fa-chevron-left'></i>",
                     next: "<i class='fas fa-chevron-right'></i>"
                 }
-            }
+            },
+            paging: false,
+            info: false
         });
     });
 </script>
-@endpush
-
 @endsection

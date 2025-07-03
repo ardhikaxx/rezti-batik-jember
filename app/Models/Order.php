@@ -27,7 +27,7 @@ class Order extends Model
 
     public function pembeli()
     {
-        return $this->belongsTo(Pembeli::class);
+        return $this->belongsTo(Pembeli::class, 'pembeli_id');
     }
 
     public function shippingAddress()

@@ -60,11 +60,13 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
 
         // Pelayanan Edukasi
-        Route::get('/pelayanan', [\App\Http\Controllers\Pembeli\PelayananController::class, 'index'])->name('pelayanan.index');
-        Route::get('/pelayanan/create', [\App\Http\Controllers\Pembeli\PelayananController::class, 'create'])->name('pelayanan.create');
-        Route::post('/pelayanan', [\App\Http\Controllers\Pembeli\PelayananController::class, 'store'])->name('pelayanan.store');
-        Route::get('/pelayanan/{id}', [\App\Http\Controllers\Pembeli\PelayananController::class, 'show'])->name('pelayanan.show');
-        Route::post('/pelayanan/{id}/cancel', [\App\Http\Controllers\Pembeli\PelayananController::class, 'cancel'])->name('pelayanan.cancel');
+        Route::prefix('pelayanan-edukasi')->name('layanan-edukasi.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pembeli\PelayananController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\Pembeli\PelayananController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Pembeli\PelayananController::class, 'store'])->name('store');
+            Route::get('/{id}', [\App\Http\Controllers\Pembeli\PelayananController::class, 'show'])->name('show');
+            Route::post('/{id}/cancel', [\App\Http\Controllers\Pembeli\PelayananController::class, 'cancel'])->name('cancel');
+        });
 
         // Alamat Pengiriman
         Route::prefix('shipping-address')->name('shipping-address.')->group(function () {

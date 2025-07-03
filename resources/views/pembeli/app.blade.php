@@ -266,6 +266,13 @@
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <a class="nav-link @if (Request::routeIs('pembeli.layanan-edukasi.*')) active @endif"
+                        href="{{ route('pembeli.layanan-edukasi.index') }}">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Booking Saya</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link @if (Request::routeIs('pembeli.shipping-address.*')) active @endif"
                         href="{{ route('pembeli.shipping-address.index') }}">
                         <i class="fas fa-map-marker-alt"></i>

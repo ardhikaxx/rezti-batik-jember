@@ -209,15 +209,18 @@
         <div class="container py-5">
             <!-- Header with back button and title -->
             <div class="d-flex align-items-center justify-content-between h-auto mb-4">
+                <div class="d-flex align-items-center">
+                    <h1 class="fw-bold text-header mb-0">
+                        <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
+                    </h1>
+                    <span class="badge rounded-pill ms-3 px-3 py-2 fs-6" style="background-color: var(--primary-color)">
+                        {{ $cartItems->sum('quantity') }} Item
+                    </span>
+                </div>
                 <a href="{{ route('index') }}" class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
                     style="background-color: var(--primary-color)">
                     <i class="fas fa-chevron-left me-2"></i> Kembali
                 </a>
-                <h1 class="fw-bold text-header">
-                    <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
-                </h1>
-                <span class="badge rounded-pill ms-3 px-3 py-2 fs-6"
-                    style="background-color: var(--primary-color)">{{ $cartItems->sum('quantity') }} Item</span>
             </div>
 
             <!-- Main Cart Content -->
@@ -230,7 +233,8 @@
                                 <i class="fas fa-shopping-cart fa-4x mb-3" style="color: var(--primary-dark);"></i>
                                 <h2 class="fw-bold" style="color: var(--primary-dark)">Keranjang Anda Kosong</h2>
                                 <p class="h4 fw-medium" style="color: var(--primary-color)">Mulai belanja sekarang!</p>
-                                <a href="{{ route('index') }}" class="btn mt-3" style="background-color: var(--primary-dark); color: var(--light-color);">
+                                <a href="{{ route('index') }}" class="btn mt-3"
+                                    style="background-color: var(--primary-dark); color: var(--light-color);">
                                     <i class="fas fa-store me-2"></i> Belanja Sekarang
                                 </a>
                             </div>

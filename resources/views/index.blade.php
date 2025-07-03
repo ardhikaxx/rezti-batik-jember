@@ -1127,8 +1127,13 @@
                                         href="{{ route('pembeli.pesanan.index') }}">
                                         <i class="fas fa-clipboard-list me-2 text-primary"></i>
                                         <span>Pesanan Saya</span>
-                                        <span class="badge rounded-pill ms-2"
-                                            style="background-color: var(--primary-color);">0</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-3"
+                                        href="{{ route('pembeli.layanan-edukasi.index') }}">
+                                        <i class="fas fa-calendar-check me-2 text-primary"></i>
+                                        <span>Booking Saya</span>
                                     </a>
                                 </li>
                                 <li>
@@ -1241,12 +1246,11 @@
     </section>
 
     <!-- Modern Bento Grid for Batik Education -->
-    <section id="edukasi" class="section py-6 bg-soft-gradient">
+    <section id="edukasi" class="section bg-soft-gradient">
         <div class="container">
-            <div class="text-center mb-6" data-aos="fade-up">
-                <h2 class="display-5 fw-bold mb-3">Edukasi Membatik</h2>
-                <p class="lead text-muted mx-auto" style="max-width: 600px;">Pelajari seni warisan budaya dengan
-                    metode modern dari pembatik profesional</p>
+            <div class="section-title" data-aos="fade-up">
+                <h2>Edukasi Membatik</h2>
+                <p class="subtitle">Pelajari seni warisan budaya dengan metode modern dari pembatik profesional</p>
             </div>
 
             <div class="modern-bento-grid">
@@ -1275,7 +1279,7 @@
                                     <div class="feature-icon-edukasi">
                                         <i class="fas fa-user"></i>
                                     </div>
-                                    <span>Instruktur bersertifikat</span>
+                                    <span>Pengajar yang berkompeten</span>
                                 </div>
                             </div>
                         </div>
@@ -1287,9 +1291,9 @@
                                         <span class="text-muted small">Mulai dari</span>
                                         <h4 class="fw-bold mb-0">Rp 25.000</h4>
                                     </div>
-                                    <a href="#" class="btn btn-primary px-4">
+                                    <button class="btn btn-primary add-service-education px-4">
                                         Daftar Sekarang <i class="fas fa-arrow-right ms-2"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1851,6 +1855,30 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // Handle education service booking
+        document.querySelector('.add-service-education').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            @auth('pembeli')
+                window.location.href = "{{ route('pembeli.layanan-edukasi.create') }}";
+            @else
+                Swal.fire({
+                    title: 'Login Required',
+                    text: 'Anda perlu login untuk melakukan booking layanan edukasi',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#8B4513',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Login Sekarang',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('pembeli.login') }}";
+                    }
+                });
+            @endauth
+        });
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Add to cart functionality
             document.querySelectorAll('.add-to-cart').forEach(button => {

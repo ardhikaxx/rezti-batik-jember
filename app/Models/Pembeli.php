@@ -30,7 +30,11 @@ class Pembeli extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Tambahkan relasi shippingAddresses
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'pembeli_id');
+    }
+
     public function shippingAddresses()
     {
         return $this->hasMany(ShippingAddress::class);

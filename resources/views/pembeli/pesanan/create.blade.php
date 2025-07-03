@@ -169,8 +169,8 @@
         }
 
         .payment-icon {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
             margin-right: 1rem;
         }
@@ -221,6 +221,7 @@
         }
 
         .btn-checkout:hover {
+            color: white;
             background-color: var(--primary-dark);
             transform: translateY(-2px);
         }
@@ -258,13 +259,17 @@
     <!-- Main Content -->
     <main>
         <div class="container py-5">
-            <div class="d-flex align-items-center justify-content-start mb-5">
+            <div class="d-flex align-items-center justify-content-between mb-5">
                 <div>
                     <h1 class="fw-bold mb-1 text-header">
                         <i class="fas fa-shopping-cart me-2"></i>Checkout
                     </h1>
                     <p class="text-muted mb-0">Lengkapi informasi berikut untuk menyelesaikan pesanan Anda</p>
                 </div>
+                <a href="{{ route('pembeli.keranjang.index') }}" class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
+                    style="background-color: var(--primary-color)">
+                    <i class="fas fa-chevron-left me-2"></i> Kembali
+                </a>
             </div>
 
             @if ($errors->any())
@@ -325,13 +330,15 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addressModalLabel">Pilih Alamat Pengiriman</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 @foreach ($shippingAddresses as $address)
                                     <div class="col-md-6 mb-3">
-                                        <div class="card address-card {{ $address->is_default ? 'active' : '' }} p-3 h-100">
+                                        <div
+                                            class="card address-card {{ $address->is_default ? 'active' : '' }} p-3 h-100">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                 <h5 class="mb-0 fw-bold">{{ $address->recipient_name }}</h5>
                                                 @if ($address->is_default)
@@ -359,7 +366,8 @@
                                                         @method('PUT')
                                                         <button type="submit" class="btn btn-sm w-100 rounded-3"
                                                             style="background-color: var(--secondary-color); color: var(--dark-color);">
-                                                            <i class="fas fa-check-circle me-1"></i> Jadikan Alamat Pengiriman
+                                                            <i class="fas fa-check-circle me-1"></i> Jadikan Alamat
+                                                            Pengiriman
                                                         </button>
                                                     </form>
                                                 @endif
@@ -376,8 +384,8 @@
                             @endif
                         </div>
                         <div class="modal-footer">
-                            <a href="{{ route('pembeli.shipping-address.create') }}"
-                        class="btn btn-primary">Tambah Alamat</a>
+                            <a href="{{ route('pembeli.shipping-address.create') }}" class="btn btn-primary">Tambah
+                                Alamat</a>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
@@ -435,22 +443,12 @@
                         <div class="card-body">
                             <h5 class="mb-3">Pilih Metode Pembayaran</h5>
 
-                            <div class="payment-method active" data-method="Transfer Bank BRI">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/252px-BANK_BRI_logo.svg.png"
-                                    class="payment-icon" alt="BRI">
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Transfer Bank BRI</h6>
-                                    <p class="small text-muted mb-0">Rek: 1234-5678-9012-3456 a/n Reztis Batik</p>
-                                </div>
-                                <i class="fas fa-check-circle text-success ms-2"></i>
-                            </div>
-
-                            <div class="payment-method" data-method="Transfer Bank BCA">
+                            <div class="payment-method active" data-method="Transfer Bank BCA">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png"
                                     class="payment-icon" alt="BCA">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">Transfer Bank BCA</h6>
-                                    <p class="small text-muted mb-0">Rek: 9876-5432-1098-7654 a/n Reztis Batik</p>
+                                    <p class="small text-muted mb-0">Rek: 3320-4720-15 a/n LESTARI KUSUMAWATI</p>
                                 </div>
                             </div>
 
@@ -459,7 +457,17 @@
                                     class="payment-icon" alt="Mandiri">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">Transfer Bank Mandiri</h6>
-                                    <p class="small text-muted mb-0">Rek: 5678-1234-9012-3456 a/n Reztis Batik</p>
+                                    <p class="small text-muted mb-0">Rek: 1430-0154-9338-8 a/n LESTARI KUSUMAWATI</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-method" data-method="Transfer Bank BRI">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/252px-BANK_BRI_logo.svg.png"
+                                    class="payment-icon" alt="BRI">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">Transfer Bank BRI</h6>
+                                    <p class="small text-muted mb-0">Rek: 1161-0100-6551-531 a/n TAMARA REZTI SYAFIRA
+                                    </p>
                                 </div>
                             </div>
 
@@ -468,7 +476,16 @@
                                     class="payment-icon" alt="DANA">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">DANA</h6>
-                                    <p class="small text-muted mb-0">0812-3456-7890 a/n Reztis Batik</p>
+                                    <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-method" data-method="GoPay">
+                                <img src="https://logos-world.net/wp-content/uploads/2023/03/GoPay-Logo.png"
+                                    class="payment-icon" alt="GoPay">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">GoPay</h6>
+                                    <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
                                 </div>
                             </div>
 
@@ -547,11 +564,8 @@
     <script>
         // Function to handle address selection
         function selectAddress(addressId) {
-            // You can implement AJAX here to update the selected address
-            // For now, we'll just close the modal
             $('#addressModal').modal('hide');
 
-            // Show success message
             Swal.fire({
                 icon: 'success',
                 title: 'Alamat berhasil diubah',
