@@ -79,4 +79,50 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    public function showForgotPasswordForm()
+    {
+        return view('pembeli.auth.verifikasi');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $pembeli = Pembeli::where('email', $request->email)->first();
+
+        if (!$pembeli) {
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => 'Email tidak terdaftar']);
+        }
+
+        return redirect()->route('pembeli.password.reset', ['email' => $request->email]);
+    }
+
+    public function showResetPasswordForm(Request $request)
+    {
+        return view('pembeli.auth.forgot-password', [
+            'email' => $request->email
+        ]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $pembeli = Pembeli::where('email', $request->email)->first();
+
+        if (!$pembeli) {
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => 'Email tidak terdaftar']);
+        }
+
+        $pembeli->password = Hash::make($request->password);
+        $pembeli->save();
+
+        return redirect()->route('pembeli.login')->with('success', 'Password berhasil diubah! Silakan login dengan password baru Anda.');
+    }
 }

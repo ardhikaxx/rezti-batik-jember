@@ -31,6 +31,12 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         Route::post('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'login']);
         Route::get('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'showRegisterForm'])->name('register');
         Route::post('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'register']);
+
+        // route lupa password
+        Route::get('/forgot-password', [\App\Http\Controllers\Pembeli\AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+        Route::post('/forgot-password', [\App\Http\Controllers\Pembeli\AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+        Route::get('/reset-password', [\App\Http\Controllers\Pembeli\AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+        Route::post('/reset-password', [\App\Http\Controllers\Pembeli\AuthController::class, 'reset'])->name('password.update');
     });
 
     // Logout route (accessible when authenticated)
@@ -65,7 +71,7 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
             Route::get('/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('show');
             Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
             Route::post('/', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('store');
-            
+
             // Rating
             Route::get('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
             Route::post('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');

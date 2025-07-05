@@ -28,7 +28,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background-image: url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-image: url('{{ asset('img/background.jpg') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -237,8 +237,9 @@
             border-color: var(--primary-color);
         }
 
-        .form-check-label {
-            user-select: none;
+        .form-forgot a {
+            font-weight: 600;
+            color: var(--primary-dark);
         }
 
         /* Responsive adjustments */
@@ -267,7 +268,7 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Toggle password visibility
         document.querySelectorAll('.password-toggle').forEach(button => {
