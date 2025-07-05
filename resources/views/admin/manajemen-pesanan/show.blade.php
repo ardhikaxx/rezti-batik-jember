@@ -21,7 +21,7 @@
                             <p class="mb-1">{{ $order->pembeli->nama }}</p>
                             <p class="mb-1">{{ $order->pembeli->email }}</p>
                             <p class="mb-1">{{ $order->pembeli->no_hp }}</p>
-                            <button class="btn btn-success">Hubungi Pelanggan</button>
+                            <button class="btn btn-success" onclick="hubungiPelanggan('{{ $order->pembeli->no_hp }}', '{{ $order->pembeli->nama }}', '{{ $order->shippingAddress->address }}', '{{ $order->shippingAddress->city }}')">Hubungi Pelanggan</button>
                         </div>
                         <div class="col-md-6">
                             <h6 class="fw-bold">Informasi Pesanan</h6>
@@ -117,11 +117,12 @@
                 </div>
                 <div class="card-body text-center">
                     @if ($order->payment_proof)
-                        <img src="{{ $order->payment_proof_url }}" alt="Bukti Pembayaran" class="img-fluid mb-3"
-                            style="max-height: 200px;">
+                    <div class="d-flex flex-column">
+                        <img src="{{ $order->payment_proof_url }}" alt="Bukti Pembayaran" class="img-fluid mb-3 h-auto" style="height: auto;">
                         <a href="{{ $order->payment_proof_url }}" target="_blank" class="btn btn-sm btn-primary">
-                            <i class="fas fa-download me-1"></i> Download
+                            <i class="fas fa-eye me-1"></i> Lihat Bukti Pembayaran
                         </a>
+                    </div>
                     @else
                         <p class="text-muted">Belum ada bukti pembayaran</p>
                     @endif
@@ -157,17 +158,29 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            $(document).ready(function() {
-                $('#status').change(function() {
-                    if ($(this).val() == 'shipped') {
-                        $('#trackingNumberField').show();
-                    } else {
-                        $('#trackingNumberField').hide();
-                    }
-                });
+     <script>
+        $(document).ready(function() {
+            $('#status').change(function() {
+                if ($(this).val() == 'shipped') {
+                    $('#trackingNumberField').show();
+                } else {
+                    $('#trackingNumberField').hide();
+                }
             });
-        </script>
-    @endpush
+        });
+
+        function hubungiPelanggan(noHp, nama, alamat, kota) {
+            // Format nomor HP (hapus karakter selain angka)
+            const formattedNoHp = noHp.replace(/\D/g, '');
+            
+            // Buat pesan WhatsApp
+            const pesan = `Halo ${nama},\n\nTerima kasih telah memesan produk dari kami. Berikut informasi ongkos kirim ke alamat Anda:\n\nAlamat: ${alamat}, ${kota}\n\nMohon konfirmasi jika alamat tersebut sudah benar. Kami akan segera menghitung ongkos kirim dan menginformasikan total biaya yang perlu dibayarkan.\n\nTerima kasih.`;
+            
+            // Encode pesan untuk URL
+            const encodedPesan = encodeURIComponent(pesan);
+            
+            // Buka WhatsApp di tab baru
+            window.open(`https://wa.me/${formattedNoHp}?text=${encodedPesan}`, '_blank');
+        }
+    </script>
 @endsection

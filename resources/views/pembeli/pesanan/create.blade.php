@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reztis Batik - Checkout</title>
-    <link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo-brand.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
@@ -266,7 +266,8 @@
                     </h1>
                     <p class="text-muted mb-0">Lengkapi informasi berikut untuk menyelesaikan pesanan Anda</p>
                 </div>
-                <a href="{{ route('pembeli.keranjang.index') }}" class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
+                <a href="{{ route('pembeli.keranjang.index') }}"
+                    class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
                     style="background-color: var(--primary-color)">
                     <i class="fas fa-chevron-left me-2"></i> Kembali
                 </a>

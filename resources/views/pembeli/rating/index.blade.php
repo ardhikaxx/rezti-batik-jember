@@ -121,7 +121,7 @@
                             </div>
                             
                             <div class="form-group mt-3">
-                                <label for="comment-{{ $item->id }}">Ulasan (opsional):</label>
+                                <label for="comment-{{ $item->id }}" class="mb-3">Ulasan (opsional):</label>
                                 <textarea class="form-control" id="comment-{{ $item->id }}" name="ratings[{{ $item->id }}][comment]" rows="3" placeholder="Bagaimana pengalaman Anda dengan produk ini?">{{ optional($item->rating)->comment }}</textarea>
                             </div>
                         </div>

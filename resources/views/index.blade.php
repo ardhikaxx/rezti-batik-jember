@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reztis Batik Jember - Batik Premium dengan Sentuhan Modern</title>
+    <link rel="shortcut icon" href="{{ asset('img/logo-brand.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -69,7 +70,7 @@
         .navbar {
             background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            padding: 20px 0;
+            padding: 10px 0;
             transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -81,15 +82,36 @@
         }
 
         .navbar-brand {
-            font-family: 'Sriwedari', sans-serif;
-            font-weight: 700;
-            color: var(--primary-color) !important;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
         }
 
-        .navbar-brand span {
-            color: var(--dark-color);
+        .nav-logo {
+            width: auto;
+            height: 75px;
+            transition: height 0.3s ease;
+            /* Animasi perubahan ukuran */
+        }
+
+        /* Untuk tablet */
+        @media (max-width: 991.98px) {
+            .nav-logo {
+                height: 65px;
+            }
+        }
+
+        /* Untuk mobile */
+        @media (max-width: 767.98px) {
+            .nav-logo {
+                height: 55px;
+            }
+        }
+
+        /* Untuk mobile kecil */
+        @media (max-width: 575.98px) {
+            .nav-logo {
+                height: 45px;
+            }
         }
 
         .nav-link {
@@ -324,7 +346,7 @@
             color: var(--light-color);
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
-            border: none;
+            border: 2px solid transparent;
         }
 
         .section {
@@ -508,8 +530,9 @@
         }
 
         .about-img {
-            height: 400px;
+            height: 650px;
             width: auto;
+            object-fit: cover;
             border-radius: 15px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
             transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -528,105 +551,277 @@
 
         .about-features {
             margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
         .feature-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
-            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: 100%;
+        }
+
+        .feature-item>* {
+            align-self: flex-start;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
 
         .feature-icon {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: var(--gradient-primary);
             color: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            margin-right: 15px;
-            flex-shrink: 0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-text {
+            width: 100%;
+            text-align: left;
         }
 
         .feature-text h5 {
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            font-size: 0.95rem;
         }
 
         .feature-text p {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             margin-bottom: 0;
+            line-height: 1.4;
         }
 
-        /* Testimoni Styles */
+        .btn-outline-primary-about {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline-primary-about:hover {
+            background: var(--primary-color);
+            color: var(--light-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+            border: 2px solid transparent;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 767.98px) {
+            .about-features {
+                grid-template-columns: 1fr;
+                /* Satu kolom di mobile */
+            }
+
+            .feature-item {
+                padding: 20px;
+                /* Lebih banyak ruang di mobile */
+            }
+
+            .feature-icon {
+                width: 45px;
+                height: 45px;
+                /* Sedikit lebih besar di mobile */
+                font-size: 1.1rem;
+            }
+
+            .feature-text h5 {
+                font-size: 1rem;
+                /* Sedikit lebih besar di mobile */
+            }
+
+            .feature-text p {
+                font-size: 0.85rem;
+                /* Sedikit lebih besar di mobile */
+            }
+
+            /* Tombol akan otomatis menumpuk karena grid 1 kolom */
+        }
+
+        /* Testimoni Styles - Improved */
         .testimonial-section {
-            background-color: #f9f5f0;
-            padding: 80px 0;
+            background-color: var(--light-color);
+            padding: 100px 0;
+        }
+
+        .testimonial-container {
+            position: relative;
+            z-index: 1;
         }
 
         .testimonial-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
             height: 100%;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .testimonial-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
         }
 
         .testimonial-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
         }
 
         .testimonial-content {
-            padding: 30px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .testimonial-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid #8B4513;
+        .testimonial-product-img {
+            position: relative;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 150px;
         }
 
         .testimonial-product-img img {
-            border: 1px solid #e0e0e0;
-            padding: 5px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card:hover .testimonial-product-img img {
+            transform: scale(1.05);
         }
 
         .testimonial-text {
             font-style: italic;
-            color: #555;
-            margin-bottom: 20px;
+            color: var(--text-color);
+            margin-bottom: 25px;
             position: relative;
+            line-height: 1.7;
+            font-size: 16px;
+            padding: 0 15px;
         }
 
         .testimonial-text::before,
         .testimonial-text::after {
             content: '"';
-            font-size: 24px;
-            color: #8B4513;
-            opacity: 0.3;
+            font-size: 32px;
+            color: var(--primary-color);
+            opacity: 0.2;
+            position: absolute;
+            font-family: serif;
+        }
+
+        .testimonial-text::before {
+            top: -15px;
+            left: -5px;
+        }
+
+        .testimonial-text::after {
+            bottom: -25px;
+            right: -5px;
+        }
+
+        .testimonial-meta {
+            margin-top: auto;
+            text-align: center;
         }
 
         .testimonial-name {
-            color: #8B4513;
-            font-weight: 600;
+            color: var(--primary-dark);
+            font-weight: 700;
             margin-bottom: 5px;
+            font-size: 18px;
+            letter-spacing: 0.5px;
         }
 
         .testimonial-product {
-            color: #666;
-            font-size: 14px;
+            color: var(--accent-color);
+            font-size: 15px;
             margin-bottom: 10px;
+            font-weight: 500;
         }
 
-        .testimonial-role {
-            color: #888;
+        .testimonial-rating {
+            margin-bottom: 15px;
+        }
+
+        .testimonial-rating .fas {
+            font-size: 18px;
+            margin: 0 2px;
+        }
+
+        .testimonial-date {
+            color: var(--text-light);
             font-size: 13px;
-            margin-bottom: 10px;
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(139, 69, 19, 0.05);
+            border-radius: 20px;
+        }
+
+        .testimonial-quote-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            font-size: 60px;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover .testimonial-quote-icon {
+            opacity: 0.2;
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .testimonial-section {
+                padding: 70px 0;
+            }
+
+            .testimonial-content {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-section {
+                padding: 50px 0;
+            }
+
+            .testimonial-card {
+                margin-bottom: 30px;
+            }
         }
 
         .contact-section {
@@ -703,14 +898,13 @@
             position: relative;
         }
 
+        .footer-navbar {
+            padding: 10px;
+        }
+
         .footer-logo {
-            font-family: 'Sriwedari', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: inline-block;
-            color: var(--light-color);
-            text-decoration: none;
+            width: auto;
+            height: 95px;
         }
 
         .footer-about {
@@ -723,6 +917,7 @@
             margin-bottom: 25px;
             position: relative;
             padding-bottom: 10px;
+            color: white;
         }
 
         .footer-links h5:after {
@@ -737,23 +932,50 @@
 
         .footer-links ul {
             list-style: none;
-            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 0;
         }
 
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 0;
+            /* dihapus karena gap sudah mengatur jarak */
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: white;
             text-decoration: none;
             transition: all 0.3s ease;
             display: block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-links a:hover {
-            color: white;
-            padding-left: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding-left: 15px;
+            /* reset padding-left agar tidak bergeser */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .footer-links ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-links ul {
+                grid-template-columns: 1fr;
+            }
         }
 
         .social-icons {
@@ -966,13 +1188,13 @@
             background: rgba(78, 84, 200, 0.08);
         }
 
-        .feature-list {
+        .feature-list-edukasi {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
         }
 
-        .feature-item {
+        .feature-item-edukasi {
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -1055,8 +1277,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <span class="text-primary">Reztis</span><span> Batik</span>
+            <a class="navbar-brand" href="{{ route('index') }}">
+                <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik" class="nav-logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -1155,6 +1377,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 mx-auto text-center hero-content">
+                    <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik"
+                        class="w-25 mb-3 animate__animated animate__fadeInDown" data-aos="fade-down"
+                        data-aos-duration="1000">
                     <h1 class="hero-title animate__animated animate__fadeInDown" data-aos="fade-down"
                         data-aos-duration="1000">Batik Premium Khas Jember</h1>
                     <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s" data-aos="fade-up"
@@ -1243,20 +1468,20 @@
                             <p class="text-muted mb-4">Bimbingan langsung dari maestro batik dengan pendekatan
                                 pembelajaran yang menyenangkan dan interaktif untuk semua usia.</p>
 
-                            <div class="feature-list mb-4">
-                                <div class="feature-item">
+                            <div class="feature-list-edukasi mb-4">
+                                <div class="feature-item-edukasi">
                                     <div class="feature-icon-edukasi">
                                         <i class="fas fa-clock"></i>
                                     </div>
                                     <span>1-2 jam sesi intensif</span>
                                 </div>
-                                <div class="feature-item">
+                                <div class="feature-item-edukasi">
                                     <div class="feature-icon-edukasi">
                                         <i class="fas fa-palette"></i>
                                     </div>
                                     <span>Semua peralatan disediakan</span>
                                 </div>
-                                <div class="feature-item">
+                                <div class="feature-item-edukasi">
                                     <div class="feature-icon-edukasi">
                                         <i class="fas fa-user"></i>
                                     </div>
@@ -1267,8 +1492,9 @@
 
                         <div class="mt-auto">
                             <div class="price-tag bg-white rounded-3 p-3 mb-4 shadow-sm">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
+                                <div
+                                    class="price-action-wrapper d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                                    <div class="price-section mb-3 mb-md-0">
                                         <span class="text-muted small">Mulai dari</span>
                                         <h4 class="fw-bold mb-0">Rp 25.000</h4>
                                     </div>
@@ -1328,51 +1554,73 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipOaV7CC5GtpuEI3KzYsY8-QF34BL_ekegH8j2iu=s1360-w1360-h1020-rw"
-                        alt="Proses Pembuatan Batik" class="img-fluid about-img">
+                    <img src="{{ asset('img/about.jpg') }}" alt="Reztis Batik Jember" class="img-fluid about-img">
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <div class="text-start">
                         <h2>Tentang Reztis Batik</h2>
                     </div>
-                    <p>UMKM Reztis Batik Jember didirikan pada tahun 2010 dengan misi melestarikan seni batik
-                        tradisional sambil mengembangkan motif-motif baru yang sesuai dengan perkembangan zaman.</p>
-                    <p>Kami menggunakan bahan-bahan berkualitas tinggi dan pewarna alami untuk menciptakan batik yang
-                        tidak hanya indah tetapi juga nyaman dipakai.</p>
+                    <p>Rezti’s merupakan perintis batik di Jember Selatan yang diawali dari pelatihan membatik dengan
+                        dana PNPM Mandiri Perkotaan. Rezti’s Batik dirintis di akhir tahun 2012. Tahun 2014, merk
+                        didaftarkan di Dirjen HKI (Hak Kekayaan Intelektual). Pada tahun 2015, Rezti’s Batik mendapat
+                        Sertifikat Batik Mark dari Balai Besar Kerajinan Batik sebagai sebaran Batik Indonesia.</p>
+                    <p>Produk batik yang dihasilkan meliputi: kain, pakaian, mukenah, udheng, syal, dan dompet. Selain
+                        itu, Rezti’s Batik juga menyediakan:</p>
                     <div class="about-features">
                         <div class="feature-item" data-aos="fade-up" data-aos-delay="0">
                             <div class="feature-icon">
-                                <i class="fas fa-award"></i>
+                                <i class="fas fa-graduation-cap"></i>
                             </div>
                             <div class="feature-text">
-                                <h5 class="text-primary">Kualitas Premium</h5>
-                                <p>Bahan katun prima dengan pewarna tahan luntur</p>
+                                <h5>Wisata Edukasi</h5>
+                                <p>Pengalaman belajar langsung tentang seni dan budaya batik tradisional</p>
                             </div>
                         </div>
 
                         <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
                             <div class="feature-icon">
-                                <i class="fas fa-hands-helping"></i>
+                                <i class="fas fa-paintbrush"></i>
                             </div>
                             <div class="feature-text">
-                                <h5 class="text-primary">Pengrajin Lokal</h5>
-                                <p>Dibuat oleh pengrajin batik berpengalaman</p>
+                                <h5>Batik Tulis</h5>
+                                <p>Karya seni batik tulis premium dengan detail rumit buatan tangan</p>
                             </div>
                         </div>
 
                         <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
                             <div class="feature-icon">
-                                <i class="fas fa-leaf"></i>
+                                <i class="fas fa-stamp"></i>
                             </div>
                             <div class="feature-text">
-                                <h5 class="text-primary">Ramah Lingkungan</h5>
-                                <p>Menggunakan pewarna alami yang eco-friendly</p>
+                                <h5>Batik Cap & Kombinasi</h5>
+                                <p>Batik berkualitas dengan teknik cap modern dan kombinasi teknik tradisional</p>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="mt-4" data-aos="fade-up" data-aos-delay="300">
-                        <a href="#kontak" class="btn btn-primary">Hubungi Kami</a>
+                        <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h5>Batik Zat Warna Alam</h5>
+                                <p>Batik ramah lingkungan dengan pewarna alami dari tumbuhan</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h5>Batik Zat Warna Sintetis</h5>
+                                <p>Batik dengan warna-warna cerah dan tahan lama dari pewarna sintetis</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex flex-column" data-aos="fade-up" data-aos-delay="300">
+                            <a href="#kontak" class="btn btn-primary mb-3">Hubungi Kami</a>
+                            <a href="#produk" class="btn btn-outline-primary-about">Produk Kami</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1381,44 +1629,55 @@
 
     <!-- Testimoni Section -->
     <section id="testimoni" class="section testimonial-section">
-        <div class="container">
+        <div class="container testimonial-container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Apa Kata Pelanggan</h2>
                 <p class="subtitle">Testimoni asli dari pelanggan yang sudah membeli produk kami</p>
             </div>
             <div class="row">
                 @forelse($ratings as $rating)
-                    <div class="col-lg-4 mb-4">
+                    <div class="col-lg-4 col-md-6 mb-4">
                         <div class="testimonial-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                            <div class="testimonial-content text-center">
-                                <div class="testimonial-product-img mb-3">
-                                    <img src="{{ asset($rating->product->image) }}" class="img-fluid rounded"
-                                        alt="{{ $rating->product->name }}" style="max-height: 120px;">
-                                </div>
-                                <div class="testimonial-text">
-                                    "{{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}"
-                                </div>
-                                <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
-                                <p class="testimonial-product">{{ $rating->product->name }}</p>
-                                <div class="mb-2">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $rating->rating)
-                                            <i class="fas fa-star text-warning"></i>
-                                        @else
-                                            <i class="fas fa-star text-secondary"></i>
-                                        @endif
-                                    @endfor
+                            <div class="testimonial-content">
+                                <div class="testimonial-product-img">
+                                    <img src="{{ asset($rating->product->image) }}" class="img-fluid"
+                                        alt="{{ $rating->product->name }}">
                                 </div>
 
-                                <small class="text-muted">
-                                    {{ $rating->created_at->format('d M Y') }}
-                                </small>
+                                <p class="testimonial-text">
+                                    {{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}
+                                </p>
+
+                                <div class="testimonial-meta">
+                                    <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
+                                    <p class="testimonial-product">{{ $rating->product->name }}</p>
+
+                                    <div class="testimonial-rating">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $rating->rating)
+                                                <i class="fas fa-star text-warning"></i>
+                                            @else
+                                                <i class="fas fa-star text-muted"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+
+                                    <span class="testimonial-date">
+                                        {{ $rating->created_at->format('d M Y') }}
+                                    </span>
+                                </div>
+
+                                <div class="testimonial-quote-icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center py-4">
-                        <div class="alert alert-info">
+                    <div class="col-12 text-center py-4" data-aos="fade-up">
+                        <div class="alert alert-warning"
+                            style="background: rgba(139, 69, 19, 0.1); border-color: var(--primary-light); color: var(--primary-dark);">
+                            <i class="fa-solid fa-comment-slash me-2"></i>
                             Belum ada testimoni dari pelanggan
                         </div>
                     </div>
@@ -1504,7 +1763,7 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Telepon/WhatsApp</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">(0331) 1234567</p>
+                                <p style="opacity: 0.9; margin-bottom: 0;">085104362229</p>
                             </div>
                         </div>
 
@@ -1525,7 +1784,7 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Email</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">info@reztisbatik.com</p>
+                                <p style="opacity: 0.9; margin-bottom: 0;">reztisbatik@gmail.com</p>
                             </div>
                         </div>
 
@@ -1553,58 +1812,21 @@
                         <div class="mt-5 pt-3">
                             <h5 class="mb-3">Ikuti Kami</h5>
                             <div class="social-icons">
-                                <a href="#" class="me-2"
-                                    style="
-                                display: inline-flex;
-                                width: 40px;
-                                height: 40px;
-                                background: rgba(255,255,255,0.2);
-                                color: white;
-                                border-radius: 50%;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.3s ease;
-                            "><i
-                                        class="fab fa-instagram"></i></a>
-                                <a href="#" class="me-2"
-                                    style="
-                                display: inline-flex;
-                                width: 40px;
-                                height: 40px;
-                                background: rgba(255,255,255,0.2);
-                                color: white;
-                                border-radius: 50%;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.3s ease;
-                            "><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="me-2"
-                                    style="
-                                display: inline-flex;
-                                width: 40px;
-                                height: 40px;
-                                background: rgba(255,255,255,0.2);
-                                color: white;
-                                border-radius: 50%;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.3s ease;
-                            "><i
-                                        class="fab fa-whatsapp"></i></a>
-                                <a href="#"
-                                    style="
-                                display: inline-flex;
-                                width: 40px;
-                                height: 40px;
-                                background: rgba(255,255,255,0.2);
-                                color: white;
-                                border-radius: 50%;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.3s ease;
-                            "><i
-                                        class="fab fa-youtube"></i></a>
+                                <a href="https://www.instagram.com/reztisbatiktegalsari/" target="_blank"
+                                    class="me-2"
+                                    style="display: inline-flex; width: 40px; height: 40px; background: rgba(255,255,255,0.2); color: white; border-radius: 50%; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+
+                                <a href="https://www.facebook.com/reztisbatik" target="_blank" class="me-2"
+                                    style="display: inline-flex; width: 40px; height: 40px; background: rgba(255,255,255,0.2); color: white; border-radius: 50%; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                <a href="https://wa.me/6281246833799" target="_blank" class="me-2"
+                                    style="display: inline-flex; width: 40px; height: 40px; background: rgba(255,255,255,0.2); color: white; border-radius: 50%; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1736,51 +1958,33 @@
     <footer data-aos="fade-up">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <a href="#" class="footer-logo">Reztis Batik</a>
-                    <p class="footer-about">Menjual batik berkualitas dengan motif tradisional dan modern. Melestarikan
-                        warisan budaya Indonesia melalui karya batik yang indah.</p>
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <a href="{{ route('index') }}" class="footer-brand mb-2"><img
+                            src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik"
+                            class="footer-logo"></a>
+                    <p class="footer-about mt-2">Rezti’s merupakan perintis batik di Jember Selatan yang diawali dari
+                        pelatihan membatik dengan dana PNPM Mandiri Perkotaan. Rezti’s Batik dirintis di akhir tahun
+                        2012. Tahun 2014, merk didaftarkan di Dirjen HKI (Hak Kekayaan Intelektual). Pada tahun 2015,
+                        Rezti’s Batik mendapat Sertifikat Batik Mark dari Balai Besar Kerajinan Batik sebagai sebaran
+                        Batik Indonesia.</p>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/reztisbatiktegalsari/" target="_blank"><i
                                 class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com/reztisbatik" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/6281246833799" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                <div class="col-lg-6 mb-4 mb-md-0">
                     <div class="footer-links">
                         <h5>Link Cepat</h5>
                         <ul>
                             <li><a href="#home">Beranda</a></li>
                             <li><a href="#produk">Produk</a></li>
+                            <li><a href="#edukasi">Layanan Edukasi</a></li>
                             <li><a href="#tentang">Tentang</a></li>
                             <li><a href="#testimoni">Testimoni</a></li>
                             <li><a href="#kontak">Kontak</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h5>Produk</h5>
-                        <ul>
-                            <li><a href="#">Batik Tulis</a></li>
-                            <li><a href="#">Batik Cap</a></li>
-                            <li><a href="#">Batik Printing</a></li>
-                            <li><a href="#">Baju Batik</a></li>
-                            <li><a href="#">Kain Batik</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="footer-links">
-                        <h5>Layanan</h5>
-                        <ul>
-                            <li><a href="#">Custom Batik</a></li>
-                            <li><a href="#">Reseller Program</a></li>
-                            <li><a href="#">Pembelian Grosir</a></li>
-                            <li><a href="#">Pengiriman</a></li>
-                            <li><a href="#">Kebijakan Pengembalian</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1968,6 +2172,8 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+
+            updateActiveNavLink();
         });
 
         // Back to top button
@@ -1988,6 +2194,31 @@
             });
         });
 
+        // Function to update active nav link
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link:not(.nav-cta)');
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === `#${currentSection}` || (href === '#home' && currentSection === '')) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -2002,11 +2233,8 @@
                         behavior: 'smooth'
                     });
 
-                    // Update active nav link
-                    document.querySelectorAll('.nav-link').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
+                    // Update active nav link after scroll completes
+                    setTimeout(updateActiveNavLink, 1000);
                 }
             });
         });
@@ -2022,6 +2250,11 @@
                     bsCollapse.hide();
                 }
             });
+        });
+
+        // Initialize active link on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateActiveNavLink();
         });
     </script>
 </body>

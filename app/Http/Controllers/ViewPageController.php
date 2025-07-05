@@ -12,7 +12,7 @@ class ViewPageController extends Controller
         $products = Product::active()->latest()->take(8)->get();
         $ratings = Rating::with(['product', 'pembeli'])
             ->latest()
-            ->take(3)
+            ->take(10)
             ->get();
             
         return view('index', compact('products', 'ratings'));

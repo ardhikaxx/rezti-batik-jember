@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') - Reztis Batik</title>
-    <link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo-brand.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -94,18 +94,14 @@
         }
 
         .auth-logo {
-            width: 80px;
-            height: 80px;
+            width: auto;
+            height: 85px;
             margin-bottom: 1rem;
             border-radius: 50%;
             border: 3px solid rgba(255,255,255,0.2);
             padding: 10px;
             background-color: rgba(255,255,255,0.1);
             transition: all 0.5s ease;
-        }
-
-        .auth-logo:hover {
-            transform: rotate(15deg) scale(1.1);
         }
 
         .auth-body {

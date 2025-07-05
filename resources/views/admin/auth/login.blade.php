@@ -8,7 +8,7 @@
     <title>Login Admin - Reztis Batik</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('img/logo-brand.png') }}" type="image/x-icon">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -119,7 +119,7 @@
             <div class="col-md-8">
                 <div class="login-card mx-auto">
                     <div class="login-header">
-                        <img src="{{ asset('admin/img/logo-white.png') }}" alt="Reztis Batik" class="logo">
+                        <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik" class="logo">
                         <h3>Admin Panel</h3>
                         <p>Silakan masuk untuk mengakses dashboard</p>
                     </div>

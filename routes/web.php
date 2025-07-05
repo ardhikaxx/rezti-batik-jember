@@ -25,14 +25,18 @@ Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->nam
 
 // Routes untuk pembeli
 Route::prefix('pembeli')->name('pembeli.')->group(function () {
-    // Auth routes
-    Route::get('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'login']);
-    Route::get('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'register']);
+    // Auth routes (unauthenticated)
+    Route::middleware('guest:pembeli')->group(function () {
+        Route::get('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [\App\Http\Controllers\Pembeli\AuthController::class, 'login']);
+        Route::get('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'showRegisterForm'])->name('register');
+        Route::post('/register', [\App\Http\Controllers\Pembeli\AuthController::class, 'register']);
+    });
+
+    // Logout route (accessible when authenticated)
     Route::post('/logout', [\App\Http\Controllers\Pembeli\AuthController::class, 'logout'])->name('logout');
 
-    // Protected routes
+    // Protected routes (authenticated only)
     Route::middleware('auth:pembeli')->group(function () {
         Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->name('index');
 
@@ -45,21 +49,27 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
         });
 
         // Keranjang
-        Route::get('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'index'])->name('keranjang.index');
-        Route::post('/keranjang', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'store'])->name('keranjang.store');
-        Route::put('/keranjang/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'update'])->name('keranjang.update');
-        Route::delete('/keranjang/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroy'])->name('keranjang.destroy');
-        Route::get('/keranjang/count', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'count'])->name('keranjang.count');
-        Route::post('/keranjang/destroy-multiple', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroyMultiple'])->name('keranjang.destroy-multiple');
-        Route::match(['get', 'post'], '/keranjang/checkout', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'checkout'])->name('keranjang.checkout');
+        Route::prefix('keranjang')->name('keranjang.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'index'])->name('index');
+            Route::post('/', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'store'])->name('store');
+            Route::put('/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroy'])->name('destroy');
+            Route::get('/count', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'count'])->name('count');
+            Route::post('/destroy-multiple', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'destroyMultiple'])->name('destroy-multiple');
+            Route::match(['get', 'post'], '/checkout', [\App\Http\Controllers\Pembeli\KeranjangController::class, 'checkout'])->name('checkout');
+        });
 
         // Pesanan
-        Route::get('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('pesanan.index');
-        Route::get('/pesanan/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('pesanan.show');
-        Route::post('/pesanan/{id}/update-status', [OrderController::class, 'updateStatus'])->name('pesanan.update-status');
-        Route::post('/pesanan', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('pesanan.store');
-        Route::get('pesanan/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
-        Route::post('pesanan/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');
+        Route::prefix('pesanan')->name('pesanan.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pembeli\PesananController::class, 'index'])->name('index');
+            Route::get('/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('show');
+            Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
+            Route::post('/', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('store');
+            
+            // Rating
+            Route::get('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
+            Route::post('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');
+        });
 
         // Pelayanan Edukasi
         Route::prefix('pelayanan-edukasi')->name('layanan-edukasi.')->group(function () {
@@ -83,55 +93,60 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
     });
 });
 
-// Admin Authentication Routes
+// Routes untuk admin
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    // Auth routes (unauthenticated)
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    });
+
+    // Logout route (accessible when authenticated)
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
 
-// Admin Protected Routes
-Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Protected routes (authenticated only)
+    Route::middleware('auth:admin')->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Produk Batik
-    Route::prefix('data-barang')->name('data-barang.')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('index');
-        Route::get('/create', [ProductController::class, 'create'])->name('create');
-        Route::post('/', [ProductController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [ProductController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
-    });
+        // Produk Batik
+        Route::prefix('data-barang')->name('data-barang.')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('index');
+            Route::get('/create', [ProductController::class, 'create'])->name('create');
+            Route::post('/', [ProductController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ProductController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
+        });
 
-    // Data Pembeli
-    Route::prefix('data-pembeli')->name('data-pembeli.')->group(function () {
-        Route::get('/', [CustomerController::class, 'index'])->name('index');
-        Route::get('/{id}', [CustomerController::class, 'show'])->name('show');
-    });
+        // Data Pembeli
+        Route::prefix('data-pembeli')->name('data-pembeli.')->group(function () {
+            Route::get('/', [CustomerController::class, 'index'])->name('index');
+            Route::get('/{id}', [CustomerController::class, 'show'])->name('show');
+        });
 
-    // Manajemen Pesanan
-    Route::prefix('manajemen-pesanan')->name('manajemen-pesanan.')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('index');
-        Route::get('/{id}', [OrderController::class, 'show'])->name('show');
-        Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
-    });
+        // Manajemen Pesanan
+        Route::prefix('manajemen-pesanan')->name('manajemen-pesanan.')->group(function () {
+            Route::get('/', [OrderController::class, 'index'])->name('index');
+            Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+            Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
+        });
 
-    // Manajemen Pelayanan
-    Route::prefix('manajemen-pelayanan')->name('manajemen-pelayanan.')->group(function () {
-        Route::get('/', [EducationServiceController::class, 'index'])->name('index');
-        Route::get('/{id}', [EducationServiceController::class, 'show'])->name('show');
-        Route::post('/{id}/update-status', [EducationServiceController::class, 'updateStatus'])->name('update-status');
-    });
+        // Manajemen Pelayanan
+        Route::prefix('manajemen-pelayanan')->name('manajemen-pelayanan.')->group(function () {
+            Route::get('/', [EducationServiceController::class, 'index'])->name('index');
+            Route::get('/{id}', [EducationServiceController::class, 'show'])->name('show');
+            Route::post('/{id}/update-status', [EducationServiceController::class, 'updateStatus'])->name('update-status');
+        });
 
-    // Manajemen Admin
-    Route::prefix('manajemen-admin')->name('manajemen-admin.')->group(function () {
-        Route::get('/', [ManajemenAdminController::class, 'index'])->name('index');
-        Route::get('/create', [ManajemenAdminController::class, 'create'])->name('create');
-        Route::post('/', [ManajemenAdminController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ManajemenAdminController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [ManajemenAdminController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ManajemenAdminController::class, 'destroy'])->name('destroy');
+        // Manajemen Admin
+        Route::prefix('manajemen-admin')->name('manajemen-admin.')->group(function () {
+            Route::get('/', [ManajemenAdminController::class, 'index'])->name('index');
+            Route::get('/create', [ManajemenAdminController::class, 'create'])->name('create');
+            Route::post('/', [ManajemenAdminController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [ManajemenAdminController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [ManajemenAdminController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ManajemenAdminController::class, 'destroy'])->name('destroy');
+        });
     });
 });

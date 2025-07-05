@@ -63,9 +63,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(139, 69, 19, 0.7);
             }
+
             70% {
                 box-shadow: 0 0 0 10px rgba(139, 69, 19, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(139, 69, 19, 0);
             }
@@ -120,14 +122,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($order->items as $item)
+                                    @foreach ($order->items as $item)
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="{{ asset($item->product->image) }}" class="product-img me-3" alt="{{ $item->product->name }}">
+                                                    <img src="{{ asset($item->product->image) }}" class="product-img me-3"
+                                                        alt="{{ $item->product->name }}">
                                                     <div>
                                                         <h6 class="mb-1">{{ $item->product->name }}</h6>
-                                                        <p class="text-muted mb-0">Kode: {{ $item->product->code ?? 'N/A' }}</p>
+                                                        <p class="text-muted mb-0">Kode: {{ $item->product->code ?? 'N/A' }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -158,25 +162,29 @@
                     </div>
                     <div class="card-body">
                         <ul class="order-timeline">
-                            <li class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' || $order->status == 'pending' ? 'completed' : '' }}">
+                            <li
+                                class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' || $order->status == 'pending' ? 'completed' : '' }}">
                                 <h6 class="mb-1">Pesanan Dibuat</h6>
                                 <p class="text-muted mb-0">{{ $order->created_at->format('d M Y H:i') }}</p>
                             </li>
-                            <li class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' || $order->status == 'pending' ? 'completed' : '' }}">
+                            <li
+                                class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' || $order->status == 'pending' ? 'completed' : '' }}">
                                 <h6 class="mb-1">Pembayaran Diverifikasi</h6>
                                 <p class="text-muted mb-0">{{ $order->created_at->format('d M Y H:i') }}</p>
                             </li>
-                            <li class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' ? 'completed' : ($order->status == 'pending' ? 'active' : 'pending') }}">
+                            <li
+                                class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' ? 'completed' : ($order->status == 'pending' ? 'active' : 'pending') }}">
                                 <h6 class="mb-1">Pesanan Diproses</h6>
-                                @if($order->status == 'pending')
+                                @if ($order->status == 'pending')
                                     <p class="text-muted mb-0">Sedang diproses</p>
                                 @else
                                     <p class="text-muted mb-0">{{ $order->updated_at->format('d M Y H:i') }}</p>
                                 @endif
                             </li>
-                            <li class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' ? ($order->status == 'shipped' ? 'active' : 'completed') : 'pending' }}">
+                            <li
+                                class="order-timeline-item {{ $order->status == 'completed' || $order->status == 'shipped' ? ($order->status == 'shipped' ? 'active' : 'completed') : 'pending' }}">
                                 <h6 class="mb-1">Pesanan Dikirim</h6>
-                                @if($order->status == 'shipped')
+                                @if ($order->status == 'shipped')
                                     <p class="text-muted mb-0">Sedang dalam pengiriman</p>
                                 @elseif($order->status == 'completed')
                                     <p class="text-muted mb-0">{{ $order->updated_at->format('d M Y H:i') }}</p>
@@ -186,7 +194,7 @@
                             </li>
                             <li class="order-timeline-item {{ $order->status == 'completed' ? 'completed' : 'pending' }}">
                                 <h6 class="mb-1">Pesanan Selesai</h6>
-                                @if($order->status == 'completed')
+                                @if ($order->status == 'completed')
                                     <p class="text-muted mb-0">{{ $order->updated_at->format('d M Y H:i') }}</p>
                                 @else
                                     <p class="text-muted mb-0">Menunggu konfirmasi</p>
@@ -207,8 +215,8 @@
                         <p class="mb-1">{{ $order->shippingAddress->phone_number }}</p>
                         <p class="mb-1">{{ $order->shippingAddress->address }}</p>
                         <p class="mb-1">
-                            {{ $order->shippingAddress->district }}, 
-                            {{ $order->shippingAddress->city }}, 
+                            {{ $order->shippingAddress->district }},
+                            {{ $order->shippingAddress->city }},
                             {{ $order->shippingAddress->province }}
                         </p>
                         <p class="mb-0">Kode Pos: {{ $order->shippingAddress->postal_code }}</p>
@@ -232,7 +240,8 @@
                         </div>
                         <div>
                             <h6 class="mb-2">Bukti Pembayaran</h6>
-                            <img src="{{ $order->payment_proof_url }}" alt="Bukti Pembayaran" class="payment-proof img-fluid">
+                            <img src="{{ $order->payment_proof_url }}" alt="Bukti Pembayaran"
+                                class="payment-proof img-fluid">
                         </div>
                     </div>
                 </div>
@@ -242,22 +251,25 @@
                         <h5 class="mb-0">Aksi</h5>
                     </div>
                     <div class="card-body">
-                        @if($order->status == 'pending')
-                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST" class="mb-2">
+                        @if ($order->status == 'pending')
+                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST"
+                                class="mb-2">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="status" value="cancelled">
-                                <button type="submit" class="btn btn-outline-danger btn-sm w-100" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100"
+                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                                     Batalkan Pesanan
                                 </button>
                             </form>
                         @elseif($order->status == 'shipped')
-                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST">
+                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST"
+                                class="flex-grow-1">
                                 @csrf
-                                @method('PUT')
+                                @method('POST')
                                 <input type="hidden" name="status" value="completed">
-                                <button type="submit" class="btn btn-outline-success btn-sm w-100" onclick="return confirm('Apakah pesanan sudah sampai?')">
-                                    Konfirmasi Pesanan Diterima
+                                <button type="submit" class="btn btn-outline-success btn-sm w-100 confirm-button" data-title="Konfirmasi Pesanan" data-text="Apakah pesanan sudah sampai?" data-confirm-text="Ya, Sudah Sampai" data-cancel-text="Belum">
+                                    <i class="fas fa-check-circle me-1"></i> Terima Pesanan
                                 </button>
                             </form>
                         @endif
@@ -269,4 +281,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // SweetAlert confirmation for all buttons with confirm-button class
+            document.querySelectorAll('.confirm-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
+
+                    Swal.fire({
+                        title: this.dataset.title || 'Konfirmasi',
+                        text: this.dataset.text || 'Apakah Anda yakin?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#5D2906',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: this.dataset.confirmText || 'Ya',
+                        cancelButtonText: this.dataset.cancelText || 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

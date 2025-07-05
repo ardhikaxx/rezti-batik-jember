@@ -8,7 +8,7 @@
             <div class="col-md-8 col-lg-6">
                 <div class="auth-card animate__animated animate__fadeInUp">
                     <div class="auth-header">
-                        <img src="{{ asset('admin/img/logo-white.png') }}" alt="Reztis Batik" class="auth-logo">
+                        <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik" class="auth-logo">
                         <h2>Masuk ke Akun Anda</h2>
                         <p>Silakan login untuk melanjutkan belanja</p>
                     </div>
