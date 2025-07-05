@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ManajemenAdminController;
 
 // Route utama untuk halaman depan
 Route::get('/', [\App\Http\Controllers\ViewPageController::class, 'index'])->name('index');
+Route::get('/get-all-products', [\App\Http\Controllers\ViewPageController::class, 'getAllProducts'])->name('get.all.products');
 
 // Routes untuk pembeli
 Route::prefix('pembeli')->name('pembeli.')->group(function () {

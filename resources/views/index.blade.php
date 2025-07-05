@@ -218,6 +218,47 @@
             font-weight: 500;
         }
 
+        /* Dropdown Mobile Fix */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                padding: 15px 0;
+            }
+
+            .dropdown-menu {
+                position: static !important;
+                transform: none !important;
+                margin-top: 0;
+                border: none;
+                box-shadow: none;
+                background-color: rgba(255, 255, 255, 0.2);
+                animation: none;
+                display: none;
+            }
+
+            .dropdown-menu.show {
+                display: block;
+            }
+
+            .dropdown-item {
+                padding: 0.75rem 1.5rem;
+                color: var(--dark-color) !important;
+            }
+
+            .dropdown-item:hover {
+                background-color: rgba(139, 69, 19, 0.1);
+            }
+
+            .dropdown-divider {
+                margin: 0.25rem 0;
+                border-color: rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-cta.dropdown-toggle {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
         .hero-section {
             position: relative;
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ asset('img/background.jpg') }}');
@@ -1413,9 +1454,9 @@
                     <p style="color: var(--primary-color)">Produk akan segera hadir. Silakan cek kembali nanti.</p>
                 </div>
             @else
-                <div class="row">
+                <div class="row" id="product-container">
                     @foreach ($products as $product)
-                        <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-6 mb-4 product-item">
                             <div class="product-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                                 <div class="product-img-container">
                                     <img src="{{ asset($product->image) }}" class="product-img"
@@ -1444,9 +1485,12 @@
                     @endforeach
                 </div>
 
-                <div class="text-center mt-2" data-aos="fade-up" data-aos-delay="400">
-                    <a href="#" class="btn btn-primary px-5">Lihat Semua Produk</a>
-                </div>
+                @if (count($products) >= 4 && !request()->has('show_all'))
+                    <div class="text-center mt-2" data-aos="fade-up" data-aos-delay="400">
+                        <a href="{{ url()->current() }}?show_all=true" class="btn btn-primary px-5"
+                            id="show-all-btn">Lihat Semua Produk</a>
+                    </div>
+                @endif
             @endif
         </div>
     </section>
@@ -2164,18 +2208,6 @@
             once: true
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            updateActiveNavLink();
-        });
-
         // Back to top button
         const backToTopButton = document.querySelector('.back-to-top');
         window.addEventListener('scroll', function() {
@@ -2192,6 +2224,18 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            updateActiveNavLink();
         });
 
         // Function to update active nav link
@@ -2239,8 +2283,8 @@
             });
         });
 
-        // Close mobile menu when clicking a link
-        const navLinks = document.querySelectorAll('.nav-link');
+        // Close mobile menu when clicking a link (except dropdown items)
+        const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
         const navbarCollapse = document.querySelector('.navbar-collapse');
 
         navLinks.forEach(link => {
@@ -2250,6 +2294,77 @@
                     bsCollapse.hide();
                 }
             });
+        });
+
+        // Navbar Dropdown Mobile Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth < 992) { // Only for mobile
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const dropdownMenu = this.nextElementSibling;
+                        const isOpen = dropdownMenu.classList.contains('show');
+
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            if (menu !== dropdownMenu) {
+                                menu.classList.remove('show');
+                            }
+                        });
+
+                        // Toggle current dropdown
+                        dropdownMenu.classList.toggle('show');
+
+                        // Update aria-expanded
+                        this.setAttribute('aria-expanded', !isOpen);
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown') && window.innerWidth < 992) {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                        toggle.setAttribute('aria-expanded', 'false');
+                    });
+                }
+            });
+
+            // Close dropdown when a dropdown item is clicked
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth < 992) {
+                        const dropdownMenu = this.closest('.dropdown-menu');
+                        if (dropdownMenu) {
+                            dropdownMenu.classList.remove('show');
+                            const toggle = dropdownMenu.previousElementSibling;
+                            if (toggle) {
+                                toggle.setAttribute('aria-expanded', 'false');
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Existing navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                updateActiveNavLink();
+            });
+
+            // Rest of your existing JavaScript...
         });
 
         // Initialize active link on page load
