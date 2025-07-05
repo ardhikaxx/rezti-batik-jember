@@ -73,6 +73,16 @@
             box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
         }
 
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .form-forgot a {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
@@ -170,10 +180,17 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" name="remember" id="remember"
-                                    {{ old('remember') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="remember">Ingat Saya</label>
+                            <div class="d-flex flex-row justify-content-between align-items-center mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" 
+                                        {{ old('remember') || Cookie::get('remember_email') ? 'checked' : '' }}>
+                                    <label class="form-check-label fw-semibold" style="color: var(--primary-dark)" for="remember">
+                                        Ingat Saya
+                                    </label>
+                                </div>
+                                <div class="form-forgot">
+                                    <a href="{{ route('pembeli.password.request') }}" class="text-decoration-none">Lupa Password?</a>
+                                </div>
                             </div>
 
                             <div class="d-grid gap-2">
