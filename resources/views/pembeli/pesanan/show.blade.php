@@ -251,28 +251,6 @@
                         <h5 class="mb-0">Aksi</h5>
                     </div>
                     <div class="card-body">
-                        @if ($order->status == 'pending')
-                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST"
-                                class="mb-2">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="status" value="cancelled">
-                                <button type="submit" class="btn btn-outline-danger btn-sm w-100"
-                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
-                                    Batalkan Pesanan
-                                </button>
-                            </form>
-                        @elseif($order->status == 'shipped')
-                            <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}" method="POST"
-                                class="flex-grow-1">
-                                @csrf
-                                @method('POST')
-                                <input type="hidden" name="status" value="completed">
-                                <button type="submit" class="btn btn-outline-success btn-sm w-100 confirm-button" data-title="Konfirmasi Pesanan" data-text="Apakah pesanan sudah sampai?" data-confirm-text="Ya, Sudah Sampai" data-cancel-text="Belum">
-                                    <i class="fas fa-check-circle me-1"></i> Terima Pesanan
-                                </button>
-                            </form>
-                        @endif
                         <a href="{{ route('pembeli.pesanan.index') }}" class="btn btn-outline-primary btn-sm w-100 mt-2">
                             Kembali ke Daftar Pesanan
                         </a>

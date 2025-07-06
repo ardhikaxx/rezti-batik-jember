@@ -40,8 +40,29 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
+        .nav-tabs-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-tabs-wrapper::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
         .nav-tabs {
+            flex-wrap: nowrap;
+            white-space: nowrap;
             border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-tabs .nav-item {
+            flex-shrink: 0;
         }
 
         .nav-tabs .nav-link {
@@ -51,6 +72,7 @@
             padding: 0.75rem 1.25rem;
             position: relative;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-tabs .nav-link.active {
@@ -142,30 +164,45 @@
         </div>
 
         <!-- Order Tabs -->
-        <ul class="nav nav-tabs mb-4" id="orderTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button">
-                    Semua <span class="badge ms-2"
-                        style="background-color: var(--primary-dark)">{{ $orders->count() }}</span>
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="processing-tab" data-bs-toggle="tab" data-bs-target="#processing"
-                    type="button">
-                    Diproses <span class="badge bg-info ms-2">{{ $orders->where('status', 'pending')->count() }}</span>
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="shipped-tab" data-bs-toggle="tab" data-bs-target="#shipped" type="button">
-                    Dikirim <span class="badge bg-primary ms-2">{{ $orders->where('status', 'shipped')->count() }}</span>
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button">
-                    Selesai <span class="badge bg-success ms-2">{{ $orders->where('status', 'completed')->count() }}</span>
-                </button>
-            </li>
-        </ul>
+        <div class="nav-tabs-wrapper mb-4">
+            <ul class="nav nav-tabs flex-nowrap" id="orderTabs" role="tablist" style="min-width: max-content;">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all"
+                        type="button">
+                        Semua
+                        <span class="badge ms-2" style="background-color: var(--primary-dark)">
+                            {{ $orders->count() }}
+                        </span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="processing-tab" data-bs-toggle="tab" data-bs-target="#processing"
+                        type="button">
+                        Diproses
+                        <span class="badge bg-info ms-2">
+                            {{ $orders->where('status', 'pending')->count() }}
+                        </span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="shipped-tab" data-bs-toggle="tab" data-bs-target="#shipped" type="button">
+                        Dikirim
+                        <span class="badge bg-primary ms-2">
+                            {{ $orders->where('status', 'shipped')->count() }}
+                        </span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed"
+                        type="button">
+                        Selesai
+                        <span class="badge bg-success ms-2">
+                            {{ $orders->where('status', 'completed')->count() }}
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
 
         <!-- Order Content -->
         <div class="tab-content" id="orderTabsContent">
@@ -185,7 +222,7 @@
                     @foreach ($orders as $order)
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="d-flex flex-column flex-md-row">
                                     <span
                                         class="badge bg-{{ $order->status == 'pending' ? 'info' : ($order->status == 'shipped' ? 'primary' : ($order->status == 'completed' ? 'success' : 'warning')) }} me-2">
                                         {{ $order->status_label }}
@@ -221,11 +258,15 @@
                                                 </h5>
                                             </div>
                                             <div class="mt-auto d-flex gap-2">
+                                                {{-- Tombol Detail --}}
                                                 <a href="{{ route('pembeli.pesanan.show', $order->id) }}"
                                                     class="btn btn-outline-primary btn-sm flex-grow-1">
-                                                    <i class="fas fa-eye me-1"></i> Detail Pesanan
+                                                    <i class="fas fa-eye me-1"></i>
+                                                    <span class="d-none d-md-inline">Detail Pesanan</span>
+                                                    <span class="d-inline d-md-none">Detail</span>
                                                 </a>
 
+                                                {{-- Jika pesanan masih pending, tampilkan tombol batal --}}
                                                 @if ($order->status == 'pending')
                                                     <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}"
                                                         method="POST" class="flex-grow-1">
@@ -238,11 +279,16 @@
                                                             data-text="Apakah Anda yakin ingin membatalkan pesanan ini?"
                                                             data-confirm-text="Ya, Batalkan Pesanan"
                                                             data-cancel-text="Batal">
-                                                            <i class="fas fa-times-circle me-1"></i> Batalkan Pesanan
+                                                            <i class="fas fa-times-circle me-1"></i>
+                                                            <span class="d-none d-md-inline">Batalkan Pesanan</span>
+                                                            <span class="d-inline d-md-none">Batalkan</span>
                                                         </button>
                                                     </form>
+
+                                                    {{-- Jika pesanan dikirim, tampilkan tombol terima --}}
                                                 @elseif($order->status == 'shipped')
-                                                    <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}"
+                                                    <form
+                                                        action="{{ route('pembeli.pesanan.update-status', $order->id) }}"
                                                         method="POST" class="flex-grow-1">
                                                         @csrf
                                                         @method('POST')
@@ -252,18 +298,26 @@
                                                             data-title="Konfirmasi Pesanan"
                                                             data-text="Apakah pesanan sudah sampai?"
                                                             data-confirm-text="Ya, Sudah Sampai" data-cancel-text="Belum">
-                                                            <i class="fas fa-check-circle me-1"></i> Terima Pesanan
+                                                            <i class="fas fa-check-circle me-1"></i>
+                                                            <span class="d-none d-md-inline">Terima Pesanan</span>
+                                                            <span class="d-inline d-md-none">Terima</span>
                                                         </button>
                                                     </form>
+
+                                                    {{-- Jika pesanan selesai --}}
                                                 @elseif($order->status == 'completed')
                                                     @if ($order->items->every(fn($item) => $item->rating))
                                                         <span class="btn btn-success btn-sm flex-grow-1">
-                                                            <i class="fas fa-check-circle me-1"></i> Rating Diberikan
+                                                            <i class="fas fa-check-circle me-1"></i>
+                                                            <span class="d-none d-md-inline">Rating Diberikan</span>
+                                                            <span class="d-inline d-md-none">Selesai</span>
                                                         </span>
                                                     @else
                                                         <a href="{{ route('pembeli.rating.index', $order->id) }}"
                                                             class="btn btn-warning btn-sm flex-grow-1 text-white">
-                                                            <i class="fas fa-star me-1"></i> Beri Nilai Pesanan
+                                                            <i class="fas fa-star me-1"></i>
+                                                            <span class="d-none d-md-inline">Beri Nilai Pesanan</span>
+                                                            <span class="d-inline d-md-none">Nilai</span>
                                                         </a>
                                                     @endif
                                                 @endif
@@ -294,7 +348,7 @@
                     @foreach ($processingOrders as $order)
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="d-flex flex-column flex-md-row">
                                     <span class="badge bg-info me-2">
                                         {{ $order->status_label }}
                                     </span>
@@ -329,10 +383,15 @@
                                                     {{ number_format($order->total, 0, ',', '.') }}</h5>
                                             </div>
                                             <div class="mt-auto d-flex gap-2">
+                                                {{-- Tombol Detail --}}
                                                 <a href="{{ route('pembeli.pesanan.show', $order->id) }}"
                                                     class="btn btn-outline-primary btn-sm flex-grow-1">
-                                                    <i class="fas fa-eye me-1"></i> Detail Pesanan
+                                                    <i class="fas fa-eye me-1"></i>
+                                                    <span class="d-none d-md-inline">Detail Pesanan</span>
+                                                    <span class="d-inline d-md-none">Detail</span>
                                                 </a>
+
+                                                {{-- Tombol Batalkan --}}
                                                 <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}"
                                                     method="POST" class="flex-grow-1">
                                                     @csrf
@@ -343,7 +402,9 @@
                                                         data-title="Batalkan Pesanan"
                                                         data-text="Apakah Anda yakin ingin membatalkan pesanan ini?"
                                                         data-confirm-text="Ya, Batalkan Pesanan" data-cancel-text="Batal">
-                                                        <i class="fas fa-times-circle me-1"></i> Batalkan Pesanan
+                                                        <i class="fas fa-times-circle me-1"></i>
+                                                        <span class="d-none d-md-inline">Batalkan Pesanan</span>
+                                                        <span class="d-inline d-md-none">Batalkan</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -373,7 +434,7 @@
                     @foreach ($shippedOrders as $order)
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="d-flex flex-column flex-md-row">
                                     <span class="badge bg-primary me-2">
                                         {{ $order->status_label }}
                                     </span>
@@ -408,10 +469,15 @@
                                                     {{ number_format($order->total, 0, ',', '.') }}</h5>
                                             </div>
                                             <div class="mt-auto d-flex gap-2">
+                                                {{-- Tombol Detail --}}
                                                 <a href="{{ route('pembeli.pesanan.show', $order->id) }}"
                                                     class="btn btn-outline-primary btn-sm flex-grow-1">
-                                                    <i class="fas fa-eye me-1"></i> Detail Pesanan
+                                                    <i class="fas fa-eye me-1"></i>
+                                                    <span class="d-none d-md-inline">Detail Pesanan</span>
+                                                    <span class="d-inline d-md-none">Detail</span>
                                                 </a>
+
+                                                {{-- Tombol Terima Pesanan --}}
                                                 <form action="{{ route('pembeli.pesanan.update-status', $order->id) }}"
                                                     method="POST" class="flex-grow-1">
                                                     @csrf
@@ -422,7 +488,9 @@
                                                         data-title="Konfirmasi Pesanan"
                                                         data-text="Apakah pesanan sudah sampai?"
                                                         data-confirm-text="Ya, Sudah Sampai" data-cancel-text="Belum">
-                                                        <i class="fas fa-check-circle me-1"></i> Terima Pesanan
+                                                        <i class="fas fa-check-circle me-1"></i>
+                                                        <span class="d-none d-md-inline">Terima Pesanan</span>
+                                                        <span class="d-inline d-md-none">Terima</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -452,7 +520,7 @@
                     @foreach ($completedOrders as $order)
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="d-flex flex-column flex-md-row">
                                     <span class="badge bg-success me-2">
                                         {{ $order->status_label }}
                                     </span>
@@ -487,19 +555,29 @@
                                                     {{ number_format($order->total, 0, ',', '.') }}</h5>
                                             </div>
                                             <div class="mt-auto d-flex gap-2">
+                                                {{-- Tombol Detail --}}
                                                 <a href="{{ route('pembeli.pesanan.show', $order->id) }}"
                                                     class="btn btn-outline-primary btn-sm flex-grow-1">
-                                                    <i class="fas fa-eye me-1"></i> Detail Pesanan
+                                                    <i class="fas fa-eye me-1"></i>
+                                                    <span class="d-none d-md-inline">Detail Pesanan</span>
+                                                    <span class="d-inline d-md-none">Detail</span>
                                                 </a>
+
                                                 @if ($order->status == 'completed')
                                                     @if ($order->items->every(fn($item) => $item->rating))
+                                                        {{-- Rating sudah diberikan --}}
                                                         <span class="btn btn-success btn-sm flex-grow-1">
-                                                            <i class="fas fa-check-circle me-1"></i> Rating Diberikan
+                                                            <i class="fas fa-check-circle me-1"></i>
+                                                            <span class="d-none d-md-inline">Rating Diberikan</span>
+                                                            <span class="d-inline d-md-none">Selesai</span>
                                                         </span>
                                                     @else
+                                                        {{-- Tombol untuk beri rating --}}
                                                         <a href="{{ route('pembeli.rating.index', $order->id) }}"
                                                             class="btn btn-warning btn-sm flex-grow-1 text-white">
-                                                            <i class="fas fa-star me-1"></i> Beri Nilai Pesanan
+                                                            <i class="fas fa-star me-1"></i>
+                                                            <span class="d-none d-md-inline">Beri Nilai Pesanan</span>
+                                                            <span class="d-inline d-md-none">Nilai</span>
                                                         </a>
                                                     @endif
                                                 @endif

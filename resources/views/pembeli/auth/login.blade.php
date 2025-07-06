@@ -106,23 +106,5 @@
                 confirmButtonColor: '#8B4513'
             });
         @endif
-
-        // Toggle password visibility
-        document.querySelectorAll('.password-toggle').forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.closest('.form-floating').querySelector('input');
-                const icon = this.querySelector('i');
-
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
-        });
     </script>
 @endsection

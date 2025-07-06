@@ -39,26 +39,47 @@
             background-color: var(--light-color);
             color: var(--dark-color);
         }
+
+        @media (max-width: 576px) {
+
+            h4,
+            h5 {
+                font-size: 1.1rem;
+            }
+
+            .address-detail {
+                padding: 0.75rem !important;
+            }
+
+            .card-body {
+                padding: 1rem !important;
+            }
+        }
     </style>
 
     <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="card border-0 rounded-3 shadow-sm" style="border-color: var(--secondary-color) background-color: var(--light-color); !important;">
+                <div class="card border-0 rounded-3 shadow-sm" style="background-color: var(--light-color);">
                     <div class="card-header py-3"
-                        style="background: linear-gradient(to right, var(--primary-color), var(--primary-light)); border-radius: 0.375rem 0.375rem 0 0 !important;">
-                        <div class="d-flex justify-content-between align-items-center">
+                        style="background: linear-gradient(to right, var(--primary-color), var(--primary-light)); border-radius: 0.375rem 0.375rem 0 0;">
+                        <div
+                            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                             <h4 class="mb-0 fw-bold text-white">
                                 <i class="fas fa-map-marker-alt me-2"></i>Daftar Alamat Pengiriman
                             </h4>
-                            <div class="d-flex justify-content-center align-items-center gap-2">
+                            <div class="d-flex flex-wrap gap-2">
                                 <a href="{{ route('pembeli.profile.index') }}" class="btn btn-sm"
                                     style="background-color: var(--primary-dark); color: white;">
-                                    <i class="fas fa-arrow-left me-1"></i> Kembali
+                                    <i class="fas fa-arrow-left me-1"></i>
+                                    <span class="d-none d-sm-inline">Kembali</span>
+                                    <span class="d-inline d-sm-none">Back</span>
                                 </a>
                                 <a href="{{ route('pembeli.shipping-address.create') }}" class="btn btn-sm"
                                     style="background-color: var(--primary-dark); color: white;">
-                                    <i class="fas fa-plus me-1"></i>Tambah Alamat
+                                    <i class="fas fa-plus me-1"></i>
+                                    <span class="d-none d-sm-inline">Tambah Alamat</span>
+                                    <span class="d-inline d-sm-none">Tambah</span>
                                 </a>
                             </div>
                         </div>
@@ -66,21 +87,23 @@
 
                     <div class="card-body rounded-3" style="background-color: var(--light-color);">
                         @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show d-flex align-items-center"
-                                role="alert"
-                                style="background-color: rgba(139, 69, 19, 0.1); border-left: 4px solid var(--primary-color);">
-                                <i class="fas fa-check-circle me-2" style="color: var(--primary-color);"></i>
-                                <div>{{ session('success') }}</div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: '{{ session('success') }}',
+                                        confirmButtonColor: '#8B4513'
+                                    });
+                                });
+                            </script>
                         @endif
 
                         <div class="row g-4">
                             @forelse($addresses as $address)
                                 <div class="col-md-6">
-                                    <div class="card h-100 border-0 shadow-sm rounded-3"
-                                        style="{{ $address->is_default ? 'border-left: 4px solid var(--primary-color) !important;' : '' }}">
+                                    <div class="card h-100 border-0 shadow-sm rounded-3 p-3"
+                                        style="{{ $address->is_default ? 'border-left: 4px solid var(--primary-color);' : '' }}">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-start mb-3">
                                                 <div>
@@ -99,7 +122,7 @@
                                                     <button class="btn btn-sm p-0" type="button"
                                                         id="dropdownMenuButton{{ $address->id }}" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"
+                                                        <i class="fas fa-ellipsis-v fs-5"
                                                             style="color: var(--primary-light);"></i>
                                                     </button>
                                                     <ul class="dropdown-menu"
@@ -113,11 +136,11 @@
                                                         <li>
                                                             <form
                                                                 action="{{ route('pembeli.shipping-address.destroy', $address->id) }}"
-                                                                method="POST" class="d-inline">
+                                                                method="POST" class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="dropdown-item text-danger"
-                                                                    onclick="return confirm('Hapus alamat ini?')">
+                                                                <button type="button"
+                                                                    class="dropdown-item text-danger delete-btn">
                                                                     <i class="fas fa-trash me-2"></i> Hapus
                                                                 </button>
                                                             </form>
@@ -174,4 +197,30 @@
             </div>
         </div>
     </div>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: 'Data alamat ini akan dihapus secara permanen!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#aaa',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            btn.closest('form').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

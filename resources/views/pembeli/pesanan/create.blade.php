@@ -34,6 +34,92 @@
             color: var(--primary-dark);
         }
 
+        /* Improved Header Styles */
+        .page-header {
+            position: relative;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+
+        .back-btn-text {
+            display: none;
+        }
+
+        .checkout-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Address Edit Button Styles */
+        .address-edit-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            display: flex;
+            align-items: center;
+            padding: 0.35rem 0.75rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .address-edit-btn:hover {
+            border: 2px solid var(--primary-color);
+        }
+
+        .address-edit-icon {
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .address-edit-text {
+            display: inline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767.98px) {
+            .address-edit-text {
+                display: none;
+            }
+
+            .address-edit-icon {
+                display: inline;
+            }
+
+            .address-edit-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                border-radius: 50%;
+                justify-content: center;
+            }
+
+            .address-card {
+                padding: 1rem !important;
+            }
+
+            .address-details p {
+                margin-bottom: 0.5rem !important;
+                font-size: 0.85rem;
+            }
+        }
+
         .card {
             border-radius: 12px;
             border: none;
@@ -57,7 +143,7 @@
 
         .cart-item {
             transition: all 0.3s ease;
-            padding: 1.5rem;
+            padding: 1rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
@@ -70,8 +156,8 @@
         }
 
         .product-img-container {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 10px;
             overflow: hidden;
             position: relative;
@@ -103,7 +189,7 @@
         .current-price {
             font-weight: 600;
             color: var(--primary-color);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .quantity-selector {
@@ -169,8 +255,8 @@
         }
 
         .payment-icon {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             margin-right: 1rem;
         }
@@ -178,7 +264,7 @@
         .upload-area {
             border: 2px dashed #ddd;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -191,9 +277,9 @@
         }
 
         .upload-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary-light);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .summary-item {
@@ -205,7 +291,7 @@
 
         .summary-total {
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--primary-dark);
         }
 
@@ -231,25 +317,80 @@
         }
 
         /* Responsive adjustments */
-        @media (max-width: 991.98px) {
+        @media (min-width: 768px) {
+            .back-btn {
+                width: auto;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+            }
+
+            .back-btn-text {
+                display: inline;
+                margin-left: 0.5rem;
+            }
+
+            .checkout-title {
+                font-size: 1.75rem;
+            }
+
             .product-img-container {
-                width: 80px;
-                height: 80px;
+                width: 100px;
+                height: 100px;
+            }
+
+            .payment-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .upload-area {
+                padding: 2rem;
+            }
+
+            .upload-icon {
+                font-size: 2.5rem;
             }
         }
 
         @media (max-width: 767.98px) {
+            .page-header {
+                padding: 0.75rem 0;
+                margin-bottom: 1rem;
+            }
+
+            .cart-item {
+                padding: 0.75rem;
+            }
+
             .product-img-container {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
             }
 
             .product-title {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
-            .btn-checkout {
-                padding: 0.75rem;
+            .current-price {
+                font-size: 0.9rem;
+            }
+
+            .payment-method {
+                padding: 0.5rem;
+            }
+
+            .payment-icon {
+                width: 30px;
+                height: 30px;
+                margin-right: 0.75rem;
+            }
+
+            .upload-area {
+                padding: 1rem;
+            }
+
+            .upload-icon {
+                font-size: 1.75rem;
             }
         }
     </style>
@@ -258,19 +399,22 @@
 <body>
     <!-- Main Content -->
     <main>
-        <div class="container py-5">
-            <div class="d-flex align-items-center justify-content-between mb-5">
-                <div>
-                    <h1 class="fw-bold mb-1 text-header">
-                        <i class="fas fa-shopping-cart me-2"></i>Checkout
-                    </h1>
-                    <p class="text-muted mb-0">Lengkapi informasi berikut untuk menyelesaikan pesanan Anda</p>
+        <div class="container py-3 py-md-4 py-lg-5">
+            <!-- Improved Header with back button and title -->
+            <div class="page-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <a href="{{ route('pembeli.keranjang.index') }}" class="back-btn me-2 me-md-3">
+                            <i class="fas fa-chevron-left"></i>
+                            <span class="back-btn-text">Kembali</span>
+                        </a>
+                        <div>
+                            <h1 class="checkout-title mb-0">
+                                <i class="fas fa-shopping-cart me-2"></i>Checkout
+                            </h1>
+                        </div>
+                    </div>
                 </div>
-                <a href="{{ route('pembeli.keranjang.index') }}"
-                    class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
-                    style="background-color: var(--primary-color)">
-                    <i class="fas fa-chevron-left me-2"></i> Kembali
-                </a>
             </div>
 
             @if ($errors->any())
@@ -287,8 +431,11 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-map-marker-alt me-2"></i>Alamat Pengiriman</span>
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                        data-bs-target="#addressModal">Ubah Alamat Pengiriman</button>
+                    <button class="btn address-edit-btn" data-bs-toggle="modal"
+                        data-bs-target="#addressModal">
+                        <span class="address-edit-text"><i class="fas fa-pencil-alt me-2"></i>Ubah Alamat</span>
+                        <i class="fas fa-pencil-alt address-edit-icon"></i>
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="row">

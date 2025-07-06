@@ -72,11 +72,11 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
             Route::get('/{order}', [\App\Http\Controllers\Pembeli\PesananController::class, 'show'])->name('show');
             Route::post('/{id}/update-status', [OrderController::class, 'updateStatus'])->name('update-status');
             Route::post('/', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('store');
-
-            // Rating
-            Route::get('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
-            Route::post('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');
         });
+
+        // Rating
+        Route::get('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
+        Route::post('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');
 
         // Pelayanan Edukasi
         Route::prefix('pelayanan-edukasi')->name('layanan-edukasi.')->group(function () {

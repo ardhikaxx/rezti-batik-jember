@@ -218,45 +218,141 @@
             font-weight: 500;
         }
 
-        /* Dropdown Mobile Fix */
+        /* Improved Mobile Dropdown Styles */
         @media (max-width: 991.98px) {
             .navbar-collapse {
-                padding: 15px 0;
+                background-color: rgba(255, 255, 255, 0.98);
+                padding: 10px;
+                border-radius: 10px;
+                margin-top: 8px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
 
-            .dropdown-menu {
-                position: static !important;
-                transform: none !important;
-                margin-top: 0;
-                border: none;
-                box-shadow: none;
-                background-color: rgba(255, 255, 255, 0.2);
-                animation: none;
+            .navbar-nav {
+                padding-top: 10px;
+            }
+
+            .nav-item {
+                margin-bottom: 5px;
+            }
+
+            .nav-link {
+                padding: 10px 15px !important;
+                margin: 0 !important;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link:hover {
+                background-color: rgba(139, 69, 19, 0.05);
+            }
+
+            .nav-link:after {
                 display: none;
             }
 
-            .dropdown-menu.show {
-                display: block;
+            .nav-cta {
+                margin-left: 0 !important;
+                margin-top: 10px !important;
+                display: inline-block;
+                width: auto;
+            }
+
+            /* Mobile Dropdown Menu */
+            .dropdown-menu {
+                background-color: rgba(255, 255, 255, 0.9);
+                border: none;
+                box-shadow: none;
+                margin-left: 15px;
+                width: calc(100% - 30px);
+                padding: 5px 0;
             }
 
             .dropdown-item {
-                padding: 0.75rem 1.5rem;
-                color: var(--dark-color) !important;
+                padding: 3px 6px;
+                border-radius: 8px;
+                margin: 3px 8px;
+                background-color: rgba(139, 69, 19, 0.05);
             }
 
             .dropdown-item:hover {
                 background-color: rgba(139, 69, 19, 0.1);
+                padding-left: 10px;
             }
 
             .dropdown-divider {
-                margin: 0.25rem 0;
-                border-color: rgba(0, 0, 0, 0.1);
+                margin: 5px 15px;
             }
 
-            .nav-cta.dropdown-toggle {
-                margin-left: 0;
-                margin-top: 10px;
+            /* Adjust dropdown toggle arrow */
+            .dropdown-toggle::after {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
             }
+
+            /* Make sure dropdown stays visible when open */
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+        }
+
+        /* Improved Toggler Button */
+        .navbar-toggler {
+            border: none;
+            padding: 8px 10px;
+            font-size: 1.25rem;
+            color: var(--dark-color);
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+            outline: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            position: relative;
+            width: 24px;
+            height: 2px;
+            background-color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: var(--dark-color);
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
         }
 
         .hero-section {
@@ -1402,7 +1498,7 @@
                             </ul>
                         </li>
                     @else
-                        <li class="nav-item ms-lg-3">
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
                             <a href="{{ route('pembeli.login') }}" class="nav-link nav-cta">
                                 <i class="fas fa-sign-in-alt me-1"></i> Login
                             </a>
@@ -2284,7 +2380,7 @@
         });
 
         // Close mobile menu when clicking a link (except dropdown items)
-        const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+        const navLinks = document.querySelectorAll('.nav-link');
         const navbarCollapse = document.querySelector('.navbar-collapse');
 
         navLinks.forEach(link => {
@@ -2294,77 +2390,6 @@
                     bsCollapse.hide();
                 }
             });
-        });
-
-        // Navbar Dropdown Mobile Fix
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
-                    if (window.innerWidth < 992) { // Only for mobile
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        const dropdownMenu = this.nextElementSibling;
-                        const isOpen = dropdownMenu.classList.contains('show');
-
-                        // Close all other dropdowns
-                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                            if (menu !== dropdownMenu) {
-                                menu.classList.remove('show');
-                            }
-                        });
-
-                        // Toggle current dropdown
-                        dropdownMenu.classList.toggle('show');
-
-                        // Update aria-expanded
-                        this.setAttribute('aria-expanded', !isOpen);
-                    }
-                });
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.dropdown') && window.innerWidth < 992) {
-                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                        menu.classList.remove('show');
-                    });
-                    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-                        toggle.setAttribute('aria-expanded', 'false');
-                    });
-                }
-            });
-
-            // Close dropdown when a dropdown item is clicked
-            document.querySelectorAll('.dropdown-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    if (window.innerWidth < 992) {
-                        const dropdownMenu = this.closest('.dropdown-menu');
-                        if (dropdownMenu) {
-                            dropdownMenu.classList.remove('show');
-                            const toggle = dropdownMenu.previousElementSibling;
-                            if (toggle) {
-                                toggle.setAttribute('aria-expanded', 'false');
-                            }
-                        }
-                    }
-                });
-            });
-
-            // Existing navbar scroll effect
-            window.addEventListener('scroll', function() {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-                updateActiveNavLink();
-            });
-
-            // Rest of your existing JavaScript...
         });
 
         // Initialize active link on page load

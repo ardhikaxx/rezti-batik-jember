@@ -42,6 +42,46 @@
             color: var(--primary-dark);
         }
 
+        /* Improved Header Styles */
+        .page-header {
+            position: relative;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+        
+        .back-btn-text {
+            display: none;
+        }
+        
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+        
+        .cart-badge {
+            font-size: 0.9rem;
+            padding: 0.35rem 0.75rem;
+        }
+
         .cart-item {
             transition: all 0.3s ease;
         }
@@ -174,6 +214,23 @@
         }
 
         /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .back-btn {
+                width: auto;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+            }
+            
+            .back-btn-text {
+                display: inline;
+                margin-left: 0.5rem;
+            }
+            
+            .cart-title {
+                font-size: 1.75rem;
+            }
+        }
+
         @media (max-width: 991.98px) {
             .product-img-container {
                 width: 70px;
@@ -198,6 +255,20 @@
             .btn-checkout {
                 padding: 0.75rem;
             }
+            
+            .page-header {
+                padding: 0.75rem 0;
+                margin-bottom: 1rem;
+            }
+            
+            .cart-title {
+                font-size: 1.25rem;
+            }
+            
+            .cart-badge {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.5rem;
+            }
         }
     </style>
 </head>
@@ -205,21 +276,23 @@
 <body>
     <!-- Main Content -->
     <main>
-        <div class="container py-5">
-            <!-- Header with back button and title -->
-            <div class="d-flex align-items-center justify-content-between h-auto mb-4">
+        <div class="container py-3 py-md-4 py-lg-5">
+            <!-- Improved Header with back button and title -->
+            <div class="page-header">
                 <div class="d-flex align-items-center">
-                    <h1 class="fw-bold text-header mb-0">
-                        <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
-                    </h1>
-                    <span class="badge rounded-pill ms-3 px-3 py-2 fs-6" style="background-color: var(--primary-color)">
-                        {{ $cartItems->sum('quantity') }} Item
-                    </span>
+                    <a href="{{ route('index') }}" class="back-btn me-2 me-md-3">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="back-btn-text">Kembali</span>
+                    </a>
+                    <div class="d-flex align-items-center">
+                        <h1 class="cart-title mb-0">
+                            <i class="fas fa-shopping-cart me-2"></i>Keranjang Saya
+                        </h1>
+                        <span class="badge rounded-pill ms-3 cart-badge" style="background-color: var(--primary-color)">
+                            {{ $cartItems->sum('quantity') }} Item
+                        </span>
+                    </div>
                 </div>
-                <a href="{{ route('index') }}" class="btn btn-primary rounded-2 me-3 border-0 px-3 py-2"
-                    style="background-color: var(--primary-color)">
-                    <i class="fas fa-chevron-left me-2"></i> Kembali
-                </a>
             </div>
 
             <!-- Main Cart Content -->
@@ -261,7 +334,7 @@
                         <div class="card shadow-sm border-0">
                             <div class="card-body p-0">
                                 @foreach ($cartItems as $item)
-                                    <div class="cart-item p-4 border-bottom" data-cart-id="{{ $item->id }}">
+                                    <div class="cart-item p-3 p-md-4 border-bottom" data-cart-id="{{ $item->id }}">
                                         <div class="row align-items-center">
                                             <div class="col-auto">
                                                 <div class="form-check">

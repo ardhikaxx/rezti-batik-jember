@@ -14,36 +14,20 @@
             --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
         }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--light-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
         .profile-container {
             min-height: 100vh;
+            padding: 2rem 0;
         }
 
-        .profile-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-5px);
-        }
-
+        /* Profile Header */
         .profile-header {
             background: var(--gradient);
-            padding: 2rem;
+            padding: 2.5rem 1.5rem;
             color: white;
+            text-align: center;
             position: relative;
             overflow: hidden;
+            border-radius: 15px 15px 0 0;
         }
 
         .profile-header::before {
@@ -53,49 +37,130 @@
             right: -50%;
             width: 100%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
             transform: rotate(30deg);
         }
 
-        .detail-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--secondary-color);
-            transition: all 0.3s ease;
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            color: white;
+            border: 3px solid white;
         }
 
-        .detail-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .member-badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Profile Content */
+        .profile-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-details {
+            margin: 1.5rem 0;
+        }
+
+        .profile-detail-item {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
 
         .detail-icon {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 10px;
             background-color: rgba(139, 69, 19, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
             color: var(--primary-color);
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
+        .detail-text {
+            flex-grow: 1;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-info {
+            color: var(--dark-color);
+            font-size: 1rem;
+            word-break: break-word;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767.98px) {
+            .profile-detail-item {
+                padding: 1rem 0;
+            }
+
+            .detail-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .detail-label {
+                font-size: 0.85rem;
+            }
+
+            .detail-info {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Buttons */
         .btn-edit {
             background: var(--gradient);
             border: none;
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 200px;
         }
 
         .btn-edit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3);
         }
 
         .btn-address {
@@ -106,85 +171,136 @@
             font-weight: 500;
             transition: all 0.3s ease;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-address:hover {
             background: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(93, 41, 6, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(93, 41, 6, 0.3);
         }
 
-        .member-badge {
-            background-color: rgba(210, 180, 140, 0.3);
-            color: var(--light-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
+        /* Alert */
         .custom-alert {
             border-left: 4px solid var(--primary-color);
             background-color: rgba(139, 69, 19, 0.1);
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .custom-alert i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767.98px) {
+            .profile-header {
+                padding: 1.5rem;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .profile-content {
+                padding: 1.5rem;
+            }
+
+            .detail-card {
+                padding: 1.25rem;
+            }
+
+            .detail-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .detail-value {
+                padding-left: 56px;
+                font-size: 1rem;
+            }
+
+            .btn-edit,
+            .btn-address {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 
     <div class="profile-container">
-        <div class="container mt-3">
+        <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="profile-card mb-5">
-                        <div class="profile-header text-center">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <!-- Profile Header -->
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <h2 class="fw-bold mb-1">{{ $pembeli->nama }}</h2>
                             <span class="member-badge">
-                                <i class="fas fa-calendar-alt me-1"></i> 
+                                <i class="fas fa-calendar-alt me-1"></i>
                                 Member sejak {{ $pembeli->created_at->format('d M Y') }}
                             </span>
                         </div>
-                        
-                        <div class="card-body p-3">
+
+                        <!-- Profile Content -->
+                        <div class="profile-content">
                             @if (session('success'))
-                                <div class="alert custom-alert alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
-                                    <i class="fas fa-check-circle me-2" style="color: var(--primary-color); font-size: 1.5rem;"></i>
-                                    <div class="flex-grow-1">{{ session('success') }}</div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="custom-alert">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>{{ session('success') }}</div>
                                 </div>
                             @endif
-                            
-                            <div class="d-flex justify-content-end mb-3">
+
+                            <!-- Edit Profile Button -->
+                            <div class="d-flex justify-content-center mb-4">
                                 <a href="{{ route('pembeli.profile.edit') }}" class="btn btn-edit text-white">
-                                    <i class="fas fa-edit me-1"></i> Edit Profil
+                                    <i class="fas fa-edit me-2"></i> Edit Profil
                                 </a>
                             </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <div class="detail-card h-auto">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="detail-icon">
-                                                <i class="fas fa-envelope"></i>
-                                            </div>
-                                            <h5 class="mb-0 fw-bold" style="color: var(--dark-color);">Email</h5>
+
+                            <!-- Profile Details -->
+                            <div class="profile-details">
+                                <div class="profile-detail-item">
+                                    <div class="detail-content">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-envelope"></i>
                                         </div>
-                                        <p class="ps-5 mb-0">{{ $pembeli->email }}</p>
+                                        <div class="detail-text">
+                                            <div class="detail-label">Email</div>
+                                            <div class="detail-info">{{ $pembeli->email }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6 mb-2">
-                                    <div class="detail-card h-auto">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="detail-icon">
-                                                <i class="fas fa-phone-alt"></i>
-                                            </div>
-                                            <h5 class="mb-0 fw-bold" style="color: var(--dark-color);">Nomor Telepon</h5>
+
+                                <div class="profile-detail-item">
+                                    <div class="detail-content">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-phone-alt"></i>
                                         </div>
-                                        <p class="ps-5 mb-0">{{ $pembeli->no_hp }}</p>
+                                        <div class="detail-text">
+                                            <div class="detail-label">Nomor Telepon</div>
+                                            <div class="detail-info">{{ $pembeli->no_hp }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="mt-2">
+
+                            <!-- Manage Address Button -->
+                            <div class="mt-4">
                                 <a href="{{ route('pembeli.shipping-address.index') }}" class="btn btn-address text-white">
                                     <i class="fas fa-map-marker-alt me-2"></i> Kelola Alamat Pengiriman
                                 </a>
