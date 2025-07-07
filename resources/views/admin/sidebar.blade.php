@@ -1,6 +1,7 @@
 <aside class="sidebar px-0">
     <div class="sidebar-header d-flex align-items-center justify-content-center p-2">
-        <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center justify-content-center text-decoration-none">
+        <a href="{{ route('admin.dashboard') }}"
+            class="d-flex align-items-center justify-content-center text-decoration-none">
             <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Logo" height="75" class="me-2">
         </a>
         <button class="sidebar-toggle btn-close-sidebar d-lg-none">
@@ -53,8 +54,16 @@
             <li class="nav-item">
                 <a href="{{ route('admin.manajemen-admin.index') }}"
                     class="nav-link @if (Request::is('admin/manajemen-admin*')) active @endif">
-                    <i class="fas fa-user-cog me-2"></i>
+                    <i class="fas fa-shield-halved me-2"></i>
                     <span>Manajemen Admin</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('admin.profile.index') }}"
+                    class="nav-link @if (Request::is('admin/profile*')) active @endif">
+                    <i class="fas fa-user-shield me-2"></i>
+                    <span>Profile Saya</span>
                 </a>
             </li>
         </ul>
@@ -62,8 +71,8 @@
 
     <div class="sidebar-footer p-4">
         <div class="d-flex align-items-center">
-            <i class="fas fa-user-shield me-2 text-dark"></i>
-            <h6 class="mb-0 fw-semibold text-dark">{{ Auth::user()->nama_lengkap }}</h6>
+            <i class="fas fa-user-shield me-2"></i>
+            <h6 class="mb-0 fw-semibold">{{ Auth::user()->nama_lengkap }}</h6>
         </div>
     </div>
 </aside>

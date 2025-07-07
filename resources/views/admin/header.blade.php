@@ -7,18 +7,24 @@
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" style="color: var(--primary-color);" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" style="color: var(--primary-color);"
+                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user-shield" style="color: var(--primary-color);"></i>
                     <div class="flex-grow-1 ms-2 d-none d-lg-inline">
-                        <span class="fw-bold" style="color: var(--primary-color);">{{ Auth::user()->nama_lengkap }}</span>
+                        <span class="fw-bold"
+                            style="color: var(--primary-color);">{{ Auth::user()->nama_lengkap }}</span>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                    <li><a class="dropdown-item" style="color: var(--primary-color);" href="#"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
-                    <li><a class="dropdown-item" style="color: var(--primary-color);" href="#"><i class="fas fa-cog me-2"></i> Pengaturan</a></li>
                     <li>
-                        <hr class="dropdown-divider">
+                        <a class="dropdown-item" style="color: var(--primary-color);"
+                            href="{{ route('admin.profile.index') }}"
+                            onmousedown="this.style.background='var(--primary-color)'; this.style.color='var(--light-color)';"
+                            onmouseup="this.style.background=''; this.style.color='var(--primary-color)';">
+                            <i class="fas fa-user me-2"></i> Profil Saya
+                        </a>
                     </li>
+                    <hr class="dropdown-divider">
                     <li>
                         <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}" id="logout-link">
                             <i class="fas fa-sign-out-alt me-2"></i> Keluar
@@ -38,11 +44,11 @@
         // Logout confirmation
         const logoutLink = document.getElementById('logout-link');
         const logoutForm = document.getElementById('logout-form');
-        
+
         if (logoutLink) {
             logoutLink.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 Swal.fire({
                     title: 'Konfirmasi Logout',
                     text: "Apakah Anda yakin ingin keluar dari sistem?",

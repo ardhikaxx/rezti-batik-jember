@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\EducationServiceController;
 use App\Http\Controllers\Admin\ManajemenAdminController;
+use App\Http\Controllers\Admin\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,6 +161,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{id}/edit', [ManajemenAdminController::class, 'edit'])->name('edit');
             Route::put('/{id}', [ManajemenAdminController::class, 'update'])->name('update');
             Route::delete('/{id}', [ManajemenAdminController::class, 'destroy'])->name('destroy');
+        });
+
+        // Profile routes
+        // Inside the admin middleware group in routes/web.php
+        Route::prefix('profile')->name('profile.')->group(function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+            Route::put('/', [ProfileController::class, 'update'])->name('update');
+            Route::put('/password', [ProfileController::class, 'changePassword'])->name('change-password');
         });
     });
 });

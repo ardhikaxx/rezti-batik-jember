@@ -173,7 +173,7 @@
         <div class="col-lg-6 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 fw-bold">Booking Edukasi Terbaru</h6>
+                    <h6 class="m-0 fw-bold">Booking Terbaru</h6>
                     <a href="{{ route('admin.manajemen-pelayanan.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body">

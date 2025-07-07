@@ -23,6 +23,10 @@
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-body text-center">
+                    <div class="profile-picture mb-3">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($customer->nama) }}&background=random&size=150"
+                            class="rounded-circle" alt="Profile Picture">
+                    </div>
                     <h4 class="mb-2">{{ $customer->nama }}</h4>
                     <div class="d-flex justify-content-center mb-3">
                         <div class="px-3 text-center">
