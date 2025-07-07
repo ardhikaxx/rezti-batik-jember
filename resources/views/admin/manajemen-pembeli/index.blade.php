@@ -80,7 +80,7 @@
                             @foreach ($customers->getUrlRange(1, $customers->lastPage()) as $page => $url)
                                 @if ($page == $customers->currentPage())
                                     <li class="page-item active" aria-current="page">
-                                        <span class="page-link">{{ $page }}</span>
+                                        <span class="page-link" style="color: var(--light-color);">{{ $page }}</span>
                                     </li>
                                 @else
                                     <li class="page-item">
