@@ -19,7 +19,7 @@ class ManajemenAdminController extends Controller
                         ->orWhere('email', 'like', '%' . $search . '%');
         })
         ->orderBy('nama_lengkap')
-        ->paginate(10);
+        ->paginate(5);
 
         return view('admin.manajemen-admin.index', compact('admins', 'search'));
     }
