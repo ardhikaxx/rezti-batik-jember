@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Admin - Reztis Batik</title>
+    <title>Reset Password - Reztis Batik Admin</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/logo-brand.png') }}" type="image/x-icon">
@@ -73,16 +73,6 @@
             box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
         }
 
-        .form-check-input:checked {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .form-forgot a {
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
@@ -108,10 +98,6 @@
             border-right: none;
         }
 
-        .email-input {
-            border-left: none;
-        }
-
         .password-input {
             border-left: none;
         }
@@ -119,6 +105,21 @@
         .logo {
             width: 80px;
             margin-bottom: 1rem;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .back-to-login a {
+            color: var(--primary-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .toggle-password {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -130,45 +131,31 @@
                 <div class="login-card mx-auto">
                     <div class="login-header">
                         <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik" class="logo">
-                        <h3>Admin Panel</h3>
-                        <p>Silakan masuk untuk mengakses dashboard</p>
+                        <h3>Reset Password Admin</h3>
+                        <p>Buat password baru untuk akun Anda</p>
                     </div>
 
                     <div class="login-body">
-                        <form method="POST" action="{{ route('admin.login.submit') }}">
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('admin.password.update') }}">
                             @csrf
 
-                            @if (session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                </div>
-                            @endif
+                            <input type="hidden" name="email" value="{{ $email }}">
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Alamat Email</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email"
-                                        class="form-control email-input @error('email') is-invalid @enderror"
-                                        id="email" name="email" value="{{ old('email') }}" required
-                                        autocomplete="email" autofocus>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" class="form-label">Password Baru</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input type="password"
                                         class="form-control password-input @error('password') is-invalid @enderror"
-                                        id="password" name="password" required autocomplete="current-password">
+                                        id="password" name="password" required autocomplete="new-password">
                                     <button class="input-group-text toggle-password" type="button">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -180,25 +167,29 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-row justify-content-between align-items-center mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" 
-                                        {{ old('remember') || Cookie::get('remember_email') ? 'checked' : '' }}>
-                                    <label class="form-check-label fw-semibold" style="color: var(--primary-dark)" for="remember">
-                                        Ingat Saya
-                                    </label>
-                                </div>
-                                <div class="form-forgot">
-                                    <a href="{{ route('admin.password.request') }}" class="text-decoration-none">Lupa Password?</a>
+                            <div class="mb-3">
+                                <label for="password-confirm" class="form-label">Konfirmasi Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control password-input"
+                                        id="password-confirm" name="password_confirmation" required
+                                        autocomplete="new-password">
+                                    <button class="input-group-text toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                 </div>
                             </div>
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Masuk
+                                    <i class="fas fa-save me-2"></i> Simpan Password Baru
                                 </button>
                             </div>
                         </form>
+
+                        <div class="back-to-login">
+                            <a href="{{ route('admin.login') }}"><i class="fas fa-arrow-left me-2"></i>Kembali ke Login</a>
+                        </div>
                     </div>
 
                     <div class="login-footer">
@@ -224,7 +215,7 @@
             });
         @endif
 
-        @if ($errors->any())
+        @if ($errors->any()))
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
@@ -232,8 +223,7 @@
                 confirmButtonColor: '#8B4513'
             });
         @endif
-    </script>
-    <script>
+
         // Toggle password visibility
         document.querySelectorAll('.toggle-password').forEach(button => {
             button.addEventListener('click', function() {

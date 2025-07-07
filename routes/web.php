@@ -106,6 +106,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+
+        // route lupa password
+        Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+        Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+        Route::get('/reset-password', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+        Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
     });
 
     // Logout route (accessible when authenticated)
