@@ -388,6 +388,26 @@
             z-index: 2;
         }
 
+        .hero-logo {
+            max-width: 200px;
+            width: 50%;
+        }
+
+        @media (min-width: 768px) {
+            .hero-logo {
+                max-width: 250px;
+                width: 30%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .hero-logo {
+                max-width: 300px;
+                width: 25%;
+            }
+        }
+
+
         .hero-title {
             font-family: 'Sriwedari', sans-serif;
             color: #fff;
@@ -1627,7 +1647,7 @@
             <div class="row">
                 <div class="col-lg-10 mx-auto text-center hero-content">
                     <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik"
-                        class="w-25 mb-3 animate__animated animate__fadeInDown" data-aos="fade-down"
+                        class="img-fluid hero-logo mb-3 animate__animated animate__fadeInDown" data-aos="fade-down"
                         data-aos-duration="1000">
                     <h1 class="hero-title animate__animated animate__fadeInDown" data-aos="fade-down"
                         data-aos-duration="1000">Batik Premium Khas Jember</h1>
