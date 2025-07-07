@@ -7,21 +7,20 @@
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" style="color: var(--primary-color);" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-shield" style="color: var(--primary-color);"></i>
                     <div class="flex-grow-1 ms-2 d-none d-lg-inline">
-                        <i class="fas fa-user-shield me-2 text-dark"></i>
-                        <span class="fw-bold text-dark">{{ Auth::user()->nama_lengkap }}</span>
+                        <span class="fw-bold" style="color: var(--primary-color);">{{ Auth::user()->nama_lengkap }}</span>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Pengaturan</a></li>
+                    <li><a class="dropdown-item" style="color: var(--primary-color);" href="#"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
+                    <li><a class="dropdown-item" style="color: var(--primary-color);" href="#"><i class="fas fa-cog me-2"></i> Pengaturan</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.logout') }}" id="logout-link">
+                        <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}" id="logout-link">
                             <i class="fas fa-sign-out-alt me-2"></i> Keluar
                         </a>
                         <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">

@@ -80,7 +80,7 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow-sm mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Grafik Penjualan 6 Bulan Terakhir</h6>
+                    <h6 class="m-0 fw-bold">Grafik Penjualan 6 Bulan Terakhir</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -94,7 +94,7 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow-sm mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Statistik Produk</h6>
+                    <h6 class="m-0 fw-bold">Statistik Produk</h6>
                 </div>
                 <div class="card-body">
                     <h4 class="small font-weight-bold">Total Produk <span class="float-right">{{ $totalProducts }}</span>
@@ -129,7 +129,7 @@
         <div class="col-lg-6 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Pesanan Terbaru</h6>
+                    <h6 class="m-0 fw-bold">Pesanan Terbaru</h6>
                     <a href="{{ route('admin.manajemen-pesanan.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body">
@@ -173,7 +173,7 @@
         <div class="col-lg-6 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Booking Edukasi Terbaru</h6>
+                    <h6 class="m-0 fw-bold">Booking Edukasi Terbaru</h6>
                     <a href="{{ route('admin.manajemen-pelayanan.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body">
