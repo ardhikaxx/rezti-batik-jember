@@ -9,12 +9,17 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Pembeli::withCount(['orders'])
+        $search = $request->input('search');
+        
+        $customers = Pembeli::when($search, function($query) use ($search) {
+                return $query->where('nama', 'like', '%'.$search.'%');
+            })
+            ->withCount(['orders'])
             ->withSum('orders', 'total')
             ->latest()
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.manajemen-pembeli.index', compact('customers'));
     }
