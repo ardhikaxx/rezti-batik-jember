@@ -12,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
@@ -803,6 +804,113 @@
             z-index: 1;
         }
 
+        /* Improved Testimonial Slider Layout */
+        .testimonial-section .row {
+            position: relative;
+            padding-bottom: 70px;
+            /* Space for navigation buttons */
+        }
+
+        .swiper.mySwiper {
+            width: 100%;
+            overflow: visible;
+        }
+
+        .swiper-wrapper {
+            padding: 20px 0 40px;
+            /* Extra space for card shadows */
+            box-sizing: border-box;
+        }
+
+        .swiper-slide {
+            width: auto;
+            /* Allow slides to take their natural width */
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        /* Navigation buttons positioning */
+        .swiper-button-next,
+        .swiper-button-prev {
+            position: absolute;
+            top: auto;
+            bottom: 0;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.15);
+            z-index: 10;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .swiper-button-prev {
+            left: 50%;
+            transform: translateX(calc(-50% - 30px));
+        }
+
+        .swiper-button-next {
+            right: 50%;
+            transform: translateX(calc(50% + 30px));
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(calc(-50% - 30px)) scale(1.1);
+        }
+
+        .swiper-button-next:hover {
+            transform: translateX(calc(50% + 30px)) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-section .row {
+                padding-bottom: 60px;
+            }
+
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 42px;
+                height: 42px;
+            }
+
+            .swiper-button-prev {
+                transform: translateX(calc(-50% - 25px));
+            }
+
+            .swiper-button-next {
+                transform: translateX(calc(50% + 25px));
+            }
+
+            .swiper-button-next:hover,
+            .swiper-button-prev:hover {
+                transform: translateX(calc(-50% - 25px)) scale(1.1);
+            }
+
+            .swiper-button-next:hover {
+                transform: translateX(calc(50% + 25px)) scale(1.1);
+            }
+        }
+
+        .swiper {
+            z-index: 99;
+            width: 100%;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+        }
+
         .testimonial-card {
             background: white;
             border-radius: 16px;
@@ -957,7 +1065,11 @@
             }
 
             .testimonial-card {
-                margin-bottom: 30px;
+                width: 350px;
+            }
+
+            .testimonial-text {
+                margin-bottom: 10px;
             }
         }
 
@@ -1676,12 +1788,11 @@
                     </div>
                 </div>
 
-                <div class="bento-card stats-card rounded-4 p-4 bg-primary text-white">
-                    <div class="d-flex flex-column h-100 justify-content-center">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-user fs-1 me-2"></i>
-                            <h3 class="fw-bold mb-2 text-white">500+ Peserta</h3>
-                        </div>
+                <div class="bento-card stats-card rounded-4 p-4 bg-primary text-white text-center shadow-sm">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100 gap-2">
+                        <i class="fas fa-user fs-1 fs-md-2 fs-lg-3 mb-1" style="font-size: large;"></i>
+                        <h2 class="fw-bold mb-0" style="color: var(--light-color);">500+</h2>
+                        <h4 class="text-uppercase fw-bold mb-0" style="color: var(--light-color);">Peserta</h4>
                         <p class="small opacity-75 mb-0">Telah mengikuti workshop kami</p>
                     </div>
                 </div>
@@ -1775,53 +1886,62 @@
                 <p class="subtitle">Testimoni asli dari pelanggan yang sudah membeli produk kami</p>
             </div>
             <div class="row">
-                @forelse($ratings as $rating)
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                            <div class="testimonial-content">
-                                <div class="testimonial-product-img">
-                                    <img src="{{ asset($rating->product->image) }}" class="img-fluid"
-                                        alt="{{ $rating->product->name }}">
-                                </div>
+                <div class="col-12 px-0"> <!-- Full width container -->
+                    <div class="swiper mySwiper" data-aos="fade-up">
+                        <div class="swiper-wrapper">
+                            @forelse($ratings as $rating)
+                                <div class="swiper-slide">
+                                    <div class="testimonial-card">
+                                        <div class="testimonial-content">
+                                            <div class="testimonial-product-img">
+                                                <img src="{{ asset($rating->product->image) }}" class="img-fluid"
+                                                    alt="{{ $rating->product->name }}">
+                                            </div>
 
-                                <p class="testimonial-text">
-                                    {{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}
-                                </p>
+                                            <p class="testimonial-text">
+                                                {{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}
+                                            </p>
 
-                                <div class="testimonial-meta">
-                                    <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
-                                    <p class="testimonial-product">{{ $rating->product->name }}</p>
+                                            <div class="testimonial-meta">
+                                                <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
+                                                <p class="testimonial-product">{{ $rating->product->name }}</p>
 
-                                    <div class="testimonial-rating">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $rating->rating)
-                                                <i class="fas fa-star text-warning"></i>
-                                            @else
-                                                <i class="fas fa-star text-muted"></i>
-                                            @endif
-                                        @endfor
+                                                <div class="testimonial-rating">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $rating->rating)
+                                                            <i class="fas fa-star text-warning"></i>
+                                                        @else
+                                                            <i class="fas fa-star text-muted"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+
+                                                <span class="testimonial-date">
+                                                    {{ $rating->created_at->format('d M Y') }}
+                                                </span>
+                                            </div>
+
+                                            <div class="testimonial-quote-icon">
+                                                <i class="fas fa-quote-right"></i>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <span class="testimonial-date">
-                                        {{ $rating->created_at->format('d M Y') }}
-                                    </span>
                                 </div>
-
-                                <div class="testimonial-quote-icon">
-                                    <i class="fas fa-quote-right"></i>
+                            @empty
+                                <div class="swiper-slide">
+                                    <div class="alert alert-warning text-center p-4"
+                                        style="background: rgba(139, 69, 19, 0.1); border-color: var(--primary-light); color: var(--primary-dark);">
+                                        <i class="fa-solid fa-comment-slash me-2"></i>
+                                        Belum ada testimoni dari pelanggan
+                                    </div>
                                 </div>
-                            </div>
+                            @endforelse
                         </div>
                     </div>
-                @empty
-                    <div class="col-12 text-center py-4" data-aos="fade-up">
-                        <div class="alert alert-warning"
-                            style="background: rgba(139, 69, 19, 0.1); border-color: var(--primary-light); color: var(--primary-dark);">
-                            <i class="fa-solid fa-comment-slash me-2"></i>
-                            Belum ada testimoni dari pelanggan
-                        </div>
-                    </div>
-                @endforelse
+                    <!-- Navigation buttons outside swiper but inside container -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -2145,13 +2265,30 @@
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome JS CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-    <!-- AOS Animation JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2
+                }, // Tablet
+                992: {
+                    slidesPerView: 3
+                } // Desktop
+            }
+        });
+    </script>
+
     <script>
         // Handle education service booking
         document.querySelector('.add-service-education').addEventListener('click', function(e) {
