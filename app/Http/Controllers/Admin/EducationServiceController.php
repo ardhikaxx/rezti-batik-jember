@@ -8,13 +8,36 @@ use Illuminate\Http\Request;
 
 class EducationServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'latest');
+        $status = $request->input('status');
+        
+        $monthlyRevenue = EducationService::where('status', 'confirmed')
+            ->whereMonth('created_at', now()->month)
+            ->sum('total_price');
+            
         $bookings = EducationService::with('pembeli')
-            ->latest()
-            ->paginate(10);
+            ->when($search, function($query) use ($search) {
+                return $query->whereHas('pembeli', function($q) use ($search) {
+                    $q->where('nama', 'like', '%'.$search.'%');
+                });
+            })
+            ->when($sort, function($query) use ($sort) {
+                return $sort === 'latest' 
+                    ? $query->latest() 
+                    : $query->oldest();
+            })
+            ->when($status, function($query) use ($status) {
+                return $query->where('status', $status);
+            })
+            ->paginate(5);
 
-        return view('admin.manajemen-pelayanan.index', compact('bookings'));
+        return view('admin.manajemen-pelayanan.index', [
+            'bookings' => $bookings,
+            'monthlyRevenue' => $monthlyRevenue
+        ]);
     }
 
     public function show($id)
@@ -30,7 +53,7 @@ class EducationServiceController extends Controller
         $booking = EducationService::findOrFail($id);
 
         $request->validate([
-            'status' => 'required|in:pending,confirmed,completed,cancelled'
+            'status' => 'required|in:pending,confirmed,cancelled'
         ]);
 
         $booking->update([
