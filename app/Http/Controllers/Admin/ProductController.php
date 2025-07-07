@@ -6,19 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
-        $products = Product::when($search, function($query) use ($search) {
-            return $query->where('name', 'like', '%'.$search.'%');
+
+        $products = Product::when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%' . $search . '%');
         })
-        ->latest()
-        ->paginate(5);
-        
+            ->latest()
+            ->paginate(5);
+
         return view('admin.manajemen-produk.index', compact('products'));
     }
 
@@ -46,9 +47,12 @@ class ProductController extends Controller
 
         // Handle upload gambar
         $image = $request->file('image');
-        $imageName = time() . '_' . $image->getClientOriginalName();
-        $image->move($uploadPath, $imageName);
-        $imagePath = 'product/' . $imageName;
+        // Buat nama unik
+        $slug = Str::slug($request->name);
+        $uniqueName = $slug . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+        $image->move($uploadPath, $uniqueName);
+        $imagePath = 'product/' . $uniqueName;
 
         Product::create([
             'name' => $request->name,
@@ -96,7 +100,7 @@ class ProductController extends Controller
             if (File::exists($oldImagePath)) {
                 File::delete($oldImagePath);
             }
-            
+
             // Upload gambar baru
             $uploadPath = public_path('product');
             $image = $request->file('image');
@@ -114,13 +118,13 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        
+
         // Hapus gambar dari folder public/product
         $imagePath = public_path($product->image);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
-        
+
         $product->delete();
 
         return redirect()->route('admin.data-barang.index')

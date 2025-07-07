@@ -11,11 +11,11 @@ class AdminSeeder extends Seeder
     public function run()
     {
         Admin::create([
-            'nama_lengkap' => 'Ratih Ayu Maharani',
-            'telepon' => '081234567890',
+            'nama_lengkap' => 'Admin Restis Batik',
+            'telepon' => '081246833799',
             'jenis_kelamin' => 'Perempuan',
-            'email' => 'admin@reztisbatik.com',
-            'password' => Hash::make('password123'),
+            'email' => 'reztisbatik@gmail.com',
+            'password' => Hash::make('12341234'),
         ]);
     }
 }

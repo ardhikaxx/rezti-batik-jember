@@ -71,8 +71,8 @@
 
     <div class="sidebar-footer p-4">
         <div class="d-flex align-items-center">
-            <i class="fas fa-user-shield me-2"></i>
-            <h6 class="mb-0 fw-semibold">{{ Auth::user()->nama_lengkap }}</h6>
+            <i class="fas fa-user-shield me-2" style="color: var(--primary-color);"></i>
+            <h6 class="mb-0 fw-semibold" style="color: var(--primary-color);">{{ Auth::user()->nama_lengkap }}</h6>
         </div>
     </div>
 </aside>

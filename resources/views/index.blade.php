@@ -1907,60 +1907,61 @@
             </div>
             <div class="row">
                 <div class="col-12 px-0"> <!-- Full width container -->
-                    <div class="swiper mySwiper" data-aos="fade-up">
-                        <div class="swiper-wrapper">
-                            @forelse($ratings as $rating)
-                                <div class="swiper-slide">
-                                    <div class="testimonial-card">
-                                        <div class="testimonial-content">
-                                            <div class="testimonial-product-img">
-                                                <img src="{{ asset($rating->product->image) }}" class="img-fluid"
-                                                    alt="{{ $rating->product->name }}">
-                                            </div>
-
-                                            <p class="testimonial-text">
-                                                {{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}
-                                            </p>
-
-                                            <div class="testimonial-meta">
-                                                <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
-                                                <p class="testimonial-product">{{ $rating->product->name }}</p>
-
-                                                <div class="testimonial-rating">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $rating->rating)
-                                                            <i class="fas fa-star text-warning"></i>
-                                                        @else
-                                                            <i class="fas fa-star text-muted"></i>
-                                                        @endif
-                                                    @endfor
+                    @if ($ratings->count() > 0)
+                        <div class="swiper mySwiper" data-aos="fade-up">
+                            <div class="swiper-wrapper">
+                                @foreach ($ratings as $rating)
+                                    <div class="swiper-slide">
+                                        <div class="testimonial-card">
+                                            <div class="testimonial-content">
+                                                <div class="testimonial-product-img">
+                                                    <img src="{{ asset($rating->product->image) }}" class="img-fluid"
+                                                        alt="{{ $rating->product->name }}">
                                                 </div>
 
-                                                <span class="testimonial-date">
-                                                    {{ $rating->created_at->format('d M Y') }}
-                                                </span>
-                                            </div>
+                                                <p class="testimonial-text">
+                                                    {{ $rating->comment ?: 'Produk sangat bagus dan berkualitas' }}
+                                                </p>
 
-                                            <div class="testimonial-quote-icon">
-                                                <i class="fas fa-quote-right"></i>
+                                                <div class="testimonial-meta">
+                                                    <h4 class="testimonial-name">{{ $rating->pembeli->nama }}</h4>
+                                                    <p class="testimonial-product">{{ $rating->product->name }}</p>
+
+                                                    <div class="testimonial-rating">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $rating->rating)
+                                                                <i class="fas fa-star text-warning"></i>
+                                                            @else
+                                                                <i class="fas fa-star text-muted"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+
+                                                    <span class="testimonial-date">
+                                                        {{ $rating->created_at->format('d M Y') }}
+                                                    </span>
+                                                </div>
+
+                                                <div class="testimonial-quote-icon">
+                                                    <i class="fas fa-quote-right"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="swiper-slide">
-                                    <div class="alert alert-warning text-center p-4"
-                                        style="background: rgba(139, 69, 19, 0.1); border-color: var(--primary-light); color: var(--primary-dark);">
-                                        <i class="fa-solid fa-comment-slash me-2"></i>
-                                        Belum ada testimoni dari pelanggan
-                                    </div>
-                                </div>
-                            @endforelse
+                                @endforeach
+                            </div>
+                            <!-- Navigation buttons outside swiper but inside container -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
                         </div>
-                    </div>
-                    <!-- Navigation buttons outside swiper but inside container -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    @else
+                        <div class="text-center py-5" data-aos="fade-up">
+                            <i class="fas fa-comment-dots fa-4x mb-3" style="color: var(--primary-color);"></i>
+                            <h4>Belum Ada Testimoni</h4>
+                            <p style="color: var(--primary-color)">Jadilah yang pertama memberikan testimoni dengan
+                                membeli produk kami</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -2043,7 +2044,7 @@
                             </div>
                             <div class="contact-text">
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Telepon/WhatsApp</h5>
-                                <p style="opacity: 0.9; margin-bottom: 0;">085104362229</p>
+                                <p style="opacity: 0.9; margin-bottom: 0;">081246833799</p>
                             </div>
                         </div>
 
@@ -2115,77 +2116,45 @@
                 <!-- Contact Form -->
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="contact-form p-4 p-lg-5 h-100"
-                        style="
-                    background: white;
-                    border-radius: 20px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-                ">
+                        style=" background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
                         <h3 class="mb-4" style="font-weight: 700;">Kirim Pesan</h3>
                         <p class="mb-4" style="color: #777;">Isi form berikut dan kami akan segera menghubungi Anda
                         </p>
 
-                        <form>
+                        <form id="whatsappForm">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <div class="form-floating">
+                                    <div class="form-container">
                                         <input type="text" class="form-control" id="name"
                                             placeholder="Nama Lengkap"
-                                            style="
-                                        height: 55px;
-                                        border-radius: 10px;
-                                        border: 1px solid #e0e0e0;
-                                        padding: 10px 15px;
-                                    ">
-                                        <label for="name">Nama Lengkap</label>
+                                            style="height: 55px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 10px 15px;"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email"
-                                            placeholder="Alamat Email"
-                                            style="
-                                        height: 55px;
-                                        border-radius: 10px;
-                                        border: 1px solid #e0e0e0;
-                                        padding: 10px 15px;
-                                    ">
-                                        <label for="email">Alamat Email</label>
+                                    <div class="form-container">
+                                        <input type="tel" class="form-control" id="phone"
+                                            placeholder="Nomor WhatsApp Anda"
+                                            style="height: 55px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 10px 15px;"required>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-floating mt-3">
+                            <div class="form-container mt-3">
                                 <input type="text" class="form-control" id="subject" placeholder="Subjek"
-                                    style="
-                                height: 55px;
-                                border-radius: 10px;
-                                border: 1px solid #e0e0e0;
-                                padding: 10px 15px;
-                            ">
-                                <label for="subject">Subjek</label>
+                                    style="height: 55px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 10px 15px;"
+                                    required>
                             </div>
 
-                            <div class="form-floating mt-3">
+                            <div class="form-container mt-3">
                                 <textarea class="form-control" id="message" placeholder="Pesan Anda"
-                                    style="
-                                height: 150px;
-                                border-radius: 10px;
-                                border: 1px solid #e0e0e0;
-                                padding: 15px;
-                            "></textarea>
-                                <label for="message">Pesan Anda</label>
+                                    style="height: 150px; border-radius: 10px; border: 1px solid #e0e0e0;padding: 15px;" required></textarea>
                             </div>
 
                             <div class="mt-4 d-flex align-items-center">
                                 <button type="submit" class="btn btn-primary px-4 py-3"
-                                    style="
-                                background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-                                border: none;
-                                font-weight: 600;
-                                letter-spacing: 0.5px;
-                                border-radius: 10px;
-                            ">
-                                    <i class="fas fa-paper-plane me-2"></i> Kirim Pesan
+                                    style=" background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); border: none; font-weight: 600; letter-spacing: 0.5px; border-radius: 10px;">
+                                    <i class="fab fa-whatsapp me-2"></i> Kirim via WhatsApp
                                 </button>
                             </div>
                         </form>
@@ -2308,7 +2277,35 @@
             }
         });
     </script>
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !phone || !subject || !message) {
+                alert('Harap lengkapi semua field!');
+                return;
+            }
+
+            let formattedNoPengirim = phone.replace(/\D/g, '');
+
+            if (formattedNoPengirim.startsWith('0')) {
+                formattedNoPengirim = '62' + formattedNoPengirim.substring(1);
+            } else if (!formattedNoPengirim.startsWith('62')) {
+                formattedNoPengirim = '62' + formattedNoPengirim;
+            }
+            const pesan =
+                `Halo, saya ${name} (https://wa.me/${formattedNoPengirim}).\n\nSubjek: ${subject}\n\nPesan:\n${message}\n\nDikirim melalui website.`;
+            const encodedPesan = encodeURIComponent(pesan);
+            const nomorTujuan = '6281246833799';
+            window.open(`https://wa.me/${nomorTujuan}?text=${encodedPesan}`, '_blank');
+            this.reset();
+        });
+    </script>
     <script>
         // Handle education service booking
         document.querySelector('.add-service-education').addEventListener('click', function(e) {

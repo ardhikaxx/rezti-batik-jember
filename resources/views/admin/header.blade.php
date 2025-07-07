@@ -26,7 +26,8 @@
                     </li>
                     <hr class="dropdown-divider">
                     <li>
-                        <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}" id="logout-link">
+                        <a class="dropdown-item" href="{{ route('admin.logout') }}" style="color: #db1514;" id="logout-link" onmousedown="this.style.background='var(--primary-color)'; this.style.color='var(--light-color)';"
+                            onmouseup="this.style.background=''; this.style.color='var(--primary-color)';">
                             <i class="fas fa-sign-out-alt me-2"></i> Keluar
                         </a>
                         <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
