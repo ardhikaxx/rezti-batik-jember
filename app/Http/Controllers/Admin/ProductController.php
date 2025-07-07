@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->paginate(10);
+        $search = $request->input('search');
+        
+        $products = Product::when($search, function($query) use ($search) {
+            return $query->where('name', 'like', '%'.$search.'%');
+        })
+        ->latest()
+        ->paginate(5);
+        
         return view('admin.manajemen-produk.index', compact('products'));
     }
 
