@@ -1,7 +1,7 @@
 <header class="navbar navbar-expand navbar-light sticky-top px-4 py-3 shadow-sm">
     <div class="navbar-collapse collapse">
         <div class="d-flex align-items-center">
-            <i class="fas fa-bars sidebar-toggle me-3 d-lg-none"></i>
+            <i class="fas fa-bars sidebar-toggle me-3 d-lg-none" style="cursor: pointer;"></i>
             <h4 class="mb-0">@yield('page-title')</h4>
         </div>
 

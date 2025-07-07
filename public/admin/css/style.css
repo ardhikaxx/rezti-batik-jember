@@ -23,6 +23,7 @@
     transition: all 0.3s;
     position: fixed;
     z-index: 1000;
+    transition: all 0.3s ease;
 }
 
 .sidebar-header {
@@ -71,6 +72,132 @@
     bottom: 0;
     width: 100%;
     background: #fff;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sidebar Close Button Styles */
+.btn-close-sidebar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-close-sidebar:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.btn-close-sidebar i {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+/* Sidebar Header Adjustment */
+.sidebar-header {
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Overlay Enhancement */
+.sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+}
+
+/* Mobile Sidebar Animation */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .sidebar, .sidebar.show {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-close-sidebar {
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        right: 10px;
+        top: 25%;
+    }
+}
+
+/* Untuk tampilan mobile */
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        left: -300px;
+        top: 0;
+        bottom: 0;
+        z-index: 1050;
+        width: 300px;
+        background: #fff;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar.show {
+        left: 0;
+    }
+    
+    .sidebar-toggle {
+        cursor: pointer;
+    }
+    
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .main {
+        margin-left: 0;
+    }
 }
 
 /* Main Content Styles */

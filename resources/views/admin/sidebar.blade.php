@@ -3,8 +3,8 @@
         <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center justify-content-center text-decoration-none">
             <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Logo" height="80" class="me-2">
         </a>
-        <button class="sidebar-toggle d-lg-none">
-            <i class="fas fa-times"></i>
+        <button class="sidebar-toggle btn-close-sidebar d-lg-none">
+            <i class="fas fa-times text-white"></i>
         </button>
     </div>
 
@@ -33,7 +33,7 @@
                     <span>Pelanggan</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a href="{{ route('admin.manajemen-pesanan.index') }}"
                     class="nav-link @if (Request::is('admin/manajemen-pesanan*')) active @endif">
@@ -41,7 +41,7 @@
                     <span>Manajemen Pesanan</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a href="{{ route('admin.manajemen-pelayanan.index') }}"
                     class="nav-link @if (Request::is('admin/manajemen-pelayanan*')) active @endif">
@@ -49,7 +49,7 @@
                     <span>Manajemen Pelayanan</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a href="{{ route('admin.manajemen-admin.index') }}"
                     class="nav-link @if (Request::is('admin/manajemen-admin*')) active @endif">

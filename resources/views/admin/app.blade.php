@@ -24,6 +24,9 @@
         <!-- Sidebar -->
         @include('admin.sidebar')
 
+        <!-- Overlay untuk mobile -->
+        <div class="sidebar-overlay"></div>
+
         <div class="main">
             <!-- Header -->
             @include('admin.header')
@@ -88,6 +91,55 @@
                 timer: 3000
             });
         @endif
+
+        // Sidebar toggle for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const barsToggle = document.querySelector('.fa-bars.sidebar-toggle');
+            const sidebarClose = document.querySelector('.btn-close-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+
+            // Toggle sidebar when hamburger menu is clicked
+            if (barsToggle) {
+                barsToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sidebar.classList.add('show');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when sidebar is open
+                });
+            }
+
+            // Close sidebar when close button is clicked
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = ''; // Re-enable scrolling
+                });
+            }
+
+            // Close sidebar when overlay is clicked
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = ''; // Re-enable scrolling
+                });
+            }
+
+            // Close sidebar when clicking on nav links (mobile)
+            const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 992) {
+                        sidebar.classList.remove('show');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = ''; // Re-enable scrolling
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
