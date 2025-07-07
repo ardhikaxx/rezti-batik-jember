@@ -8,11 +8,23 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'latest');
+        
         $orders = Order::with(['pembeli', 'items.product'])
-            ->latest()
-            ->paginate(10);
+            ->when($search, function($query) use ($search) {
+                return $query->whereHas('pembeli', function($q) use ($search) {
+                    $q->where('nama', 'like', '%'.$search.'%');
+                });
+            })
+            ->when($sort, function($query) use ($sort) {
+                return $sort === 'latest' 
+                    ? $query->latest() 
+                    : $query->oldest();
+            })
+            ->paginate(5);
 
         return view('admin.manajemen-pesanan.index', compact('orders'));
     }
