@@ -316,6 +316,72 @@
             transform: translateY(0);
         }
 
+        /* Add Address Modal Styles */
+        #addAddressModal .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #addAddressModal .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--light-color);
+            border-radius: 12px 12px 0 0;
+        }
+
+        #addAddressModal .modal-title {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        #addAddressModal .form-control,
+        #addAddressModal .form-select {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 0.5rem 0.75rem;
+        }
+
+        #addAddressModal .form-control:focus,
+        #addAddressModal .form-select:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.1);
+        }
+
+        #addAddressModal .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #addAddressModal .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        #addAddressModal .btn-secondary {
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+        }
+
+        .swal2-popup {
+            font-family: 'Poppins', sans-serif;
+            border-radius: 12px;
+        }
+
+        .swal2-confirm {
+            background-color: var(--primary-color) !important;
+            border: none !important;
+        }
+
+        .swal2-confirm:hover {
+            background-color: var(--primary-dark) !important;
+        }
+
+        .swal2-title {
+            color: var(--primary-dark);
+        }
+
         /* Responsive adjustments */
         @media (min-width: 768px) {
             .back-btn {
@@ -417,6 +483,19 @@
                 </div>
             </div>
 
+            @if (session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: '{{ session('success') }}',
+                            confirmButtonColor: '#8B4513'
+                        });
+                    });
+                </script>
+            @endif
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
@@ -431,8 +510,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-map-marker-alt me-2"></i>Alamat Pengiriman</span>
-                    <button class="btn address-edit-btn" data-bs-toggle="modal"
-                        data-bs-target="#addressModal">
+                    <button class="btn address-edit-btn" data-bs-toggle="modal" data-bs-target="#addressModal">
                         <span class="address-edit-text"><i class="fas fa-pencil-alt me-2"></i>Ubah Alamat</span>
                         <i class="fas fa-pencil-alt address-edit-icon"></i>
                     </button>
@@ -532,10 +610,71 @@
                             @endif
                         </div>
                         <div class="modal-footer">
-                            <a href="{{ route('pembeli.shipping-address.create') }}" class="btn btn-primary">Tambah
-                                Alamat</a>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addAddressModal" data-bs-dismiss="modal">
+                                <i class="fas fa-plus me-1"></i> Tambah Alamat
+                            </button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Address Modal -->
+            <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addAddressModalLabel">Tambah Alamat Pengiriman Baru</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('pembeli.pesanan.storeAddress') }}" method="POST" id="addressForm">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="recipient_name" class="form-label">Nama Penerima</label>
+                                    <input type="text" class="form-control" id="recipient_name"
+                                        name="recipient_name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone_number" class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Alamat Lengkap</label>
+                                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="province" class="form-label">Provinsi</label>
+                                        <input type="text" class="form-control" id="province" name="province">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="city" class="form-label">Kota/Kabupaten</label>
+                                        <input type="text" class="form-control" id="city" name="city">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="district" class="form-label">Kecamatan</label>
+                                        <input type="text" class="form-control" id="district" name="district">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="postal_code" class="form-label">Kode Pos</label>
+                                        <input type="text" class="form-control" id="postal_code"
+                                            name="postal_code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Simpan Alamat</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -710,7 +849,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Function to handle address selection
+        $('#addAddressModal').on('hidden.bs.modal', function() {
+            document.getElementById('addressForm').reset();
+        });
+
         function selectAddress(addressId) {
             $('#addressModal').modal('hide');
 
@@ -721,6 +863,17 @@
                 timer: 1500
             });
         }
+
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#8B4513',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
     </script>
     <script>
         // Payment method selection

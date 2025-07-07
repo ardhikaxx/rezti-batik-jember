@@ -75,6 +75,8 @@ Route::prefix('pembeli')->name('pembeli.')->group(function () {
             Route::post('/', [\App\Http\Controllers\Pembeli\PesananController::class, 'store'])->name('store');
         });
 
+        Route::post('/pesanan/alamat', [\App\Http\Controllers\Pembeli\PesananController::class, 'storeAddress'])->name('pesanan.storeAddress');
+
         // Rating
         Route::get('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'index'])->name('rating.index');
         Route::post('/{order_id}/rating', [\App\Http\Controllers\Pembeli\RatingController::class, 'store'])->name('rating.store');

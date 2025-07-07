@@ -94,17 +94,6 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center py-3">
                     <h6 class="m-0 fw-bold">Riwayat Pesanan</h6>
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
-                            id="dropdownMenuButton" data-bs-toggle="dropdown">
-                            Semua Pesanan
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Terbaru</a></li>
-                            <li><a class="dropdown-item" href="#">Tertinggi</a></li>
-                            <li><a class="dropdown-item" href="#">Terendah</a></li>
-                        </ul>
-                    </div>
                 </div>
                 <div class="card-body">
                     @if ($orders->count() > 0)

@@ -10,12 +10,14 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Models\ShippingAddress;
+use Illuminate\Support\Facades\Auth;
 
 class PesananController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['items.rating','items.product', 'shippingAddress'])
+        $orders = Order::with(['items.rating', 'items.product', 'shippingAddress'])
             ->where('pembeli_id', auth('pembeli')->id())
             ->latest()
             ->get();
@@ -149,5 +151,40 @@ class PesananController extends Controller
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function storeAddress(Request $request)
+    {
+        $request->validate([
+            'recipient_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'address' => 'required|string',
+            'province' => 'nullable|string',
+            'city' => 'nullable|string',
+            'district' => 'nullable|string',
+            'postal_code' => 'nullable|string',
+        ]);
+
+        $pembeli = Auth::guard('pembeli')->user();
+
+        $addressData = $request->only([
+            'recipient_name',
+            'phone_number',
+            'address',
+            'province',
+            'city',
+            'district',
+            'postal_code'
+        ]);
+
+        $addressData['pembeli_id'] = $pembeli->id;
+
+        if (ShippingAddress::where('pembeli_id', $pembeli->id)->count() === 0) {
+            $addressData['is_default'] = true;
+        }
+
+        ShippingAddress::create($addressData);
+
+        return back()->with('success', 'Alamat pengiriman berhasil ditambahkan');
     }
 }
