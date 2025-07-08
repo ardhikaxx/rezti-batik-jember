@@ -299,11 +299,6 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
-
-            /* Make sure dropdown stays visible when open */
-            .dropdown:hover .dropdown-menu {
-                display: block;
-            }
         }
 
         /* Improved Toggler Button */
@@ -1334,11 +1329,6 @@
             .navbar-brand {
                 font-size: 1.5rem;
             }
-
-            .nav-cta {
-                margin-left: 0;
-                margin-top: 10px;
-            }
         }
 
         @media (max-width: 767.98px) {
@@ -1582,16 +1572,15 @@
                     </li>
                     @auth('pembeli')
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle nav-cta" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="dropdown-toggle nav-cta border-0" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         {{ Auth::guard('pembeli')->user()->nama }}
                                     </div>
                                 </div>
-                            </a>
+                            </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="navbarDropdown"
-                                style="border: none; border-radius: 10px; overflow: hidden;">
+                                style="border: none; border-radius: 10px;">
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center py-3"
                                         href="{{ route('pembeli.keranjang.index') }}">
