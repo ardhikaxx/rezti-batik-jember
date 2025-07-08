@@ -71,10 +71,15 @@
         .navbar {
             background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            padding: 10px 0;
+            padding: 8px 0;
             transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
         }
 
         .navbar.scrolled {
@@ -510,6 +515,8 @@
         .section {
             padding: 100px 0;
             position: relative;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .section-title {
@@ -1544,8 +1551,8 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-md fixed-top">
+        <div class="container-fluid px-3 px-md-5">
             <a class="navbar-brand" href="{{ route('index') }}">
                 <img src="{{ asset('img/logo-reztis-batik.png') }}" alt="Reztis Batik" class="nav-logo">
             </a>
