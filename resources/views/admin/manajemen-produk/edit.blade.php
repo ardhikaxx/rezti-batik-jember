@@ -125,7 +125,7 @@
                             <div class="mt-2">
                                 <label class="form-label">Gambar Saat Ini:</label>
                                 <div>
-                                    <img src="{{ asset('storage/'.$product->image) }}" alt="Current Image" class="current-image">
+                                    <img src="{{ asset($product->image) }}" alt="Current Image" class="current-image">
                                 </div>
                             </div>
                         @endif
