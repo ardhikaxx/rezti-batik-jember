@@ -683,6 +683,20 @@
             transform: scale(1.05);
         }
 
+        .btn-outline-primary-video {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline-primary-video:hover {
+            background: var(--primary-color);
+            color: var(--light-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+            border: 2px solid transparent;
+        }
+
         .about-section {
             background-color: white;
             position: relative;
@@ -1572,7 +1586,8 @@
                     </li>
                     @auth('pembeli')
                         <li class="nav-item dropdown">
-                            <button class="dropdown-toggle nav-cta border-0" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="dropdown-toggle nav-cta border-0" type="button" id="navbarDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         {{ Auth::guard('pembeli')->user()->nama }}
@@ -1810,6 +1825,35 @@
                         <h2 class="fw-bold mb-0" style="color: var(--light-color);">500+</h2>
                         <h4 class="text-uppercase fw-bold mb-0" style="color: var(--light-color);">Peserta</h4>
                         <p class="small opacity-75 mb-0">Telah mengikuti workshop kami</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Profile Section -->
+    <section id="video-profile" class="section" style="background-color: #F5F0E8;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Video Company Profile Rezti's Batik</h2>
+                <p class="subtitle">Lihat sekilas tentang Reztis Batik Jember dalam video kami</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg"
+                        style="box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15) !important;">
+                        <iframe src="https://www.youtube.com/embed/o_4WiZVZM-4?si=7tXCbrmq5uOEvBFX"
+                            title="Reztis Batik Jember Company Profile" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="https://www.youtube.com/watch?v=o_4WiZVZM-4" target="_blank"
+                            class="btn btn-outline-primary-video">
+                            <i class="fab fa-youtube me-2"></i> Tonton di YouTube
+                        </a>
                     </div>
                 </div>
             </div>
