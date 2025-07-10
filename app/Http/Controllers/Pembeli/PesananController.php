@@ -28,9 +28,10 @@ class PesananController extends Controller
     public function show(Order $order)
     {
         // Ensure the order belongs to the authenticated pembeli
-        if ($order->pembeli_id !== auth('pembeli')->id()) {
-            abort(403);
-        }
+        $orders = Order::with(['items.rating', 'items.product', 'shippingAddress'])
+            ->where('pembeli_id', auth('pembeli')->id())
+            ->latest()
+            ->get();
 
         // Load relationships
         $order->load(['items.product', 'shippingAddress']);
