@@ -543,6 +543,367 @@
             border-radius: 2px;
         }
 
+        /* Step Card Styles */
+        .step-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.15);
+        }
+
+        .step-header {
+            position: relative;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .step-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .step-body h5 {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .step-body p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .step-footer {
+            padding: 0 20px 20px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 576px) {
+            .step-card {
+                flex-direction: column;
+                text-align: center;
+                padding-bottom: 10px;
+            }
+
+            .step-header {
+                flex-direction: column;
+                height: auto;
+                padding-top: 20px;
+            }
+
+            .step-number {
+                position: static;
+                margin-bottom: 10px;
+            }
+
+            .step-icon {
+                margin: 0 auto 10px;
+            }
+
+            .step-body {
+                padding: 15px;
+            }
+
+            .step-footer {
+                padding: 0 15px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .step-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .step-number {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+                margin-left: 20px;
+            }
+
+            .step-body h5 {
+                font-size: 1rem;
+            }
+
+            .step-body p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Modal Styles */
+        #purchaseFlowModal .modal-content {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(139, 69, 19, 0.2);
+        }
+
+        #purchaseFlowModal .modal-header {
+            padding: 1.2rem 2rem;
+            border-bottom: none;
+        }
+
+        #purchaseFlowModal .modal-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        Visual Timeline Styles .visual-timeline {
+            position: relative;
+            height: 100%;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            z-index: 1;
+        }
+
+        #timelineProgress {
+            height: 0%;
+            transition: height 0.5s ease;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 30px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-marker {
+            position: relative;
+            width: 50px;
+            flex-shrink: 0;
+        }
+
+        .marker-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .marker-line {
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 2px;
+            height: 40px;
+            background: rgba(139, 69, 19, 0.3);
+        }
+
+        .timeline-step:last-child .marker-line {
+            display: none;
+        }
+
+        .timeline-step.active .marker-circle {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+
+        .timeline-step.completed .marker-circle {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+
+        .step-preview {
+            padding: 12px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            flex-grow: 1;
+        }
+
+        .timeline-step.active .step-preview,
+        .timeline-step.completed .step-preview {
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .step-preview i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .step-preview span {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        /* Step Content Styles */
+        .step-content {
+            display: none;
+            height: 100%;
+        }
+
+        .step-content.active {
+            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .step-header-modal .step-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(139, 69, 19, 0.1);
+            color: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .step-body-modal p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .step-body-modal ul {
+            padding-left: 20px;
+        }
+
+        .step-body-modal ul li {
+            margin-bottom: 8px;
+        }
+
+        .step-body-modal ol {
+            padding-left: 20px;
+        }
+
+        .step-body-modal ol li {
+            margin-bottom: 8px;
+        }
+
+        /* Navigation Controls */
+        .step-navigation {
+            padding-top: 20px;
+        }
+
+        .step-indicator {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .step-indicator .current-step {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .btn-outline-primary-step {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline-primary-step:hover {
+            background: var(--primary-color);
+            color: var(--light-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+            border: 2px solid transparent;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            #purchaseFlowModal .modal-dialog {
+                margin: 1rem auto;
+            }
+
+            .visual-timeline {
+                display: none;
+            }
+
+            .step-body-modal {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            #purchaseFlowModal .modal-header {
+                padding: 1rem;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-header .step-icon {
+                margin-bottom: 15px;
+            }
+
+            .step-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .step-indicator {
+                order: -1;
+                margin-bottom: 10px;
+            }
+        }
+
         .product-card {
             border: none;
             border-radius: 15px;
@@ -1678,6 +2039,469 @@
         </a>
     </section>
 
+    <!-- Purchase Flow Section -->
+    <section id="alur-pembelian" class="section" style="background-color: #F9F5F0; padding-bottom: 50px;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Alur Pembelian Mudah</h2>
+                <p class="subtitle">Belanja produk batik premium kami dengan beberapa langkah sederhana</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Step 1 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-card h-100">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-icon">
+                                <i class="fas fa-user-lock"></i>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <h5>Login Terlebih Dahulu</h5>
+                            <p>Anda harus login untuk menambahkan produk ke keranjang. Jika belum punya akun, daftar
+                                sekarang.</p>
+                        </div>
+                        <div class="step-footer">
+                            @auth('pembeli')
+                                <span class="badge bg-success px-3 py-2"><i class="fas fa-check-circle me-1"></i>Anda
+                                    sudah login</span>
+                            @else
+                                <a href="{{ route('pembeli.login') }}"
+                                    class="btn btn-sm btn-outline-primary-step">Login/Daftar</a>
+                            @endauth
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-card h-100">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-icon">
+                                <i class="fas fa-cart-plus"></i>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <h5>Tambahkan ke Keranjang</h5>
+                            <p>Pilih produk yang diinginkan dan klik ikon keranjang. Anda juga bisa booking layanan
+                                edukasi.</p>
+                        </div>
+                        <div class="step-footer">
+                            <a href="#produk" class="btn btn-sm btn-outline-primary-step">Lihat Produk</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-card h-100">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <h5>Proses Checkout</h5>
+                            <p>Di halaman keranjang, centang produk yang ingin dibeli dan lanjutkan ke checkout.</p>
+                        </div>
+                        <div class="step-footer">
+                            @auth('pembeli')
+                                <a href="{{ route('pembeli.keranjang.index') }}"
+                                    class="btn btn-sm btn-outline-primary-step">Ke Keranjang</a>
+                            @else
+                                <span class="text-muted small">Login terlebih dahulu</span>
+                            @endauth
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-card h-100">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <h5>Pesanan Dikirim</h5>
+                            <p>Setelah pembayaran dikonfirmasi, pesanan akan diproses dan dikirim ke alamat Anda.</p>
+                        </div>
+                        <div class="step-footer">
+                            @auth('pembeli')
+                                <a href="{{ route('pembeli.pesanan.index') }}"
+                                    class="btn btn-sm btn-outline-primary-step">Lihat Pesanan</a>
+                            @else
+                                <span class="text-muted small">Login terlebih dahulu</span>
+                            @endauth
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Steps Button - Now triggers modal -->
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary-step btn-lg" data-bs-toggle="modal"
+                        data-bs-target="#purchaseFlowModal">
+                        <i class="fas fa-info-circle me-2"></i> Lihat Detail Alur Pembelian
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Purchase Flow Modal -->
+    <div class="modal fade" id="purchaseFlowModal" tabindex="-1" aria-labelledby="purchaseFlowModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content border-0">
+                <div class="modal-header" style="background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);">
+                    <h5 class="modal-title text-white" id="purchaseFlowModalLabel">
+                        <i class="fas fa-map-signs me-2"></i> Detail Alur Pembelian
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- Left Side - Visual Timeline -->
+                            <div class="col-lg-5 d-none d-lg-block" style="background-color: #F5F0E8;">
+                                <div class="p-4 h-100 d-flex flex-column justify-content-center">
+                                    <div class="visual-timeline">
+                                        <div class="timeline-progress" id="timelineProgress"></div>
+                                        <div class="timeline-step active" data-step="1">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-user-lock me-2"></i>
+                                                <span>Login</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="2">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-cart-plus me-2"></i>
+                                                <span>Keranjang</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="3">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-user-circle me-2"></i>
+                                                <span>Menu Akun</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="4">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-shopping-basket me-2"></i>
+                                                <span>Checkout</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="5">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-credit-card me-2"></i>
+                                                <span>Pembayaran</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="6">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                                <div class="marker-line"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-truck me-2"></i>
+                                                <span>Pengiriman</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="timeline-step" data-step="7">
+                                            <div class="step-marker">
+                                                <div class="marker-circle"></div>
+                                            </div>
+                                            <div class="step-preview">
+                                                <i class="fas fa-star me-2"></i>
+                                                <span>Rating</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Side - Step Content -->
+                            <div class="col-lg-7">
+                                <div class="p-4">
+                                    <!-- Step 1 Content -->
+                                    <div class="step-content active" data-step="1">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-user-lock"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">1. Login Terlebih Dahulu</h4>
+                                                <p class="text-muted mb-0">Mulai proses belanja Anda</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>🔑 Anda harus login terlebih dahulu untuk bisa menambahkan produk ke
+                                                keranjang.</p>
+                                            <p>→ Jika belum punya akun, klik "Daftar Sekarang" untuk menuju halaman
+                                                registrasi.</p>
+                                            <div class="step-action mt-4">
+                                                @auth('pembeli')
+                                                    <span class="badge bg-success p-2"><i
+                                                            class="fas fa-check-circle me-1"></i> Anda sudah login</span>
+                                                @else
+                                                    <a href="{{ route('pembeli.login') }}" class="btn btn-primary">
+                                                        <i class="fas fa-sign-in-alt me-1"></i> Login/Daftar Sekarang
+                                                    </a>
+                                                @endauth
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 2 Content -->
+                                    <div class="step-content" data-step="2">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">2. Tambahkan ke Keranjang</h4>
+                                                <p class="text-muted mb-0">Pilih produk favorit Anda</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>🛍 Setelah login, Anda dapat memilih produk yang diinginkan, lalu klik
+                                                ikon keranjang.</p>
+                                            <p>✅ Akan muncul notifikasi: "Produk berhasil ditambahkan ke keranjang".</p>
+                                            <p>→ Atau, Anda juga bisa melakukan booking layanan edukasi dengan klik
+                                                "Daftar Sekarang" di layanan tersebut.</p>
+                                            <div class="step-action mt-4">
+                                                <a href="#produk" class="btn btn-primary" data-bs-dismiss="modal">
+                                                    <i class="fas fa-shopping-bag me-1"></i> Lihat Produk
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 3 Content -->
+                                    <div class="step-content" data-step="3">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">3. Akses Menu Akun Anda</h4>
+                                                <p class="text-muted mb-0">Kelola pesanan dan keranjang</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>👤 Klik nama akun Anda di pojok kanan atas untuk membuka menu:</p>
+                                            <ul class="list-unstyled ms-3">
+                                                <li class="mb-2"><i
+                                                        class="fas fa-shopping-cart me-2 text-primary"></i>
+                                                    <strong>Keranjang Saya</strong> - untuk melihat produk yang ingin
+                                                    dibeli
+                                                </li>
+                                                <li class="mb-2"><i
+                                                        class="fas fa-clipboard-list me-2 text-primary"></i>
+                                                    <strong>Pesanan Saya</strong> - untuk memantau status pesanan
+                                                </li>
+                                                <li class="mb-2"><i
+                                                        class="fas fa-calendar-check me-2 text-primary"></i>
+                                                    <strong>Booking Saya</strong> - untuk melihat layanan edukasi yang
+                                                    dibooking
+                                                </li>
+                                                <li><i class="fas fa-user me-2 text-primary"></i> <strong>Profil
+                                                        Saya</strong> - untuk melihat dan mengedit data pribadi</li>
+                                            </ul>
+                                            <div class="step-action mt-4">
+                                                @auth('pembeli')
+                                                    <a href="{{ route('pembeli.keranjang.index') }}"
+                                                        class="btn btn-primary" data-bs-dismiss="modal">
+                                                        <i class="fas fa-shopping-cart me-1"></i> Buka Keranjang
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">Login terlebih dahulu untuk mengakses menu
+                                                        ini</span>
+                                                @endauth
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 4 Content -->
+                                    <div class="step-content" data-step="4">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-shopping-basket"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">4. Proses Checkout</h4>
+                                                <p class="text-muted mb-0">Selesaikan pembelian Anda</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>📦 Di halaman keranjang, centang produk yang ingin dibeli menggunakan
+                                                checkbox.</p>
+                                            <p>→ Setelah itu, klik "Checkout" untuk melanjutkan proses pembelian.</p>
+                                            <div class="alert alert-primary mt-3">
+                                                <i class="fas fa-info-circle me-2"></i> Pastikan alamat pengiriman
+                                                sudah benar sebelum checkout.
+                                            </div>
+                                            <div class="step-action mt-4">
+                                                @auth('pembeli')
+                                                    <a href="{{ route('pembeli.keranjang.index') }}"
+                                                        class="btn btn-primary" data-bs-dismiss="modal">
+                                                        <i class="fas fa-arrow-right me-1"></i> Lanjut ke Checkout
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">Login terlebih dahulu untuk mengakses fitur
+                                                        ini</span>
+                                                @endauth
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 5 Content -->
+                                    <div class="step-content" data-step="5">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-credit-card"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">5. Pembayaran</h4>
+                                                <p class="text-muted mb-0">Selesaikan transaksi Anda</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>💳 Di halaman checkout, Anda dapat:</p>
+                                            <ul>
+                                                <li class="mb-2">Mengganti alamat pengiriman jika memiliki lebih dari
+                                                    satu</li>
+                                                <li class="mb-2">Menambahkan alamat baru jika diperlukan</li>
+                                                <li class="mb-2">Memilih metode pembayaran yang tersedia</li>
+                                                <li>Upload bukti pembayaran di kotak yang tersedia</li>
+                                            </ul>
+                                            <p>→ Terakhir, klik "Buat Pesanan". Akan muncul notifikasi bahwa pesanan
+                                                berhasil dibuat.</p>
+                                            <div class="alert alert-warning mt-3">
+                                                <i class="fas fa-exclamation-circle me-2"></i> Harap lakukan pembayaran
+                                                dalam waktu 24 jam setelah pesanan dibuat.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 6 Content -->
+                                    <div class="step-content" data-step="6">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-truck"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">6. Pengiriman</h4>
+                                                <p class="text-muted mb-0">Pesanan sedang dikirim</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>🚚 Jika status pesanan berubah menjadi "Proses Dikirim", berarti pesanan
+                                                Anda sedang dalam perjalanan.</p>
+                                            <p>→ Anda dapat melacak pengiriman melalui nomor resi yang tersedia di
+                                                halaman detail pesanan.</p>
+                                            <p>→ Setelah barang sampai, klik tombol hijau "Terima Pesanan" untuk
+                                                mengonfirmasi bahwa barang telah diterima.</p>
+                                            <div class="alert alert-info mt-3">
+                                                <i class="fas fa-clock me-2"></i> Estimasi pengiriman 2-5 hari kerja
+                                                tergantung lokasi pengiriman.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 7 Content -->
+                                    <div class="step-content" data-step="7">
+                                        <div class="step-header-modal d-flex align-items-center mb-4">
+                                            <div class="step-icon me-3">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-0">7. Berikan Rating</h4>
+                                                <p class="text-muted mb-0">Bagikan pengalaman Anda</p>
+                                            </div>
+                                        </div>
+                                        <div class="step-body-modal">
+                                            <p>⭐ Setelah barang diterima, Anda bisa memberikan ulasan dengan:</p>
+                                            <ol>
+                                                <li class="mb-2">Buka halaman "Pesanan Saya"</li>
+                                                <li class="mb-2">Cari pesanan yang sudah diterima</li>
+                                                <li class="mb-2">Klik tombol kuning "Beri Nilai Pesanan"</li>
+                                                <li>Berikan rating dan ulasan tentang produk dan pengalaman belanja Anda
+                                                </li>
+                                            </ol>
+                                            <div class="alert alert-success mt-3">
+                                                <i class="fas fa-heart me-2"></i> Ulasan Anda sangat berarti bagi kami
+                                                untuk meningkatkan kualitas pelayanan.
+                                            </div>
+                                            <div class="step-action mt-4">
+                                                @auth('pembeli')
+                                                    <a href="{{ route('pembeli.pesanan.index') }}"
+                                                        class="btn btn-primary" data-bs-dismiss="modal">
+                                                        <i class="fas fa-clipboard-list me-1"></i> Lihat Pesanan Saya
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">Login terlebih dahulu untuk memberikan
+                                                        rating</span>
+                                                @endauth
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Navigation Controls -->
+                                    <div class="step-navigation d-flex justify-content-between mt-4 pt-3 border-top">
+                                        <button class="btn btn-outline-secondary prev-step" disabled>
+                                            <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                                        </button>
+                                        <div class="step-indicator">
+                                            Langkah <span class="current-step">1</span> dari 7
+                                        </div>
+                                        <button class="btn btn-primary next-step">
+                                            Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Produk Section -->
     <section id="produk" class="section">
         <div class="container">
@@ -2589,6 +3413,82 @@
         // Initialize active link on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateActiveNavLink();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize modal step navigation
+            const modal = document.getElementById('purchaseFlowModal');
+            if (modal) {
+                modal.addEventListener('show.bs.modal', function() {
+                    // Reset to first step when modal opens
+                    showStep(1);
+                });
+
+                // Step navigation
+                const prevBtn = modal.querySelector('.prev-step');
+                const nextBtn = modal.querySelector('.next-step');
+
+                prevBtn.addEventListener('click', function() {
+                    const currentStep = parseInt(modal.querySelector('.step-content.active').dataset.step);
+                    showStep(currentStep - 1);
+                });
+
+                nextBtn.addEventListener('click', function() {
+                    const currentStep = parseInt(modal.querySelector('.step-content.active').dataset.step);
+                    showStep(currentStep + 1);
+                });
+            }
+
+            function showStep(stepNumber) {
+                // Hide all steps
+                document.querySelectorAll('.step-content').forEach(step => {
+                    step.classList.remove('active');
+                });
+
+                // Show selected step
+                const stepToShow = document.querySelector(`.step-content[data-step="${stepNumber}"]`);
+                if (stepToShow) {
+                    stepToShow.classList.add('active');
+
+                    // Update timeline progress
+                    const progressPercentage = ((stepNumber - 1) / 6) * 100;
+                    document.getElementById('timelineProgress').style.height = `${progressPercentage}%`;
+
+                    // Update timeline markers
+                    document.querySelectorAll('.timeline-step').forEach(step => {
+                        const stepValue = parseInt(step.dataset.step);
+                        step.classList.remove('active', 'completed');
+
+                        if (stepValue === stepNumber) {
+                            step.classList.add('active');
+                        } else if (stepValue < stepNumber) {
+                            step.classList.add('completed');
+                        }
+                    });
+
+                    // Update step indicator
+                    document.querySelector('.current-step').textContent = stepNumber;
+
+                    // Update button states
+                    const prevBtn = document.querySelector('.prev-step');
+                    const nextBtn = document.querySelector('.next-step');
+
+                    prevBtn.disabled = stepNumber === 1;
+
+                    if (stepNumber === 7) {
+                        nextBtn.innerHTML = 'Selesai <i class="fas fa-check ms-2"></i>';
+                        nextBtn.addEventListener('click', function() {
+                            bootstrap.Modal.getInstance(document.getElementById('purchaseFlowModal'))
+                                .hide();
+                        }, {
+                            once: true
+                        });
+                    } else {
+                        nextBtn.innerHTML = 'Selanjutnya <i class="fas fa-arrow-right ms-2"></i>';
+                    }
+                }
+            }
         });
     </script>
 </body>
