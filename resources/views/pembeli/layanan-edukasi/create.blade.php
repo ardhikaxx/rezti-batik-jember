@@ -8,7 +8,9 @@
     <link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-color: #8B4513;
@@ -115,6 +117,65 @@
             height: 50px;
             object-fit: contain;
             margin-right: 15px;
+        }
+
+        .account-number-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: #0d6efd;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-success {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
         }
 
         .upload-area {
@@ -229,13 +290,16 @@
                 </div>
             @endif
 
-            <form action="{{ route('pembeli.layanan-edukasi.store') }}" method="POST" enctype="multipart/form-data" id="bookingForm">
+            <form action="{{ route('pembeli.layanan-edukasi.store') }}" method="POST" enctype="multipart/form-data"
+                id="bookingForm">
                 @csrf
 
                 <!-- Tanggal Booking -->
                 <div class="mb-4">
-                    <label for="booking_date" class="form-label">Tanggal Booking <span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="booking_date" name="booking_date" required min="{{ date('Y-m-d', strtotime('+1 day')) }}">
+                    <label for="booking_date" class="form-label">Tanggal Booking <span
+                            class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="booking_date" name="booking_date" required
+                        min="{{ date('Y-m-d', strtotime('+1 day')) }}">
                     <div class="invalid-feedback">Silakan pilih tanggal booking</div>
                 </div>
 
@@ -261,8 +325,10 @@
 
                 <!-- Jumlah Peserta -->
                 <div class="mb-4">
-                    <label for="participant_count" class="form-label">Jumlah Peserta <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="participant_count" name="participant_count" min="1" max="20" required value="1">
+                    <label for="participant_count" class="form-label">Jumlah Peserta <span
+                            class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="participant_count" name="participant_count"
+                        min="1" max="20" required value="1">
                     <div class="invalid-feedback">Silakan masukkan jumlah peserta (minimal 1)</div>
                 </div>
 
@@ -283,46 +349,77 @@
                     <label class="form-label">Metode Pembayaran <span class="text-danger">*</span></label>
 
                     <div class="payment-method active" data-method="Transfer Bank BCA">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png" class="payment-icon" alt="BCA">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png"
+                            class="payment-icon" alt="BCA">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">Transfer Bank BCA</h6>
-                            <p class="small text-muted mb-0">Rek: 3320-4720-15 a/n LESTARI KUSUMAWATI</p>
+                            <div class="account-number-container">
+                                <p class="small text-muted mb-0">Rek: 3320-4720-15 a/n LESTARI KUSUMAWATI</p>
+                                <button class="copy-btn" data-number="3320472015" title="Salin nomor rekening">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="payment-method" data-method="Transfer Bank Mandiri">
-                        <img src="https://upload.wikimedia.org/wikipedia/id/thumb/f/fa/Bank_Mandiri_logo.svg/2880px-Bank_Mandiri_logo.svg.png" class="payment-icon" alt="Mandiri">
+                        <img src="https://upload.wikimedia.org/wikipedia/id/thumb/f/fa/Bank_Mandiri_logo.svg/2880px-Bank_Mandiri_logo.svg.png"
+                            class="payment-icon" alt="Mandiri">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">Transfer Bank Mandiri</h6>
-                            <p class="small text-muted mb-0">Rek: 1430-0154-9338-8 a/n LESTARI KUSUMAWATI</p>
+                            <div class="account-number-container">
+                                <p class="small text-muted mb-0">Rek: 1430-0154-9338-8 a/n LESTARI KUSUMAWATI</p>
+                                <button class="copy-btn" data-number="1430015493388" title="Salin nomor rekening">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="payment-method" data-method="Transfer Bank BRI">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/252px-BANK_BRI_logo.svg.png" class="payment-icon" alt="BRI">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/252px-BANK_BRI_logo.svg.png"
+                            class="payment-icon" alt="BRI">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">Transfer Bank BRI</h6>
-                            <p class="small text-muted mb-0">Rek: 1161-0100-6551-531 a/n TAMARA REZTI SYAFIRA</p>
+                            <div class="account-number-container">
+                                <p class="small text-muted mb-0">Rek: 1161-0100-6551-531 a/n TAMARA REZTI SYAFIRA</p>
+                                <button class="copy-btn" data-number="116101006551531" title="Salin nomor rekening">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="payment-method" data-method="DANA">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png" class="payment-icon" alt="DANA">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
+                            class="payment-icon" alt="DANA">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">DANA</h6>
-                            <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                            <div class="account-number-container">
+                                <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                                <button class="copy-btn" data-number="082310301199" title="Salin nomor rekening">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="payment-method" data-method="GoPay">
-                        <img src="https://logos-world.net/wp-content/uploads/2023/03/GoPay-Logo.png" class="payment-icon" alt="GoPay">
+                        <img src="https://logos-world.net/wp-content/uploads/2023/03/GoPay-Logo.png"
+                            class="payment-icon" alt="GoPay">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">GoPay</h6>
-                            <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                            <div class="account-number-container">
+                                <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                                <button class="copy-btn" data-number="082310301199" title="Salin nomor rekening">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <input type="hidden" name="payment_method" id="payment_method" value="Transfer Bank BCA" required>
+                    <input type="hidden" name="payment_method" id="payment_method" value="Transfer Bank BCA"
+                        required>
                     <div class="invalid-feedback">Silakan pilih metode pembayaran</div>
                 </div>
 
@@ -330,7 +427,8 @@
                 <div class="mb-4">
                     <label class="form-label">Upload Bukti Pembayaran <span class="text-danger">*</span></label>
                     <div class="upload-area" id="uploadArea">
-                        <input type="file" name="payment_proof" id="payment_proof" accept="image/*" hidden required>
+                        <input type="file" name="payment_proof" id="payment_proof" accept="image/*" hidden
+                            required>
                         <div id="uploadContent">
                             <div class="upload-icon">
                                 <i class="fas fa-cloud-upload-alt"></i>
@@ -357,7 +455,8 @@
                 <!-- Catatan -->
                 <div class="mb-4">
                     <label for="notes" class="form-label">Catatan (Opsional)</label>
-                    <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Masukkan catatan tambahan jika ada"></textarea>
+                    <textarea class="form-control" id="notes" name="notes" rows="3"
+                        placeholder="Masukkan catatan tambahan jika ada"></textarea>
                 </div>
 
                 <!-- Tombol Submit -->
@@ -372,6 +471,61 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const accountNumber = this.getAttribute('data-number');
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(accountNumber).then(() => {
+                        // Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'copy-success';
+                        successMsg.textContent = 'Nomor rekening berhasil disalin!';
+                        document.body.appendChild(successMsg);
+
+                        // Remove message after animation
+                        setTimeout(() => {
+                            successMsg.remove();
+                        }, 2000);
+
+                        // Change icon temporarily
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            const originalClass = icon.className;
+                            icon.className = 'fas fa-check';
+
+                            setTimeout(() => {
+                                icon.className = originalClass;
+                            }, 2000);
+                        }
+                    }).catch(err => {
+                        console.error('Gagal menyalin: ', err);
+
+                        // Fallback for browsers that don't support clipboard API
+                        const tempInput = document.createElement('input');
+                        tempInput.value = accountNumber;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+
+                        // Show success message for fallback
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'copy-success';
+                        successMsg.textContent = 'Nomor rekening berhasil disalin!';
+                        document.body.appendChild(successMsg);
+                        setTimeout(() => {
+                            successMsg.remove();
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Time slot selection
@@ -399,7 +553,8 @@
                     this.appendChild(checkIcon);
 
                     // Set payment method value
-                    document.getElementById('payment_method').value = this.getAttribute('data-method');
+                    document.getElementById('payment_method').value = this.getAttribute(
+                        'data-method');
                 });
             });
 
@@ -526,13 +681,15 @@
                 // Validate booking time
                 if (!document.getElementById('booking_time').value) {
                     isValid = false;
-                    document.querySelector('.time-slots-container').nextElementSibling.style.display = 'block';
+                    document.querySelector('.time-slots-container').nextElementSibling.style.display =
+                        'block';
                 } else {
-                    document.querySelector('.time-slots-container').nextElementSibling.style.display = 'none';
+                    document.querySelector('.time-slots-container').nextElementSibling.style.display =
+                        'none';
                 }
 
                 // Validate participant count
-                if (!document.getElementById('participant_count').value || 
+                if (!document.getElementById('participant_count').value ||
                     parseInt(document.getElementById('participant_count').value) < 1) {
                     isValid = false;
                     document.getElementById('participant_count').classList.add('is-invalid');

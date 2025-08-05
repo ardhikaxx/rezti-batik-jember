@@ -261,6 +261,65 @@
             margin-right: 1rem;
         }
 
+        .account-number-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: #0d6efd;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-success {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
         .upload-area {
             border: 2px dashed #ddd;
             border-radius: 8px;
@@ -735,7 +794,14 @@
                                     class="payment-icon" alt="BCA">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">Transfer Bank BCA</h6>
-                                    <p class="small text-muted mb-0">Rek: 3320-4720-15 a/n LESTARI KUSUMAWATI</p>
+                                    <div class="account-number-container">
+                                        <p class="small text-muted mb-0 account-number">Rek: 3320-4720-15 a/n LESTARI
+                                            KUSUMAWATI</p>
+                                        <button class="copy-btn" data-number="3320472015"
+                                            title="Salin nomor rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -744,7 +810,14 @@
                                     class="payment-icon" alt="Mandiri">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">Transfer Bank Mandiri</h6>
-                                    <p class="small text-muted mb-0">Rek: 1430-0154-9338-8 a/n LESTARI KUSUMAWATI</p>
+                                    <div class="account-number-container">
+                                        <p class="small text-muted mb-0 account-number">Rek: 1430-0154-9338-8 a/n
+                                            LESTARI KUSUMAWATI</p>
+                                        <button class="copy-btn" data-number="1430015493388"
+                                            title="Salin nomor rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -753,8 +826,14 @@
                                     class="payment-icon" alt="BRI">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">Transfer Bank BRI</h6>
-                                    <p class="small text-muted mb-0">Rek: 1161-0100-6551-531 a/n TAMARA REZTI SYAFIRA
-                                    </p>
+                                    <div class="account-number-container">
+                                        <p class="small text-muted mb-0 account-number">Rek: 1161-0100-6551-531 a/n
+                                            TAMARA REZTI SYAFIRA</p>
+                                        <button class="copy-btn" data-number="116101006551531"
+                                            title="Salin nomor rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -763,7 +842,14 @@
                                     class="payment-icon" alt="DANA">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">DANA</h6>
-                                    <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                                    <div class="account-number-container">
+                                        <p class="small text-muted mb-0 account-number">0823-1030-1199 a/n TAMARA REZTI
+                                            SYAFRIANA</p>
+                                        <button class="copy-btn" data-number="082310301199"
+                                            title="Salin nomor rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -772,7 +858,14 @@
                                     class="payment-icon" alt="GoPay">
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">GoPay</h6>
-                                    <p class="small text-muted mb-0">0823-1030-1199 a/n TAMARA REZTI SYAFRIANA</p>
+                                    <div class="account-number-container">
+                                        <p class="small text-muted mb-0 account-number">0823-1030-1199 a/n TAMARA REZTI
+                                            SYAFRIANA</p>
+                                        <button class="copy-btn" data-number="082310301199"
+                                            title="Salin nomor rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -848,6 +941,46 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const accountNumber = this.getAttribute('data-number');
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(accountNumber).then(() => {
+                        // Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'copy-success';
+                        successMsg.textContent = 'Nomor rekening berhasil disalin!';
+                        document.body.appendChild(successMsg);
+
+                        // Remove message after animation
+                        setTimeout(() => {
+                            successMsg.remove();
+                        }, 2000);
+
+                        // Change icon temporarily
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            const originalClass = icon.className;
+                            icon.className = 'fas fa-check';
+
+                            setTimeout(() => {
+                                icon.className = originalClass;
+                            }, 2000);
+                        }
+                    }).catch(err => {
+                        console.error('Gagal menyalin: ', err);
+                        alert(
+                        'Gagal menyalin nomor rekening. Silakan salin secara manual.');
+                    });
+                });
+            });
+        });
+    </script>
     <script>
         $('#addAddressModal').on('hidden.bs.modal', function() {
             document.getElementById('addressForm').reset();
