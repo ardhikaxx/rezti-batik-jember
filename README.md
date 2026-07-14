@@ -1,4 +1,4 @@
-# Rezti Batik Jember
+﻿# Rezti Batik Jember
 
 Aplikasi e-commerce untuk penjualan produk batik dan layanan edukasi membatik.
 
@@ -103,7 +103,7 @@ Jika project ini bermanfaat, Anda dapat mendukung pengembangan selanjutnya melal
 
 <div align="center">
 
-![QRIS](public/assets/qris.png)
+<img src="public/assets/qris.png" alt="QRIS" width="250" />
 
 **Scan QRIS di atas untuk berdonasi**
 
