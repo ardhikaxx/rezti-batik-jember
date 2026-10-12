@@ -1,115 +1,135 @@
-﻿# Rezti Batik Jember
+# 🛍️ Website E-Commerce UMKM Rezti's Batik Jember
 
-Aplikasi e-commerce untuk penjualan produk batik dan layanan edukasi membatik.
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)](./LICENSE)
+[![Author](https://img.shields.io/badge/Author-Yanuar%20Ardhika%20Rahmadhani%20Ubaidillah-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ardhikaxx)
 
-## Fitur Utama
+Website **E-Commerce Rezti's Batik Jember** adalah toko online batik: katalog motif, keranjang & checkout, ongkir, pembayaran, ulasan, serta admin order/stok. Mengangkat batik lokal Jember ke pasar digital.
 
-### Untuk Pembeli
-- Registrasi dan login
-- Melihat daftar produk
-- Menambahkan produk ke keranjang
-- Mengelola alamat pengiriman
-- Melakukan pemesanan
-- Melihat riwayat pesanan
-- Memberikan rating pada produk
-- Memesan layanan edukasi membatik
+---
 
-### Untuk Admin
-- Mengelola data produk (tambah, ubah, hapus)
-- Mengelola data pesanan
-- Mengelola data pembeli
-- Mengelola data admin
-- Mengelola layanan edukasi
+## ✨ Fitur Utama
 
-## Teknologi yang Digunakan
+### 1. 🛍️ Katalog Batik
+- Produk motif, bahan, ukuran, harga, stok, dan foto.
 
-- **Framework:** Laravel 10
-- **Bahasa Pemrograman:** PHP 8.1
-- **Database:** MySQL (atau database lain yang didukung oleh Laravel)
-- **Frontend:** Blade, CSS, JavaScript
+### 2. 🧺 Keranjang & Checkout
+- Keranjang, alamat, ongkir, dan metode pembayaran.
 
-## Panduan Instalasi
+### 3. ⭐ Ulasan
+- Rating & ulasan pembeli per produk.
 
-1.  **Clone repositori ini:**
-    ```bash
-    git clone https://github.com/username/rezti-batik-jember.git
-    ```
+### 4. 📦 Order Tracking
+- Status pesanan: diproses → dikirim → selesai.
 
-2.  **Masuk ke direktori proyek:**
-    ```bash
-    cd rezti-batik-jember
-    ```
+### 5. 📊 Admin
+- Kelola produk, pesanan, pelanggan, dan laporan omzet.
 
-3.  **Install dependensi Composer:**
-    ```bash
-    composer install
-    ```
+---
 
-4.  **Salin file `.env.example` menjadi `.env`:**
-    ```bash
-    cp .env.example .env
-    ```
+## 👥 Hak Akses Pengguna (Role-Based Access Control)
 
-5.  **Generate application key:**
-    ```bash
-    php artisan key:generate
-    ```
+| Role | Akses & Wewenang |
+| :--- | :--- |
+| **Pembeli** | Belanja, checkout, lacak pesanan, ulasan. |
+| **Admin** | Produk, pesanan, stok, laporan. |
 
-6.  **Konfigurasi database Anda di file `.env`:**
-    ```
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=rezti_batik
-    DB_USERNAME=root
-    DB_PASSWORD=
-    ```
+> Otorisasi ditegakkan di backend (middleware/Policy) — bukan sekadar menyembunyikan menu.
 
-7.  **Jalankan migrasi database:**
-    ```bash
-    php artisan migrate
-    ```
+---
 
-8.  **(Opsional) Jalankan seeder untuk mengisi data awal:**
-    ```bash
-    php artisan db:seed
-    ```
+## 🛠️ Tech Stack & Dependensi
 
-9.  **Jalankan server pengembangan:**
-    ```bash
-    php artisan serve
-    ```
+* **Backend**: Laravel 10.x (PHP 8.1+)
+* **Database**: MySQL 8.0+
+* **Frontend**: Blade, {css}, SweetAlert2, vanilla JS/Chart.js
+* **Testing**: PHPUnit / Pest
+* **Code Style**: Laravel Pint (PSR-12)
 
-10. **Akses aplikasi di:** `http://127.0.0.1:8000`
+---
 
-## Struktur Database
+## ⚙️ Panduan Instalasi & Menjalankan Aplikasi
 
-Berikut adalah beberapa tabel utama dalam database:
+### 1. Kloning Repositori
+```bash
+git clone https://github.com/ardhikaxx/rezti-batik-jember
+cd rezti-batik-jember
+```
 
--   `admins`: Menyimpan data admin.
--   `pembelis`: Menyimpan data pembeli.
--   `products`: Menyimpan data produk batik.
--   `carts`: Menyimpan data keranjang belanja pembeli.
--   `shipping_addresses`: Menyimpan data alamat pengiriman pembeli.
--   `orders`: Menyimpan data pesanan.
--   `order_items`: Menyimpan detail item dalam setiap pesanan.
--   `education_services`: Menyimpan data pemesanan layanan edukasi.
--   `ratings`: Menyimpan data rating produk dari pembeli.
+### 2. Install Dependensi PHP
+```bash
+composer install
+```
 
+### 3. Konfigurasi Environment (`.env`)
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+Sesuaikan koneksi database MySQL di file `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=rezti_batik_jember
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Donasi
+### 4. Migrasi & Seeding
+```bash
+php artisan migrate --seed
+```
+Development (database boleh dikosongkan):
+```bash
+php artisan migrate:fresh --seed
+```
 
-Jika project ini bermanfaat, Anda dapat mendukung pengembangan selanjutnya melalui donasi:
+### 5. Jalankan Server Lokal
+```bash
+php artisan serve
+```
+Buka: `http://127.0.0.1:8000`
 
-<div align="center">
+---
 
-<img src="public/assets/qris.png" alt="QRIS" width="250" />
+## 📚 Dokumentasi Sistem
 
-**Scan QRIS di atas untuk berdonasi**
+* [⚖️ **LICENSE**](./LICENSE) — Lisensi resmi **Proprietary Software License (All Rights Reserved)**.
+* [🛡️ **SECURITY.md**](./SECURITY.md) — Kebijakan keamanan & pelaporan celah (*Responsible Disclosure*).
+* [🤝 **CONTRIBUTING.md**](./CONTRIBUTING.md) — Pedoman kontribusi kode & standar.
+* [📜 **CODE_OF_CONDUCT.md**](./CODE_OF_CONDUCT.md) — Pedoman perilaku komunitas pengembang.
+* [💬 **SUPPORT.md**](./SUPPORT.md) — Kanal bantuan teknis & komunikasi resmi pengembang.
+* [📋 **CHANGELOG.md**](./CHANGELOG.md) — Riwayat rilis fitur terstruktur (*Keep a Changelog* & SemVer).
+* [📚 **CITATION.md**](./CITATION.md) — Format sitasi karya untuk keperluan akademik.
 
-Setiap donasi akan digunakan untuk:
-- Pengembangan fitur baru
-- Perbaikan bug & maintenance
-- Infrastruktur server
+---
 
-</div>
+## 💖 Dukungan & Donasi
+
+Jika proyek **Website E-Commerce UMKM Rezti's Batik Jember** ini bermanfaat bagi Anda dan telah menghemat banyak jam kerja Anda, Anda dapat menunjukkan apresiasi dengan memberikan traktiran kopi (donasi) melalui pemindaian kode QRIS di bawah ini:
+
+<p align="center">
+  <img src="./qris.png" alt="QRIS Donasi" width="300"/>
+</p>
+
+> Donasi sepenuhnya bersifat sukarela dan tidak mengikat. Aplikasi tetap dapat digunakan secara utuh tanpa donasi.
+
+---
+
+## ⚠️ Ketentuan Penggunaan
+
+Proyek ini dilindungi lisensi **Proprietary Software License (All Rights Reserved)**. Anda **dilarang** menyalin, memodifikasi, mendistribusikan ulang, atau menjual kode ini tanpa izin tertulis dari pemilik hak cipta. Lihat [LICENSE](./LICENSE) untuk detail lengkap.
+
+---
+
+## 👨‍💻 Pengembang & Hak Cipta
+
+Dirancang dan dikembangkan dengan penuh dedikasi oleh:
+**[Yanuar Ardhika Rahmadhani Ubaidillah (@ardhikaxx)](https://github.com/ardhikaxx)**
+*Lead Software Architect & Maintainer*
+
+> **Copyright (c) 2024 - 2026 Yanuar Ardhika Rahmadhani Ubaidillah (@ardhikaxx). All Rights Reserved.**
